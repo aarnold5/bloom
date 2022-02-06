@@ -1,0 +1,23 @@
+import React, { Component } from 'react';
+import NavBar from './nav-bar';
+
+class HomePage extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {}; // nothing here yet
+  }
+
+  render() {
+    return (
+      <div className="container">
+        <NavBar />
+        <div id="bloom-title-container">
+          <h1 id="home-screen-heading">Bloom</h1>
+          <button className="home-page-button" type="button">Get Started!</button>
+        </div>
+      </div>
+    );
+  }
+}
+
+export default HomePage;

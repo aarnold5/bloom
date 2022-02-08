@@ -1,8 +1,19 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import {render} from 'react-dom';
+import { BrowserRouter, Routes, Route} from "react-router-dom";
 import './style.scss';
+import Invoices from "./invoices";
+import App from "./app";
+// eslint-disable-next-line no-unused-vars
 
-// eslint-disable-next-line react/function-component-definition
-const App = () => <div className="test">All the REACT are belong to us!</div>;
 
-ReactDOM.render(<App />, document.getElementById('main'));
+const rootElement = document.getElementById("main");
+render(
+    <BrowserRouter>
+    <Routes>
+      <Route path="/" element={<App />} />
+      <Route path="invoices" element={<Invoices />} />
+    </Routes>
+  </BrowserRouter>,
+  rootElement);
+

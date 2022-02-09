@@ -5,9 +5,9 @@ import {
   Routes,
   Route,
 } from 'react-router-dom';
-import HomePage from './components/home-page';
-import TutorialPage from './components/tutorial-page';
-import LoginPage from './components/login-page';
+import HomePage from './components/pages/home-page';
+import TutorialPage from './components/pages/tutorial-page';
+import LoginPage from './components/pages/login-page';
 
 class App extends Component {
   render() {

@@ -1,6 +1,6 @@
 /* eslint-disable react/prefer-stateless-function */
 import React, { Component } from 'react';
-import TreeNode from './tree-node';
+import TreeNode from '../tutorial-components/tree-node';
 
 class TutorialPage extends Component {
   render() {

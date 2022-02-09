@@ -5,14 +5,14 @@ import TreeNode from './tree-node';
 class TutorialPage extends Component {
   render() {
     return (
-      <div id="tutorial-main-container">
-        <div id="list-of-your-trees" />
-        <div className="right-half">
-          <div id="tool-bar" />
-          <div id="tree-space">
+      <div id="tutorial-main-container" className="container">
+        <div id="list-of-your-trees" className="container" />
+        <div className="right-half container">
+          <div id="tool-bar" className="container" />
+          <div id="tree-space" className="container">
             <TreeNode />
           </div>
-          <div id="rec-bar" />
+          <div id="rec-bar" className="container" />
         </div>
       </div>
     );

@@ -8,6 +8,7 @@ body, html {
     display: flex;
     justify-content: center;
     flex-direction: column;
+    border-radius: 4px;
   }
 
   #home-screen-heading {
@@ -70,9 +71,10 @@ body, html {
   }
 
   #list-of-your-trees {
-    width: 173px;
+    width: 20%;
     height: 100vh;
     background-color: #96a66d83;
+    margin-right: 10px;
   }
 
   #tutorial-main-container {
@@ -83,6 +85,7 @@ body, html {
   }
 
   .right-half {
+    width: 80%;
     height: 100vh;
     display: flex;
     justify-content: space-between;
@@ -90,7 +93,6 @@ body, html {
   }
 
   #tool-bar {
-    width: 1034px;
     height: 42px;
     background-color: #96a66d83;
     
@@ -101,7 +103,6 @@ body, html {
   }
 
   #rec-bar {
-    width: 1009px;
     height: 127px;
     background-color: #A8B9A0;
   }

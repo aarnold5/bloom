@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import NavBar from './nav-bar';
 
 class HomePage extends Component {
@@ -13,7 +14,9 @@ class HomePage extends Component {
         <NavBar />
         <div id="bloom-title-container">
           <h1 id="home-screen-heading">Bloom</h1>
-          <button className="home-page-button" type="button">Get Started!</button>
+          <Link to="/tutorial">
+            <button className="home-page-button" type="button">Get Started!</button>
+          </Link>
         </div>
       </div>
     );

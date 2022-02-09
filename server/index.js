@@ -12,6 +12,17 @@ const db = getFirestore(app);
 
 addUsers(db);
 
+
+
+/*
+structure of song names database (tentative):
+
+tree, roots are all chars that songs can start with, next is next char it can start with, etc.
+to query some substring 'can'
+*/
+async function querySongNames(db) {
+    
+}
 async function addUsers(db) {
     const docRef = db.collection('users').doc('alovelace');
 

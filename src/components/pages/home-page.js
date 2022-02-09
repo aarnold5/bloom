@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import NavBar from './nav-bar';
+import NavBar from '../nav-bar';
 
 class HomePage extends Component {
   constructor(props) {

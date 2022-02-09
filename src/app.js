@@ -1,21 +1,20 @@
 import React from "react";
 // eslint-disable-next-line no-unused-vars
-import {Link, BrowserRouter as Router} from "react-router-dom";
+import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
+import HomePage from "./Components/home-page";
+import TutorialPage from "./Components/tutorial-page";
 //import {Welcome, About} from "./index";
 
 
 export default function App() {
     return (
       <div>
-        <h1>Bookkeeper!</h1>
-        <nav
-        style={{
-          borderBottom: "solid 1px",
-          paddingBottom: "1rem"
-        }}
-      >
-        <Link to="/invoices">Invoices</Link> |{" "}
-      </nav>
+        <Routes>
+        <Route path="/" element={<HomePage />}>
+        <Route path="/tutorial" element={<TutorialPage />}/>
+        </Route>
+        </Routes>
+          
       </div>
     );
   }

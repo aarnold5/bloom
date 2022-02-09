@@ -33,6 +33,7 @@ function getAccessToken(){
             console.log(data.body['access_token'])
             //Place all helper functions below this call to receive the access token.
             findSongID('Schism', 'Tool')
+            findSongID('YMCA', 'The Village People')
 
         },
         function (err) {

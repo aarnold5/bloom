@@ -5,7 +5,7 @@ import TreeNode from './tree-node';
 class TutorialPage extends Component {
   render() {
     return (
-      <div id="tutorial-main-container" className="container">
+      <div id="tutorial-main-container" className="page-container container">
         <div id="list-of-your-trees" className="container" />
         <div className="right-half container">
           <div id="tool-bar" className="container" />

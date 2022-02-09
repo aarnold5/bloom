@@ -10,7 +10,7 @@ class HomePage extends Component {
 
   render() {
     return (
-      <div className="container">
+      <div className="page-container container">
         <NavBar />
         <div id="bloom-title-container">
           <h1 id="home-screen-heading">Bloom</h1>

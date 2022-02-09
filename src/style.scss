@@ -4,11 +4,19 @@ body, html {
     height: 100%;
   }
 
-  .container {
+  .page-container {
     display: flex;
     justify-content: center;
     flex-direction: column;
+  }
+  
+  .container {
+    display: flex;
     border-radius: 4px;
+  }
+
+  .vertical-container {
+    flex-direction: column;
   }
 
   #home-screen-heading {

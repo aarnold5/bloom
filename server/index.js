@@ -15,10 +15,10 @@ addUsers(db);
 
 
 /*
-structure of song names database (tentative):
+TODO: create prefix tree indexer
 
-tree, roots are all chars that songs can start with, next is next char it can start with, etc.
-to query some substring 'can'
+indexer should give fast performance and some customizability; 
+can give us ability to prioritize genre stuff or whatever
 */
 async function querySongNames(db) {
     

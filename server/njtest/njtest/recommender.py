@@ -90,7 +90,7 @@ def load_data(filename):
 
     return spotify_df
 
-def perform_feature_engineering(df):
+def perform_feature_engineering(df):    
 
     float_cols = df.dtypes[df.dtypes == 'float64'].index.values
     # create 5 point buckets for popularity 
@@ -106,8 +106,9 @@ def perform_feature_engineering(df):
 
 def authenticate_to_spotify():
     #Connor's client ID and secret, make sure to blank these out before pushing
-    id = "206df76487be4f2fa3bd8277ca421cc5"
-    secret = "d3236d593f0849da86f89af00c57ed7e"
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    id = open(dir_path + '/client_id.txt','r').read()
+    secret = open(dir_path + '/client_secret.txt','r').read()
 
     auth_manager = SpotifyClientCredentials(client_id=id, client_secret=secret)
     sp = spotipy.Spotify(auth_manager=auth_manager)

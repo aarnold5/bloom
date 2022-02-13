@@ -26,3 +26,6 @@ hs_err_pid*
 dist
 node_modules
 .DS_Store
+.cache-user-library-read
+server/njtest/njtest/client_id.txt
+server/njtest/njtestclient_secret.txt

@@ -6044,6 +6044,8 @@ var artist_names = ['Drake', 'Ed Sheeran', 'Bad Bunny', 'Ariana Grande', 'The We
 
 
 var SpotifyWebApi = require('spotify-web-api-node');
+var fetch = require('node-fetch')
+//var  XMLHttpRequest = require(' XMLHttpRequest');
 
 // credentials are optional
 var spotifyApi = new SpotifyWebApi({
@@ -6083,11 +6085,14 @@ function getAccessToken(){
 
                  for (let i = 0; i < exampleArray.length; i += 1) {
                      //place calls to the api here with helper function.
-                     findMetaData(exampleArray[i])
+                     findMetaData(song_IDs[i])
+
+
+
                      await delay(400)
                  }
-             }
-             makeALoopWait()
+             }//makeALoopWait()  //uncomment to run on a loop through all artists. Just doing Drake right now.
+             findTopTracks(artist_IDs[0])
 
          },
         function (err) {
@@ -6139,13 +6144,16 @@ async function findArtistID(artist) {
 
 /*returns the metadata JSON object for a given track ID
  */
-function findMetaData(id) {
-    spotifyApi.getAudioFeaturesForTrack(id)
-        .then(function (data) {
-            console.log(data.body);
-        }, function (err) {
-            done(err);
-        });
+async function findMetaData(id) {
+    return new Promise(function (resolve, reject){
+            spotifyApi.getAudioFeaturesForTrack(id)
+            .then(function (data) {
+                //console.log(data.body)
+                resolve(data)
+            }, function (err) {
+                reject(err);
+            });
+    });
 }
 
 
@@ -6153,18 +6161,26 @@ function findMetaData(id) {
 the website tutorial. Can also be used to find all albums of an artist, and all the songs on those albums.
  */
 function findTopTracks(artistID) {
+    console.log('start: ==============================================================================')
     // Get an artist's top tracks
     spotifyApi.getArtistTopTracks(artistID, 'GB')
-        .then(function(data) {
-           // console.log(data.body);
+        .then(async function(data) {
+            for(var tracks in data.body) {
+               for (var track in data.body[tracks]) {
+                   var id = data.body[tracks][track]['id']
+                   var metaData = await findMetaData(id)
+                   //console.log(data.body[key][track]['id'])
+                   for(var data_tag in metaData.body) {
+                       data.body[tracks][track][data_tag] = metaData.body[data_tag]
 
-            for(var key in data.body) {
-                for (var key1 in data.body[key]) {
-                    console.log('\'' +data.body[key][key1]['id'] +'\''+ ',')
+                   }
+                   console.log(data.body[tracks][track])
+                   var url = "https://us-central1-bloom-838b5.cloudfunctions.net/songinforeciever";
+                   //fetch(url, {method: "POST", headers: {'Content-Type': 'application/json'}, body: JSON.stringify(data.body[key][track])});
+
                 }
             }
-
-
+            console.log("end ============================================================================")
         }, function(err) {
             console.log('Something went wrong!', err);
         });

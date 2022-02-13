@@ -8,7 +8,7 @@ class LoginPage extends Component {
 
   render() {
     return (
-      <div className="page-container container">
+      <div id="login-page" className="page-container container">
         LOGIN PAGE
         <div className="container vertical-container">
           <h1>Login</h1>

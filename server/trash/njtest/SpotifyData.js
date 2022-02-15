@@ -2,7 +2,7 @@
 
 
 var clientId = 'd45e1813a6564588837b5f187309b617';
-var clientSecret = 'e8b50e2ea99b494a9f9b22aae45f0302';
+var clientSecret = ''; //put real one in here
 var redirectUri = 'http://localhost:8888'
 var song_IDs = []
 var id_to_data = {}

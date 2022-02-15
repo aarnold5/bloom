@@ -6,15 +6,7 @@ import { getFunctions, httpsCallable } from 'firebase/functions';
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyBSXhn6HIdV5jCLL-5p0kzKNFDnkiEiAQA",
-  authDomain: "bloom-838b5.firebaseapp.com",
-  projectId: "bloom-838b5",
-  storageBucket: "bloom-838b5.appspot.com",
-  messagingSenderId: "98620041731",
-  appId: "1:98620041731:web:3fc5f74041f2f3029c7c36",
-  measurementId: "G-T5X1Z5Z64J"
-};
+
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);

@@ -1,5 +1,3 @@
-{ "data":
-
 [{
   "danceability": 0.502,
   "energy": 0.633,
@@ -2759,4 +2757,4 @@
   "analysis_url": "https://api.spotify.com/v1/audio-analysis/0LatE4S9UtCDwIdGQsFFKL",
   "duration_ms": 189907,
   "time_signature": 4
-}]}
+}]

@@ -55,29 +55,28 @@ def create_feature_set(df, float_cols):
     """
     
     #tfidf genre lists
-    tfidf = TfidfVectorizer()
-    tfidf_matrix =  tfidf.fit_transform(df['genre'])
-    genre_df = pd.DataFrame(tfidf_matrix.toarray())
-    genre_df.columns = ['genre' + "|" + i for i in tfidf.get_feature_names()]
-    genre_df.reset_index(drop = True, inplace=True)
+    #tfidf = TfidfVectorizer()
+    #tfidf_matrix =  tfidf.fit_transform(df['genre'])
+    #genre_df = pd.DataFrame(tfidf_matrix.toarray())
+    #genre_df.columns = ['genre' + "|" + i for i in tfidf.get_feature_names()]
+    #genre_df.reset_index(drop = True, inplace=True)
 
-    #explicity_ohe = ohe_prep(df, 'explicit','exp')    
-    #year_ohe = ohe_prep(df, 'year','year') * 0.5
-    popularity_ohe = ohe_prep(df, 'popularity_red','pop') * 0.15
-    mode_ohe = ohe_prep(df, 'mode','mode')
-    key_ohe = ohe_prep(df,'key','key')
-    time_ohe = ohe_prep(df,'time_signature','time')
+    explicity_ohe = ohe_prep(df, 'explicit','exp') * 1.2
+    popularity_ohe = ohe_prep(df, 'popularity_red','pop') * 0.2
+    mode_ohe = ohe_prep(df, 'mode','mode') * 0.6
+    key_ohe = ohe_prep(df,'key','key') * 0.15
+    time_ohe = ohe_prep(df,'time_signature','time') * 0.4
 
     #scale float columns
     floats = df[float_cols].reset_index(drop = True)
     scaler = MinMaxScaler()
-    floats_scaled = pd.DataFrame(scaler.fit_transform(floats), columns = floats.columns) * 0.2
+    floats_scaled = pd.DataFrame(scaler.fit_transform(floats), columns = floats.columns) * 0.35
 
     #concanenate all features
-    final = pd.concat([floats_scaled, popularity_ohe, mode_ohe, key_ohe, time_ohe], axis = 1)
+    final = pd.concat([floats_scaled, mode_ohe, key_ohe, time_ohe, popularity_ohe, explicity_ohe], axis = 1)
      
     #add song id
-    final['id']=df['track_id'].values
+    final['id']=df['id'].values
     
     return final
 
@@ -90,14 +89,13 @@ def load_data(filename):
 
     return spotify_df
 
-def perform_feature_engineering(df):    
+def perform_feature_engineering(df, float_cols):    
 
-    float_cols = df.dtypes[df.dtypes == 'float64'].index.values
     # create 5 point buckets for popularity 
     df['popularity_red'] = df['popularity'].apply(lambda x: int(x/5))
 
     #Drops duplicate song IDs, in case songs are repeated in the database and would generate good recommendations
-    df = df.drop_duplicates(subset=['track_id'])
+    df = df.drop_duplicates(subset=['id'])
 
     #Run tfidf on genre list and finish preparation of the rest of the categories
     complete_feature_set = create_feature_set(df, float_cols=float_cols)
@@ -133,7 +131,7 @@ def create_necessary_outputs(playlist_name, id_dic, df):
     Parameters: 
         playlist_name (str): name of the playlist you'd like to pull from the spotify API
         id_dic (dic): dictionary that maps playlist_name to playlist_id
-        df (pandas dataframe): spotify datafram
+        df (pandas dataframe): spotify dataframe
         
     Returns: 
         playlist: all songs in the playlist THAT ARE AVAILABLE IN THE KAGGLE DATASET
@@ -158,10 +156,12 @@ def create_necessary_outputs(playlist_name, id_dic, df):
         playlist.loc[ix, 'url'] = i['track']['album']['images'][1]['url']
         playlist.loc[ix, 'date_added'] = i['added_at']
 
-    playlist['date_added'] = pd.to_datetime(playlist['date_added'])  
+    playlist['date_added'] = pd.to_datetime(playlist['date_added'])
+    #print(playlist.to_string())
     
-    playlist = playlist[playlist['id'].isin(df['track_id'].values)].sort_values('date_added',ascending = False)
-    
+    playlist = playlist[playlist['id'].isin(df['id'].values)]#.sort_values('date_added',ascending = False)
+    print(playlist.to_string())
+
     return playlist
 
 def generate_playlist_feature(complete_feature_set, playlist_df, weight_factor):
@@ -194,6 +194,7 @@ def generate_playlist_feature(complete_feature_set, playlist_df, weight_factor):
     playlist_feature_set_weighted = playlist_feature_set.copy()
     playlist_feature_set_weighted.update(playlist_feature_set_weighted.iloc[:,:-4].mul(playlist_feature_set_weighted.weight,0))
     playlist_feature_set_weighted_final = playlist_feature_set_weighted.iloc[:, :-4]
+    #print(playlist_feature_set_weighted_final.to_string())
     
     return playlist_feature_set_weighted_final.sum(axis = 0), complete_feature_set_nonplaylist
 
@@ -211,22 +212,37 @@ def generate_playlist_recos(df, features, nonplaylist_features, top_many):
         non_playlist_df_top_x: Top top_many recommendations for that playlist
     """
     
-    non_playlist_df = df[df['track_id'].isin(nonplaylist_features['id'].values)]
+    non_playlist_df = df[df['id'].isin(nonplaylist_features['id'].values)]
     non_playlist_df['sim'] = cosine_similarity(nonplaylist_features.drop('id', axis = 1).values, features.values.reshape(1, -1))[:,0]
     non_playlist_df_top_x = non_playlist_df.sort_values('sim',ascending = False).head(top_many)
-    non_playlist_df_top_x['url'] = non_playlist_df_top_x['track_id'].apply(lambda x: sp.track(x)['album']['images'][1]['url'])
+    non_playlist_df_top_x['url'] = non_playlist_df_top_x['id'].apply(lambda x: sp.track(x)['album']['images'][1]['url'])
     #print(non_playlist_df_top_x.to_string())
     
     return non_playlist_df_top_x
 
+def extract_artists(artist_dict):
+    str = ""
+    n_artists = len(artist_dict)
+    for artist in range(0,n_artists):
+        str += artist_dict[artist]['name']
+        if (artist != n_artists - 1):
+            str += ", "
+    return str
+
+def output_recommendations(recs):
+    i = 0
+    for rec in recs.iterrows():
+        i += 1
+        print(str(i) + ". " + sp.track(rec[1]['id'])['name'] + " by " + extract_artists(sp.track(rec[1]['id'])['artists']))
+
+
 pd.set_option('display.max_columns', None)
 
-spotify_df = load_data("SpotifyFeatures")
-spotify_df, complete_feature_set = perform_feature_engineering(spotify_df)
-float_cols = spotify_df.dtypes[spotify_df.dtypes == 'float64'].index.values
+spotify_df = load_data("test")
+float_cols = np.concatenate([spotify_df.dtypes[spotify_df.dtypes == 'float64'].index.values,spotify_df.dtypes[spotify_df.dtypes == 'int64'].index.values])
+spotify_df, complete_feature_set = perform_feature_engineering(spotify_df, float_cols)
 sp, id_name, list_photo = authenticate_to_spotify()
 test_playlist = create_necessary_outputs("Bloom Algorithm Testing", id_name, spotify_df)
-#print(test_playlist.to_string())
-complete_feature_set_playlist_vector, complete_feature_set_nonplaylist = generate_playlist_feature(complete_feature_set, test_playlist, 1.09)
-recs_top10 = generate_playlist_recos(spotify_df, complete_feature_set_playlist_vector, complete_feature_set_nonplaylist, 10)
-print(recs_top10[['artist_name', 'track_name']].to_string())
+complete_feature_set_playlist_vector, complete_feature_set_nonplaylist = generate_playlist_feature(complete_feature_set, test_playlist, 1)
+recs_top10 = generate_playlist_recos(spotify_df, complete_feature_set_playlist_vector, complete_feature_set_nonplaylist, 20)
+output_recommendations(recs_top10)

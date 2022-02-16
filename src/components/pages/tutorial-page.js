@@ -1,18 +1,21 @@
 /* eslint-disable react/prefer-stateless-function */
 import React, { Component } from 'react';
-import TreeNode from '../tutorial-components/tree-node';
+import PlayList from '../tutorial-components/playlist';
+import ToolBar from '../tutorial-components/tool-bar';
+import TreeList from '../tutorial-components/tree-list';
+import Tree from '../tutorial-components/tree';
 
 class TutorialPage extends Component {
   render() {
     return (
-      <div id="tutorial-main-container" className="page-container container">
-        <div id="list-of-your-trees" className="container" />
+      <div id="tutorial-page" className="page-container container">
+        <TreeList />
         <div className="right-half container">
-          <div id="tool-bar" className="container" />
+          <ToolBar />
           <div id="tree-space" className="container">
-            <TreeNode />
+            <Tree />
           </div>
-          <div id="rec-bar" className="container" />
+          <PlayList />
         </div>
       </div>
     );

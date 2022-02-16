@@ -6,7 +6,9 @@ class PlayList extends Component {
   render() {
     return (
       <div id="playlist-container" className="container">
-        <button type="button" id="play-playlist" className="playlist-button">a</button>
+        <button type="button" id="play-playlist" className="playlist-button">
+          <i className="fa-solid fa-circle-play" />
+        </button>
         <div id="playlist" className="container">
           <Song />
           <Song />
@@ -17,7 +19,9 @@ class PlayList extends Component {
           <Song />
           <Song />
         </div>
-        <button type="button" id="reshuffle-playlist" className="playlist-button">a</button>
+        <button type="button" id="reshuffle-playlist" className="playlist-button">
+          <i className="fa-solid fa-arrows-rotate" />
+        </button>
       </div>
     );
   }

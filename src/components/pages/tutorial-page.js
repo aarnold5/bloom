@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import PlayList from '../tutorial-components/playlist';
 import ToolBar from '../tutorial-components/tool-bar';
 import TreeList from '../tutorial-components/tree-list';
-import TreeNode from '../tutorial-components/tree-node';
+import Tree from '../tutorial-components/tree';
 
 class TutorialPage extends Component {
   render() {
@@ -13,7 +13,7 @@ class TutorialPage extends Component {
         <div className="right-half container">
           <ToolBar />
           <div id="tree-space" className="container">
-            <TreeNode />
+            <Tree />
           </div>
           <PlayList />
         </div>

@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import React, { Component } from 'react';
 import { Map as iMap } from 'immutable';
 import PlayList from '../tutorial-components/playlist';
@@ -33,6 +34,24 @@ class TutorialPage extends Component {
           },
         },
       }),
+
+      playlist: iMap({
+        song1: {
+          title: '',
+          albumCover: 'https://media.architecturaldigest.com/photos/5890e88033bd1de9129eab0a/1:1/w_870,h_870,c_limit/Artist-Designed%20Album%20Covers%202.jpg',
+          thingToPassToFunctionToPlayTheSong: '',
+        },
+        song2: {
+          title: '',
+          albumCover: 'https://i.mdel.net/i/db/2019/12/1255378/1255378-800w.jpg',
+          thingToPassToFunctionToPlayTheSong: '',
+        },
+        song3: {
+          title: '',
+          albumCover: 'https://media2.wnyc.org/i/620/620/l/80/1/dark_side_moonLARGE.jpg',
+          thingToPassToFunctionToPlayTheSong: '',
+        },
+      }),
     };
   }
 
@@ -46,7 +65,7 @@ class TutorialPage extends Component {
             <Tree />
             <SearchBar />
           </div>
-          <PlayList />
+          <PlayList playlist={this.state.playlist} />
         </div>
       </div>
     );

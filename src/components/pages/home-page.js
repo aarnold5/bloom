@@ -15,7 +15,7 @@ class HomePage extends Component {
         <div id="bloom-title-container">
           <h1 id="home-screen-heading">Bloom</h1>
           <Link to="/tutorial">
-            <button className="home-page-button" type="button">Get Started!</button>
+            <button id="get-started-button" className="home-page-button" type="button">Get Started!</button>
           </Link>
         </div>
       </div>

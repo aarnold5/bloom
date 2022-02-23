@@ -7,7 +7,7 @@ function NavBar(props) {
       <ul>
         <li>
           <Link to="/login">
-            <button className="home-page-button" type="button">Login</button>
+            <button id="login-button" className="home-page-button" type="button">Login</button>
           </Link>
         </li>
       </ul>

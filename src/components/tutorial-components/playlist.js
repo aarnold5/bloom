@@ -15,7 +15,7 @@ class PlayList extends Component {
           <i className="fa-solid fa-circle-play" />
         </button>
         <div id="playlist" className="container">
-          {this.props.playlist.valueSeq().map((song, key) => {
+          {this.props.playlist.entrySeq().map(([id, song]) => {
             return <Song title={song.title} albumCover={song.albumCover} song={song.song} />;
           })}
         </div>

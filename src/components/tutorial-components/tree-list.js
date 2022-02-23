@@ -2,7 +2,7 @@ import React from 'react';
 import TreeListComponent from './tree-list-component';
 
 function TreeList(props) {
-  const treeList = props.trees.valueSeq().map((tree, key) => {
+  const treeList = props.trees.entrySeq().map(([id, tree]) => {
     return <TreeListComponent title={tree.title} />;
   });
 

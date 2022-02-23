@@ -52,6 +52,13 @@ class TutorialPage extends Component {
           thingToPassToFunctionToPlayTheSong: '',
         },
       }),
+      currTree: iMap({
+        0: {
+          title: 'Tree 1',
+          nodes: {
+          },
+        },
+      }),
     };
   }
 
@@ -62,7 +69,7 @@ class TutorialPage extends Component {
         <div className="right-half container">
           <ToolBar />
           <div id="tree-space" className="container">
-            <Tree />
+            <Tree tree={this.state.currTree} />
             <SearchBar />
           </div>
           <PlayList playlist={this.state.playlist} />

@@ -9,10 +9,9 @@ class LoginPage extends Component {
   render() {
     return (
       <div id="login-page" className="page-container container">
-        LOGIN PAGE
-        <div className="container vertical-container">
+        <div className="container vertical-container login-container">
           <h1>Login</h1>
-          <form>
+          <form className="container vertical-container">
             <label htmlFor="username">
               Username:
               <input type="text" id="username" name="username" />

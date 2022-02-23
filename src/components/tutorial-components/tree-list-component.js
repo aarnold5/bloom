@@ -1,11 +1,12 @@
+/* eslint-disable react/function-component-definition */
 import React from 'react';
 
-function TreeListComponent(props) {
+const TreeListComponent = (props) => {
   return (
     <button type="button" className="tree-list-component home-page-button container">
-      TreeName
+      {props.title}
     </button>
   );
-}
+};
 
 export default TreeListComponent;

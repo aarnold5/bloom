@@ -3,6 +3,11 @@ import React, { Component } from 'react';
 import Song from './song';
 
 class PlayList extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {}; // nothing here yet
+  }
+
   render() {
     return (
       <div id="playlist-container" className="container">
@@ -10,14 +15,9 @@ class PlayList extends Component {
           <i className="fa-solid fa-circle-play" />
         </button>
         <div id="playlist" className="container">
-          <Song />
-          <Song />
-          <Song />
-          <Song />
-          <Song />
-          <Song />
-          <Song />
-          <Song />
+          {this.props.playlist.entrySeq().map(([id, song]) => {
+            return <Song title={song.title} albumCover={song.albumCover} song={song.song} />;
+          })}
         </div>
         <button type="button" id="reshuffle-playlist" className="playlist-button">
           <i className="fa-solid fa-arrows-rotate" />

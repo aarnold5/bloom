@@ -2,8 +2,8 @@ import React from 'react';
 import TreeListComponent from './tree-list-component';
 
 function TreeList(props) {
-  const treeList = props.trees.map((tree) => {
-    return <TreeListComponent key={tree} title={tree.title} />;
+  const treeList = props.trees.entrySeq().map(([id, tree]) => {
+    return <TreeListComponent title={tree.title} />;
   });
 
   return (
@@ -13,16 +13,4 @@ function TreeList(props) {
   );
 }
 
-/* const TreeList = (props) => {
-  return (
-    <div id="tree-list" className="vertical-container container">
-      <TreeListComponent />
-      <TreeListComponent />
-      <TreeListComponent />
-      <TreeListComponent />
-      <TreeListComponent />
-    </div>
-  );
-};
- */
 export default TreeList;

@@ -15,23 +15,19 @@ class TutorialPage extends Component {
       trees: iMap({
         0: {
           title: 'Tree 1',
-          nodes: {
-          },
+          layers: [],
         },
         1: {
           title: 'Tree 2',
-          nodes: {
-          },
+          layers: [],
         },
         2: {
           title: 'Tree 3',
-          nodes: {
-          },
+          layers: [],
         },
         3: {
           title: 'Tree 4',
-          nodes: {
-          },
+          layers: [],
         },
       }),
 
@@ -51,14 +47,69 @@ class TutorialPage extends Component {
           albumCover: 'https://media2.wnyc.org/i/620/620/l/80/1/dark_side_moonLARGE.jpg',
           thingToPassToFunctionToPlayTheSong: '',
         },
-      }),
-      currTree: iMap({
-        0: {
-          title: 'Tree 1',
-          nodes: {
-          },
+        song4: {
+          title: '',
+          albumCover: 'https://media.architecturaldigest.com/photos/5890e88033bd1de9129eab0a/1:1/w_870,h_870,c_limit/Artist-Designed%20Album%20Covers%202.jpg',
+          thingToPassToFunctionToPlayTheSong: '',
+        },
+        song5: {
+          title: '',
+          albumCover: 'https://i.mdel.net/i/db/2019/12/1255378/1255378-800w.jpg',
+          thingToPassToFunctionToPlayTheSong: '',
+        },
+        song6: {
+          title: '',
+          albumCover: 'https://media2.wnyc.org/i/620/620/l/80/1/dark_side_moonLARGE.jpg',
+          thingToPassToFunctionToPlayTheSong: '',
+        },
+        song7: {
+          title: '',
+          albumCover: 'https://i.mdel.net/i/db/2019/12/1255378/1255378-800w.jpg',
+          thingToPassToFunctionToPlayTheSong: '',
+        },
+        song8: {
+          title: '',
+          albumCover: 'https://media2.wnyc.org/i/620/620/l/80/1/dark_side_moonLARGE.jpg',
+          thingToPassToFunctionToPlayTheSong: '',
         },
       }),
+
+      currTree: {
+        title: 'Tree 1',
+        totalLayers: 2,
+        nodes: iMap({
+          node1: {
+            a: 'green',
+            songTitle: '',
+            song: '',
+            albumCover: '',
+          },
+          node2: {
+            a: 'green',
+            songTitle: '',
+            song: '',
+            albumCover: '',
+          },
+          node3: {
+            a: 'green',
+            songTitle: '',
+            song: '',
+            albumCover: '',
+          },
+          node4: {
+            a: 'green',
+            songTitle: '',
+            song: '',
+            albumCover: '',
+          },
+          node5: {
+            a: 'green',
+            songTitle: '',
+            song: '',
+            albumCover: '',
+          },
+        }),
+      },
     };
   }
 
@@ -69,7 +120,7 @@ class TutorialPage extends Component {
         <div className="right-half container">
           <ToolBar />
           <div id="tree-space" className="container">
-            <Tree tree={this.state.currTree} />
+            <Tree currTree={this.state.currTree} />
             <SearchBar />
           </div>
           <PlayList playlist={this.state.playlist} />

@@ -76,8 +76,7 @@ class TutorialPage extends Component {
 
       currTree: {
         title: 'Tree 1',
-        totalLayers: 2,
-        nodes: iMap({
+        layers: iMap({
           node1: {
             a: 'green',
             songTitle: '',
@@ -111,6 +110,10 @@ class TutorialPage extends Component {
         }),
       },
     };
+  }
+
+  componentDidMount() {
+    props.fetchTrees();
   }
 
   render() {

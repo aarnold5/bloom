@@ -4,14 +4,19 @@ import java.io.Console;
 import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Base64;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.logging.Logger;
 
+import javax.net.ssl.HttpsURLConnection;
+
 import com.fasterxml.jackson.core.JsonParseException;
 import com.google.api.core.ApiFuture;
+import com.google.api.services.storage.Storage.Objects.List;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.firestore.CollectionReference;
 import com.google.cloud.firestore.Firestore;
@@ -25,6 +30,9 @@ import com.google.firebase.FirebaseOptions;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+
+
+//to deploy (from 'indexer' directory): gcloud functions deploy songinforeciever --trigger-http --entry-point com.bloom.server.indexer.SongInfoSocket --runtime java11 --allow-unauthenticated
 
 public class SongInfoSocket implements HttpFunction {
     private static final Logger logger = Logger.getLogger(SongInfoSocket.class.getName());
@@ -50,6 +58,11 @@ public class SongInfoSocket implements HttpFunction {
             
             String id = requestJson.get("id").getAsString();
             String name = requestJson.get("name").getAsString();
+            if(name.length() > 99) {
+                response.getWriter().write("Bloom cannot handle song titles longer than 99 words currently.\n");
+                response.setStatusCode(HttpsURLConnection.HTTP_ENTITY_TOO_LARGE);
+                return;
+            }
             String sanitizedTrackName = name.toLowerCase();
 
             Map<String, Object> docData = new HashMap<String, Object>();
@@ -73,26 +86,15 @@ public class SongInfoSocket implements HttpFunction {
             helperDouble(docData, "liveness", requestJson);
             helperDouble(docData, "valence", requestJson);
             helperDouble(docData, "tempo", requestJson);
-            helperDouble(docData, "time_signature", requestJson);   
+            helperDouble(docData, "time_signature", requestJson);
+            ArrayList<Object> prefixes = new ArrayList<>();
+            for(int i = 1; i <= sanitizedTrackName.length(); i++) {
+                prefixes.add(sanitizedTrackName.substring(0, i));
+            }  
+            docData.put("indexing", prefixes);
             ApiFuture<WriteResult> future = db.collection("songs").document(id).set(docData);
-            
-            Map<String, Object> nextMap = new HashMap<>();
-            nextMap.put("type", "path");
-            //add to index
-            
-            String path = "index";
-            for(char c : sanitizedTrackName.toCharArray()) {
-                if(c == '.') {
-                    path = path + "/next/dot";
-                }
-                else {
-                    path = path + "/next/" + c;
-                }
-            }
-            path = path + "/" + id;
-            response.getWriter().write("Path: " + path + "\n");
-            ApiFuture<WriteResult> future1 = db.document(path).set(indexableSongData);
-            response.getWriter().write("Indexed song: " + name + "\n    where ID = " + id + "\n        update time: " + future1.get().getUpdateTime() + "\n");
+            response.getWriter().write("got in " + future.get().getUpdateTime() + "ms\n");
+
         } else {
             response.setStatusCode(HttpURLConnection.HTTP_UNSUPPORTED_TYPE);
         }

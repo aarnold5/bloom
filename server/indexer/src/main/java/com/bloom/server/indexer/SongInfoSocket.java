@@ -66,15 +66,22 @@ public class SongInfoSocket implements HttpFunction {
             String sanitizedTrackName = name.toLowerCase();
 
             Map<String, Object> docData = new HashMap<String, Object>();
-            Map<String, Object> indexableSongData = new HashMap<>();
             helperDouble(docData, "duration_ms", requestJson);
             docData.put("href", requestJson.get("href").getAsString());
             docData.put("id", requestJson.get("id").getAsString());
-            indexableSongData.put("id", requestJson.get("id").getAsString());
             docData.put("name", requestJson.get("name").getAsString());
-            indexableSongData.put("name", requestJson.get("name").getAsString());
-            helperDouble(docData, "popularity", requestJson);
             docData.put("uri", requestJson.get("uri").getAsString());
+            docData.put("album_cover", requestJson.get("album").getAsJsonObject().get("images").getAsJsonArray().get(1).getAsJsonObject().get("url").getAsString());
+            ArrayList<String> genres = new ArrayList<>();
+            for(JsonElement genre : requestJson.get("genres").getAsJsonArray()) {
+                genres.add(genre.getAsString());
+            }
+
+
+            docData.put("genres", genres);
+            docData.put("artist", requestJson.get("artist").getAsJsonArray().get(0).getAsJsonObject().get("name").getAsString());
+            docData.put("album", requestJson.get("album").getAsJsonObject().get("name").getAsString());  
+            helperDouble(docData, "popularity", requestJson);
             helperDouble(docData, "danceability", requestJson);
             helperDouble(docData, "energy", requestJson);
             helperDouble(docData, "key", requestJson);

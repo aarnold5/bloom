@@ -41,7 +41,7 @@ import com.google.gson.JsonPrimitive;
 
 
 //to deploy (from 'indexer' directory): gcloud functions deploy songnamequerier --trigger-http --entry-point com.bloom.server.indexer.SongNameQuerier --runtime java11 --allow-unauthenticated
-
+//
 
 public class SongNameQuerier implements HttpFunction {
     private static final Logger logger = Logger.getLogger(SongNameQuerier.class.getName());
@@ -61,14 +61,16 @@ public class SongNameQuerier implements HttpFunction {
             String queryStringSanitized = requestJson.get("query").getAsString().toLowerCase();
 
             
+
             Query reference = db.collection("songs")
-            .whereArrayContains("indexing", queryStringSanitized).limit(20);
+            .whereArrayContains("indexing", queryStringSanitized).limit(10);
             List<QueryDocumentSnapshot> results = reference.get().get().getDocuments();
             JsonArray resultsArray = new JsonArray();
             for (QueryDocumentSnapshot result : results) {
                 JsonObject songJson = new JsonObject();
                 songJson.add("name", new JsonPrimitive(result.getString("name")));
                 songJson.add("id", new JsonPrimitive(result.getString("id")));
+                songJson.add("album_cover", new JsonPrimitive(result.getString("album_cover")));
                 resultsArray.add(songJson);
             }
             JsonObject responseJson = new JsonObject();

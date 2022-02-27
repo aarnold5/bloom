@@ -17,6 +17,7 @@ class App extends Component {
           <Route path="/" element={<HomePage />} />
           <Route path="tutorial" element={<TutorialPage />} />
           <Route path="login" element={<LoginPage />} />
+          <Route render={() => (<div> Page Not Found </div>)} />
         </Routes>
       </BrowserRouter>
     );

@@ -1,7 +1,7 @@
 import { ActionTypes } from '../actions';
 
 // eslint-disable-next-line default-param-last
-const CountReducer = (state = 0, action) => {
+const PlaylistReducer = (state = 0, action) => {
   switch (action.type) {
     case ActionTypes.INCREMENT:
       return state + 1;
@@ -12,4 +12,4 @@ const CountReducer = (state = 0, action) => {
   }
 };
 
-export default CountReducer;
+export default PLaylistReducer;

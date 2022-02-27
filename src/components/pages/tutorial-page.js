@@ -112,10 +112,6 @@ class TutorialPage extends Component {
     };
   }
 
-  componentDidMount() {
-    props.fetchTrees();
-  }
-
   render() {
     return (
       <div id="tutorial-page" className="page-container container">

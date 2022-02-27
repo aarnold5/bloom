@@ -11,16 +11,18 @@ class Tree extends Component {
     super(props);
     this.state = {
       // c: 'green',
-      layers: [[<TreeNode />, <TreeNode />], [<TreeNode />, <TreeNode />]],
+      layers: [[<TreeNode />], [<TreeNode />, <TreeNode />]],
       ll: 1,
+      multi: 2,
     };
   }
 
   addNode = () => {
-    if (this.state.layers[this.state.ll].length === 2) {
+    if (this.state.layers[this.state.ll].length >= this.state.multi) {
       this.setState((prevState) => ({
         layers: [...prevState.layers, [<TreeNode />]],
         ll: prevState.ll + 1,
+        multi: prevState.multi * 2,
       }));
       console.log('worked');
     } else {
@@ -63,7 +65,7 @@ class Tree extends Component {
         <button
           type="button"
           onClick={this.addNode}
-        >changeColor
+        >Add Node
         </button>
         {this.showNodes()}
         {/* <TreeNode a={this.state.c}/> */}

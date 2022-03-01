@@ -1,10 +1,5 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, getDocs } from 'firebase/firestore';
-import 'regenerator-runtime/runtime';
-import './style.scss';
-import App from './app';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyD2qCSgsfdJOShdP3dTluGe7FZo3P18sB4',
@@ -19,6 +14,11 @@ const firebaseConfig = {
 const firebaseApp = initializeApp(firebaseConfig);
 const firestoreDB = getFirestore(firebaseApp);
 
+export function fetchTrees(callback) {
+  // get names & id of trees in JSON list
+  return callback(printTrees());
+}
+
 async function printTrees() {
   const querySnapshot = await getDocs(collection(firestoreDB, 'users/Ihoc1nuTr9lL92TngABS/trees'));
   const treesReturn = {
@@ -28,7 +28,5 @@ async function printTrees() {
     treesReturn.trees.push({ id: doc.id, title: doc.get('name') });
   });
   console.log(treesReturn);
+  return treesReturn;
 }
-
-printTrees();
-ReactDOM.render(<App />, document.getElementById('main'));

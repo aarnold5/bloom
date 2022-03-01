@@ -8,10 +8,14 @@ import itertools
 import os
 
 from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
+from sklearn.metrics import pairwise_distances
+import sklearn.metrics.pairwise as pw
 from sklearn.preprocessing import MinMaxScaler
 import matplotlib.pyplot as plt
 
+import firebase_admin
+from firebase_admin import credentials
+from firebase_admin import firestore
 
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
@@ -56,12 +60,12 @@ def create_feature_set(df, float_cols):
     
     #tfidf genre lists
     #tfidf = TfidfVectorizer()
-    #tfidf_matrix =  tfidf.fit_transform(df['genre'])
+    #tfidf_matrix =  tfidf.fit_transform(df['genre'].apply(lambda x: "".join(x)))
     #genre_df = pd.DataFrame(tfidf_matrix.toarray())
     #genre_df.columns = ['genre' + "|" + i for i in tfidf.get_feature_names()]
     #genre_df.reset_index(drop = True, inplace=True)
 
-    explicity_ohe = ohe_prep(df, 'explicit','exp') * 1.2
+    #explicity_ohe = ohe_prep(df, 'explicit','exp') * 1.2
     popularity_ohe = ohe_prep(df, 'popularity_red','pop') * 0.2
     mode_ohe = ohe_prep(df, 'mode','mode') * 0.6
     key_ohe = ohe_prep(df,'key','key') * 0.15
@@ -73,7 +77,8 @@ def create_feature_set(df, float_cols):
     floats_scaled = pd.DataFrame(scaler.fit_transform(floats), columns = floats.columns) * 0.35
 
     #concanenate all features
-    final = pd.concat([floats_scaled, mode_ohe, key_ohe, time_ohe, popularity_ohe, explicity_ohe], axis = 1)
+    final = pd.concat([floats_scaled, mode_ohe, key_ohe, time_ohe, popularity_ohe], axis = 1)
+    #final = pd.concat([genre_df, floats_scaled, mode_ohe, key_ohe, time_ohe, popularity_ohe, explicity_ohe], axis = 1)
      
     #add song id
     final['id']=df['id'].values
@@ -82,14 +87,30 @@ def create_feature_set(df, float_cols):
 
 def load_data(filename):
 
-    dir_path = os.path.dirname(os.path.realpath(__file__))
+    #Firebase stuff
+    project_id = "bloom-838b5"
+    cred = credentials.ApplicationDefault()
+    firebase_admin.initialize_app(cred, {'projectId': project_id})
+
+    db = firestore.client()
+    docs = db.collection(u'songs').where(u'duration_ms', u'>=', 0).stream()
+
+    spotify_df = pd.DataFrame()
+    for doc in docs:
+        spotify_df = spotify_df.append(doc.to_dict(), ignore_index = True)
+
+    #dir_path = os.path.dirname(os.path.realpath(__file__))
     #spotify_df = pd.read_json(dir_path + '/' + filename + '.json', orient='split')
-    spotify_df = pd.read_csv(dir_path + '/' + filename + '.csv')
+    #spotify_df = pd.read_csv(dir_path + '/' + filename + '.csv')
     #print(spotify_df.head())
 
     return spotify_df
 
 def perform_feature_engineering(df, float_cols):    
+
+    # fix the genre column and prepare it for one-hot-encoding
+    #df['genre'] = df['genre'].apply(lambda x: [re.sub(' ','_',i) for i in re.findall(r"'([^']*)'", x)])
+    #df['genre'] = df['genre'].apply(lambda d: d if isinstance(d, list) else [])
 
     # create 5 point buckets for popularity 
     df['popularity_red'] = df['popularity'].apply(lambda x: int(x/5))
@@ -108,9 +129,9 @@ def authenticate_to_spotify():
     id = open(dir_path + '/client_id.txt','r').read()
     secret = open(dir_path + '/client_secret.txt','r').read()
 
-    auth_manager = SpotifyClientCredentials(client_id=id, client_secret=secret)
-    sp = spotipy.Spotify(auth_manager=auth_manager)
-    token = util.prompt_for_user_token("user-library-read", client_id= id, client_secret=secret, redirect_uri='http://localhost:8881/')
+    #auth_manager = SpotifyClientCredentials(client_id=id, client_secret=secret)
+    #sp = spotipy.Spotify(auth_manager=auth_manager)
+    token = util.prompt_for_user_token(scope = 'user-library-read playlist-modify-public playlist-modify-private playlist-read-private streaming', client_id= id, client_secret=secret, redirect_uri='http://localhost:8881/')
     sp = spotipy.Spotify(auth=token)
 
     #gather playlist names and images. 
@@ -160,7 +181,7 @@ def create_necessary_outputs(playlist_name, id_dic, df):
     #print(playlist.to_string())
     
     playlist = playlist[playlist['id'].isin(df['id'].values)]#.sort_values('date_added',ascending = False)
-    print(playlist.to_string())
+    #print(playlist.to_string())
 
     return playlist
 
@@ -211,10 +232,13 @@ def generate_playlist_recos(df, features, nonplaylist_features, top_many):
     Returns: 
         non_playlist_df_top_x: Top top_many recommendations for that playlist
     """
+
+    #good options: cosine similarity, cosine distances
     
     non_playlist_df = df[df['id'].isin(nonplaylist_features['id'].values)]
-    non_playlist_df['sim'] = cosine_similarity(nonplaylist_features.drop('id', axis = 1).values, features.values.reshape(1, -1))[:,0]
-    non_playlist_df_top_x = non_playlist_df.sort_values('sim',ascending = False).head(top_many)
+    non_playlist_df['sim'] = pw.cosine_distances(nonplaylist_features.drop('id', axis = 1).values, features.values.reshape(1, -1))[:,0]
+    non_playlist_df_top_x = non_playlist_df.sort_values('sim',ascending = True).head(top_many)
+    #print(non_playlist_df_top_x)
     non_playlist_df_top_x['url'] = non_playlist_df_top_x['id'].apply(lambda x: sp.track(x)['album']['images'][1]['url'])
     #print(non_playlist_df_top_x.to_string())
     
@@ -237,12 +261,21 @@ def output_recommendations(recs):
 
 
 pd.set_option('display.max_columns', None)
+pname = "Bloom Algorithm Testing"
 
-spotify_df = load_data("test")
+spotify_df = load_data("test2")
 float_cols = np.concatenate([spotify_df.dtypes[spotify_df.dtypes == 'float64'].index.values,spotify_df.dtypes[spotify_df.dtypes == 'int64'].index.values])
 spotify_df, complete_feature_set = perform_feature_engineering(spotify_df, float_cols)
 sp, id_name, list_photo = authenticate_to_spotify()
-test_playlist = create_necessary_outputs("Bloom Algorithm Testing", id_name, spotify_df)
-complete_feature_set_playlist_vector, complete_feature_set_nonplaylist = generate_playlist_feature(complete_feature_set, test_playlist, 1)
-recs_top10 = generate_playlist_recos(spotify_df, complete_feature_set_playlist_vector, complete_feature_set_nonplaylist, 20)
-output_recommendations(recs_top10)
+for i in range(1,2):
+    test_playlist = create_necessary_outputs(pname, id_name, spotify_df)
+    complete_feature_set_playlist_vector, complete_feature_set_nonplaylist = generate_playlist_feature(complete_feature_set, test_playlist, 1)
+    recs_top10 = generate_playlist_recos(spotify_df, complete_feature_set_playlist_vector, complete_feature_set_nonplaylist, 3)
+    print(recs_top10['id'])
+    output_recommendations(recs_top10)
+    #Adds the top song to the user's playlist, and plays the last one
+    sp.playlist_add_items(id_name[pname], recs_top10.head(1)['id'], position=sp.playlist(id_name[pname])['tracks']['total'])
+    #if (i == 9):
+        #sp.add_to_queue(recs_top10.head(1)['id'].iloc[0])
+        #sp.start_playback()
+        #sp.next_track()

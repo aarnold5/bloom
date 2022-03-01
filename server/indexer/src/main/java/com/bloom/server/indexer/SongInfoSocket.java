@@ -82,6 +82,7 @@ public class SongInfoSocket implements HttpFunction {
             docData.put("artist", requestJson.get("artists").getAsJsonArray().get(0).getAsJsonObject().get("name").getAsString());
             docData.put("album", requestJson.get("album").getAsJsonObject().get("name").getAsString());  
             helperDouble(docData, "popularity", requestJson);
+            helperDouble(docData, "explicit", requestJson);
             helperDouble(docData, "danceability", requestJson);
             helperDouble(docData, "energy", requestJson);
             helperDouble(docData, "key", requestJson);

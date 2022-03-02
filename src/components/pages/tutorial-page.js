@@ -1,12 +1,16 @@
+/* eslint-disable class-methods-use-this */
 /* eslint-disable max-len */
 import React, { Component } from 'react';
 import { Map as iMap } from 'immutable';
+import debounce from 'lodash.debounce';
 import PlayList from '../tutorial-components/playlist';
 import ToolBar from '../tutorial-components/tool-bar';
 import TreeList from '../tutorial-components/tree-list';
 import Tree from '../tutorial-components/tree';
-import SearchBar from '../tutorial-components/search-bar';
+// import SearchBar from '../tutorial-components/search-bar';
 import * as db from '../../services/firestore';
+import SearchSuggestions from '../tutorial-components/search-suggestions';
+import { bloomSearch } from '../tutorial-components/search';
 
 class TutorialPage extends Component {
   constructor(props) {
@@ -15,6 +19,7 @@ class TutorialPage extends Component {
     this.state = {
       trees: [],
       playlist: [],
+      searchSuggestions: [],
       /* playlist: iMap({
         song1: {
           title: '',
@@ -60,7 +65,7 @@ class TutorialPage extends Component {
 
       currTree: {
         title: 'Tree 1',
-        totalLayers: 2,
+        addRoot: false,
         nodes: iMap({
           node1: {
             a: 'green',
@@ -95,6 +100,8 @@ class TutorialPage extends Component {
         }),
       },
     };
+
+    this.search = debounce(this.search, 300);
   }
 
   /* componentDidMount() {
@@ -120,15 +127,28 @@ class TutorialPage extends Component {
       .then((result) => this.setState({ playlist: result.playlist }));
   }
 
+  search = (text) => {
+    bloomSearch(text).then((searchSuggestions) => {
+      this.setState({
+        searchSuggestions,
+        // selectedSuggestion: searchSuggestions[0],
+      });
+    });
+  };
+
+  rootNode() {
+    console.log('jhoierh');
+  }
+
   render() {
     return (
       <div id="tutorial-page" className="page-container container">
         <TreeList trees={this.state.trees} />
         <div className="right-half container">
-          <ToolBar />
+          <ToolBar addRootNode={this.rootNode} />
           <div id="tree-space" className="container">
             <Tree currTree={this.state.currTree} />
-            <SearchBar />
+            <SearchSuggestions onSearchChange={this.search} searchSuggestions={this.state.searchSuggestions} />
           </div>
           <PlayList playlist={this.state.playlist} />
         </div>

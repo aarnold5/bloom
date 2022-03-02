@@ -27,7 +27,7 @@ export async function fetchTrees() {
 }
 
 export async function fetchPlaylist() {
-  const querySnapshot = await getDocs(collection(firestoreDB, 'users/Ihoc1nuTr9lL92TngABS/playlist'));
+  const querySnapshot = await getDocs(collection(firestoreDB, 'users/Ihoc1nuTr9lL92TngABS/trees/2q5uA3rO1YnSd7pYXLUK/output-playlist'));
   const playlistReturn = {
     playlist: [],
   };
@@ -35,4 +35,8 @@ export async function fetchPlaylist() {
     playlistReturn.playlist.push({ id: doc.id, title: doc.get('title'), albumCover: doc.get('albumCover') });
   });
   return playlistReturn;
+}
+
+export async function addToPlaylist(song) {
+  
 }

@@ -17,12 +17,47 @@ class AltTree extends Component {
   }
 
   renderNode() {
-    console.log(this.props.layers);
     if (this.props.layers.length !== 0) {
-      const nodeList = this.props.layers.map((node) => {
-        return <AltTreeNode key={node.song.id} song={node.song} runAlgo={this.props.runAlgo} />;
+      if (this.props.layers.length === 1) {
+        const nodeList = this.props.layers.map((node) => {
+          return <li><AltTreeNode key={node.song.id} song={node.song} runAlgo={this.props.runAlgo} /></li>;
+        });
+        return nodeList;
+      } else if (this.props.layers.length > 1) {
+        const layersList = this.props.layers.map((layer) => {
+          if (layer.length > 1) {
+            const nodeList = layer.map((node) => {
+              return <li><AltTreeNode key={node.song.id} song={node.song} runAlgo={this.props.runAlgo} /></li>;
+            });
+            return nodeList;
+          }
+          return <li><AltTreeNode key={layer.song.id} song={layer.song} runAlgo={this.props.runAlgo} /></li>;
+        });
+        return layersList;
+      }
+
+      /* if (this.props.layers.length > 1) {
+        console.log(this.props.layers);
+        this.props.layers.map((layer) => {
+          if (layer.length > 1) {
+            layer.map((node) => {
+              console.log(node);
+              return <div />;
+            });
+          }
+          console.log(layer);
+          return <div />;
+        });
+        return <div />;
+      } */
+
+      // const layersList = this.props.layers.map((layer) => {
+      /* const nodeList = layer.map((node) => {
+          return <li><AltTreeNode key={node.song.id} song={node.song} runAlgo={this.props.runAlgo} /></li>;
+        });
+        return <div className="layers">bleh</div>;
       });
-      return nodeList;
+      return layersList; */
     } return <div />;
   }
 

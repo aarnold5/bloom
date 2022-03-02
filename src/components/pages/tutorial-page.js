@@ -62,7 +62,7 @@ class TutorialPage extends Component {
       name: 'Moonlight', id: '0JP9xo3adEtGSdUEISiszL', album_cover: 'https://i.scdn.co/image/ab67616d00001e02806c160566580d6335d1f16c',
     };
     this.setState((prevState) => ({
-      layers: [...prevState.layers, { song: tempSong }],
+      layers: [...prevState.layers, [{ song: tempSong }, { song: tempSong }]],
     }));
   };
 

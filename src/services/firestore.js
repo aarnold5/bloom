@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, getDocs } from 'firebase/firestore';
+import { getFirestore, collection, getDocs, setDoc } from 'firebase/firestore';
 import axios from 'axios';
 
 const firebaseConfig = {
@@ -39,22 +39,11 @@ export async function fetchPlaylist() {
 }
 
 export const popPlaylist = (song) => {
-  const fields = {
-    query: song,
-  };
-  return new Promise((resolve, reject) => {
-    axios.post('https://us-central1-bloom-838b5.cloudfunctions.net/songnamequerier', fields, {
-      headers: { 'Content-Type': 'application/json' },
-    })
-      .then((response) => {
-        // console.log(response.data.results);
-        resolve(response.data.results);
-      })
-      .catch((error) => {
-        console.log(`api error: ${error}`);
-        reject(error);
-      });
-  });
+  await setDoc(doc(db, "/users/Ihoc1nuTr9lL92TngABS/trees/2q5uA3rO1YnSd7pYXLUK/input-playlist", song.id), {
+    id: song.id,
+    name: song.title,
+    albumCover: song.albumCover,
+  })
 };
 
 export const addFirstNode = (node) => {

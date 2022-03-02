@@ -12,7 +12,7 @@ class AltTree extends Component {
     };
   }
 
-  // eslint-disable-next-line consistent-return
+  /* // eslint-disable-next-line consistent-return
   centerOfElement = (id) => {
     const elt = document.getElementById(id);
     console.log(elt);
@@ -51,16 +51,16 @@ class AltTree extends Component {
       console.log(dd);
       return (
         <div className="lines" style={{ fillOpacity: '0' }}>
-          {/*   <svg>
+             <svg>
         <line style={inputStyle} x1={String(loc1[0])} y1={String(loc1[1])} x2={String(loc2[0])} y2={String(loc2[1])}/>
-      </svg> */}
+      </svg>
           <svg>
             <path style={inputStyle} d={dd} />
           </svg>
         </div>
       );
     }
-  };
+  }; */
 
   renderNodes() {
     if (this.props.layers.length !== 0) { // if layers isn't empty
@@ -81,7 +81,7 @@ class AltTree extends Component {
   }
 
   render() {
-    return <div className="tree">{this.renderNodes()}</div>;
+    return <div className="tree">{this.renderNodes()}{console.log(this.props.layers)}</div>;
   }
 }
 

@@ -1,5 +1,7 @@
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, getDocs, setDoc } from 'firebase/firestore';
+import {
+  getFirestore, collection, getDocs, setDoc, doc,
+} from 'firebase/firestore';
 import axios from 'axios';
 
 const firebaseConfig = {
@@ -21,8 +23,8 @@ export async function fetchTrees() {
   const treesReturn = {
     trees: [],
   };
-  querySnapshot.forEach((doc) => {
-    treesReturn.trees.push({ id: doc.id, title: doc.get('name') });
+  querySnapshot.forEach((d) => {
+    treesReturn.trees.push({ id: d.id, title: d.get('name') });
   });
   return treesReturn;
 }
@@ -32,19 +34,20 @@ export async function fetchPlaylist() {
   const playlistReturn = {
     playlist: [],
   };
-  querySnapshot.forEach((doc) => {
-    playlistReturn.playlist.push({ id: doc.id, title: doc.get('title'), albumCover: doc.get('albumCover') });
+  querySnapshot.forEach((d) => {
+    playlistReturn.playlist.push({ id: d.id, title: d.get('title'), albumCover: d.get('albumCover') });
   });
   return playlistReturn;
 }
 
-export const popPlaylist = (song) => {
-  await setDoc(doc(db, "/users/Ihoc1nuTr9lL92TngABS/trees/2q5uA3rO1YnSd7pYXLUK/input-playlist", song.id), {
+export async function popPlaylist(song) {
+  console.log(song);
+  await setDoc(doc(firestoreDB, '/users/Ihoc1nuTr9lL92TngABS/trees/2q5uA3rO1YnSd7pYXLUK/input-playlist', song.id), {
     id: song.id,
-    name: song.title,
-    albumCover: song.albumCover,
-  })
-};
+    name: song.name,
+    album_cover: song.album_cover,
+  });
+}
 
 export const addFirstNode = (node) => {
   const fields = {

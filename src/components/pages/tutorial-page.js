@@ -50,6 +50,7 @@ class TutorialPage extends Component {
     }));
     this.setState({ searching: false });
     this.setState((prevState) => ({ currid: prevState.currid + 1 }));
+    db.popPlaylist(song);
   };
 
   handleRunAlgo = () => {

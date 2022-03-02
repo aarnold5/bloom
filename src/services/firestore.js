@@ -1,5 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, getDocs } from 'firebase/firestore';
+import axios from 'axios';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyD2qCSgsfdJOShdP3dTluGe7FZo3P18sB4',
@@ -37,6 +38,40 @@ export async function fetchPlaylist() {
   return playlistReturn;
 }
 
-export async function addToPlaylist(song) {
-  
-}
+export const popPlaylist = (song) => {
+  const fields = {
+    query: song,
+  };
+  return new Promise((resolve, reject) => {
+    axios.post('https://us-central1-bloom-838b5.cloudfunctions.net/songnamequerier', fields, {
+      headers: { 'Content-Type': 'application/json' },
+    })
+      .then((response) => {
+        // console.log(response.data.results);
+        resolve(response.data.results);
+      })
+      .catch((error) => {
+        console.log(`api error: ${error}`);
+        reject(error);
+      });
+  });
+};
+
+export const addFirstNode = (node) => {
+  const fields = {
+    query: node,
+  };
+  return new Promise((resolve, reject) => {
+    axios.post('https://us-central1-bloom-838b5.cloudfunctions.net/songnamequerier', fields, {
+      headers: { 'Content-Type': 'application/json' },
+    })
+      .then((response) => {
+        // console.log(response.data.results);
+        resolve(response.data.results);
+      })
+      .catch((error) => {
+        console.log(`api error: ${error}`);
+        reject(error);
+      });
+  });
+};

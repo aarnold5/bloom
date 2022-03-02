@@ -58,6 +58,15 @@ public class SongNameQuerier implements HttpFunction {
     private static final Gson gson = new Gson();
     @Override
     public void service(HttpRequest request, HttpResponse response) throws Exception {
+
+        response.appendHeader("Access-Control-Allow-Origin", "*");
+        if("OPTIONS".equals(request.getMethod())) {
+            response.appendHeader("Access-Control-Allow-Methods", "POST");
+            response.appendHeader("Access-Control-Allow-Headers", "Content-Type");
+            response.appendHeader("Access-Control-Max-Age", "3600");
+            response.setStatusCode(HttpURLConnection.HTTP_NO_CONTENT);
+            return;
+        }
         GoogleCredentials credentials = GoogleCredentials.getApplicationDefault();
         FirebaseOptions options = FirebaseOptions.builder().setCredentials(credentials).setProjectId("bloom-838b5").build();
         if(FirebaseApp.getApps().isEmpty())
@@ -66,7 +75,15 @@ public class SongNameQuerier implements HttpFunction {
 
         if(request.getContentType().orElse("").equals("application/json")) {
             JsonObject requestJson = gson.fromJson(request.getReader(), JsonElement.class).getAsJsonObject();
-            String queryStringSanitized = requestJson.get("query").getAsString().toLowerCase();
+            System.out.println("gotten data: " + requestJson.toString());
+            String queryStringSanitized = "";
+            try {
+                queryStringSanitized = requestJson.get("query").getAsString().toLowerCase();
+            } catch (NullPointerException npe) {
+                response.setStatusCode(HttpURLConnection.HTTP_BAD_REQUEST);
+                response.getWriter().write("Couldn't find 'query' field in JSON object.");
+                return;
+            }
 
             ApiFuture<QuerySnapshot> results = db.collection("songs")
             .whereArrayContains("indexing", queryStringSanitized).limit(10).get();

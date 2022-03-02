@@ -6,6 +6,7 @@ import ToolBar from '../tutorial-components/tool-bar';
 import TreeList from '../tutorial-components/tree-list';
 import Tree from '../tutorial-components/tree';
 import SearchBar from '../tutorial-components/search-bar';
+import { fetchTrees } from '../../services/firestore';
 
 class TutorialPage extends Component {
   constructor(props) {
@@ -113,6 +114,11 @@ class TutorialPage extends Component {
     };
   }
 
+  componentDidMount() {
+    fetchTrees((trees) => {
+      this.setState({ trees: trees.trees });
+    });
+  }
   render() {
     return (
       <div id="tutorial-page" className="page-container container">

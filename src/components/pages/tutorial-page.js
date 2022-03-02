@@ -14,7 +14,8 @@ class TutorialPage extends Component {
 
     this.state = {
       trees: [],
-      playlist: iMap({
+      playlist: [],
+      /* playlist: iMap({
         song1: {
           title: '',
           albumCover: 'https://media.architecturaldigest.com/photos/5890e88033bd1de9129eab0a/1:1/w_870,h_870,c_limit/Artist-Designed%20Album%20Covers%202.jpg',
@@ -55,7 +56,7 @@ class TutorialPage extends Component {
           albumCover: 'https://media2.wnyc.org/i/620/620/l/80/1/dark_side_moonLARGE.jpg',
           thingToPassToFunctionToPlayTheSong: '',
         },
-      }),
+      }), */
 
       currTree: {
         title: 'Tree 1',
@@ -115,6 +116,8 @@ class TutorialPage extends Component {
     db.fetchTrees()
       .then((result) => this.setState({ trees: result.trees }));
     // this.setState({ trees: iMap(trees.trees) });
+    db.fetchPlaylist()
+      .then((result) => this.setState({ playlist: result.playlist }));
   }
 
   render() {

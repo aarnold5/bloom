@@ -14,11 +14,14 @@ const firebaseConfig = {
 const firebaseApp = initializeApp(firebaseConfig);
 const firestoreDB = getFirestore(firebaseApp);
 
+// eslint-disable-next-line import/prefer-default-export
 export async function fetchTrees() {
   const querySnapshot = await getDocs(collection(firestoreDB, 'users/Ihoc1nuTr9lL92TngABS/trees'));
-  const treesReturn = {};
+  const treesReturn = {
+    trees: [],
+  };
   querySnapshot.forEach((doc) => {
-    treesReturn[doc.id] = doc.get('name');
+    treesReturn.trees.push({ id: doc.id, title: doc.get('name') });
   });
   return treesReturn;
 }

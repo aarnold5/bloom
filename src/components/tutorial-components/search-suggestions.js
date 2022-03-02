@@ -26,7 +26,7 @@ class SearchSuggestions extends Component {
     if (this.props.searching === true) {
       return (
         <div>
-          <SearchBar onSearchChange={this.props.onSearchChange} />
+          <SearchBar className="search-bar" onSearchChange={this.props.onSearchChange} />
           <div className="suggestion-box">
             {this.renderSearchSuggestions()}
           </div>

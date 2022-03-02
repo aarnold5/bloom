@@ -16,22 +16,23 @@ class AltTree extends Component {
     };
   }
 
-  renderNode() {
-    if (this.props.layers.length !== 0) {
-      if (this.props.layers.length === 1) {
+  renderNodes() {
+    if (this.props.layers.length !== 0) { // if layers isn't empty
+      /* if (this.props.layers.length === 1) { // if there is only one node
         const nodeList = this.props.layers.map((node) => {
           return <li><AltTreeNode key={node.song.id} song={node.song} runAlgo={this.props.runAlgo} /></li>;
         });
         return nodeList;
-      } else if (this.props.layers.length > 1) {
+      } else  */
+      if (this.props.layers.length > 0) {
         const layersList = this.props.layers.map((layer) => {
           if (layer.length > 1) {
             const nodeList = layer.map((node) => {
               return <li><AltTreeNode key={node.song.id} song={node.song} runAlgo={this.props.runAlgo} /></li>;
             });
-            return nodeList;
+            return <div className="layer">{nodeList}</div>;
           }
-          return <li><AltTreeNode key={layer.song.id} song={layer.song} runAlgo={this.props.runAlgo} /></li>;
+          return <div className="layer"><li><AltTreeNode key={layer.song.id} song={layer.song} runAlgo={this.props.runAlgo} /></li></div>;
         });
         return layersList;
       }
@@ -62,7 +63,7 @@ class AltTree extends Component {
   }
 
   render() {
-    return <div>{this.renderNode()}</div>;
+    return <div className="tree">{this.renderNodes()}</div>;
   }
 }
 

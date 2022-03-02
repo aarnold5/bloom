@@ -151,6 +151,9 @@ nav {
 
 #tree-space {
   height: auto;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
 }
 
 #playlist-container {

@@ -5,7 +5,7 @@ import debounce from 'lodash.debounce';
 import PlayList from '../tutorial-components/playlist';
 import ToolBar from '../tutorial-components/tool-bar';
 import TreeList from '../tutorial-components/tree-list';
-import Tree from '../tutorial-components/tree';
+// import Tree from '../tutorial-components/tree';
 import * as db from '../../services/firestore';
 import SearchSuggestions from '../tutorial-components/search-suggestions';
 import { bloomSearch } from '../tutorial-components/search';
@@ -72,11 +72,8 @@ class TutorialPage extends Component {
         <TreeList trees={this.state.trees} />
         <div className="right-half container">
           <ToolBar addRootNode={this.rootNode} />
-          <div id="tree-space" className="container">
-            <Tree />
-            <AltTree layers={this.state.layers} runAlgo={this.handleRunAlgo} />
-            <SearchSuggestions searching={this.state.searching} onSelectSong={this.handleSelectSong} onSearchChange={this.search} searchSuggestions={this.state.searchSuggestions} />
-          </div>
+          <SearchSuggestions searching={this.state.searching} onSelectSong={this.handleSelectSong} onSearchChange={this.search} searchSuggestions={this.state.searchSuggestions} />
+          <AltTree layers={this.state.layers} runAlgo={this.handleRunAlgo} />
           <PlayList playlist={this.state.playlist} />
         </div>
       </div>

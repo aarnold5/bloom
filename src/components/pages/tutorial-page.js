@@ -17,6 +17,7 @@ class TutorialPage extends Component {
       playlist: [],
       searchSuggestions: [],
       layers: [],
+      currid: 0,
       searching: false,
     };
 
@@ -48,6 +49,7 @@ class TutorialPage extends Component {
       layers: [...prevState.layers, { song }],
     }));
     this.setState({ searching: false });
+    this.setState((prevState) => ({ currid: prevState.currid + 1 }));
   };
 
   handleRunAlgo = () => {

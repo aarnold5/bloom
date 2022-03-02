@@ -26,6 +26,12 @@ hs_err_pid*
 dist
 node_modules
 .DS_Store
+.cache
+.cache-playlist-modify-public user-library-read
+.cache-playlist-public-modify user-library-read
+.cache-user-library-modify
 .cache-user-library-read
+.cache-user-library-read playlist-modify-public
+.cache-user-library-read playlist-modify-public playlist-modify-private playlist-read-private
 server/njtest/njtest/client_id.txt
 server/njtest/njtestclient_secret.txt

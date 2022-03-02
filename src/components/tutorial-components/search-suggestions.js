@@ -13,23 +13,31 @@ class SearchSuggestions extends Component {
   renderSearchSuggestions() {
     if (this.props.searchSuggestions.length > 0) {
       const sugList = this.props.searchSuggestions.map((suggestion) => {
-        // console.log(suggestion);
         // eslint-disable-next-line max-len
-        return <Suggestion onSelectSong={() => this.props.onSelectSong(suggestion.id)} key={suggestion.id} id={suggestion.id} name={suggestion.name} albumCover={suggestion.album_cover} />;
+        return <Suggestion onClick={() => this.props.onSelectSong(suggestion)} key={suggestion.id} id={suggestion.id} name={suggestion.name} albumCover={suggestion.album_cover} />;
       });
       return sugList;
     }
     return <div />;
   }
 
+  renderSearch() {
+    console.log(this.props.searching);
+    if (this.props.searching === true) {
+      return (
+        <div>
+          <SearchBar onSearchChange={this.props.onSearchChange} />
+          <div className="suggestion-box">
+            {this.renderSearchSuggestions()}
+          </div>
+        </div>
+      );
+    } return <div />;
+  }
+
   render() {
     return (
-      <div>
-        <SearchBar onSearchChange={this.props.onSearchChange} />
-        <div className="suggestion-box">
-          {this.renderSearchSuggestions()}
-        </div>
-      </div>
+      this.renderSearch()
     );
   }
 }

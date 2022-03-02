@@ -9,6 +9,7 @@ import Tree from '../tutorial-components/tree';
 import * as db from '../../services/firestore';
 import SearchSuggestions from '../tutorial-components/search-suggestions';
 import { bloomSearch } from '../tutorial-components/search';
+import AltTree from '../tutorial-components/alt-tree';
 
 class TutorialPage extends Component {
   constructor(props) {
@@ -18,10 +19,10 @@ class TutorialPage extends Component {
       trees: [],
       playlist: [],
       searchSuggestions: [],
-      selectedSuggestion: null,
-      currTree: { layers: [] },
+      // selectedSuggestion: null,
+      layers: [],
       // eslint-disable-next-line react/no-unused-state
-      nothingYet: true,
+      searching: true,
     };
 
     this.search = debounce(this.search, 300);
@@ -48,7 +49,12 @@ class TutorialPage extends Component {
   };
 
   handleSelectSong = (song) => {
-    this.setState({ selectedSuggestion: song });
+    // const s = song;
+    // this.setState({ selectedSuggestion: song });
+    this.setState((prevState) => ({
+      layers: [...prevState.layers, { song }],
+    }));
+    this.setState({ searching: false });
   };
 
   render() {
@@ -59,9 +65,8 @@ class TutorialPage extends Component {
           <ToolBar addRootNode={this.rootNode} />
           <div id="tree-space" className="container">
             <Tree />
-            <SearchSuggestions onSelectSong={this.handleSelectSong} onSearchChange={this.search} searchSuggestions={this.state.searchSuggestions} />
-            {this.state.selectedSuggestion}
-            {console.log(this.state.currTree)}
+            <AltTree layers={this.state.layers} />
+            <SearchSuggestions searching={this.state.searching} onSelectSong={this.handleSelectSong} onSearchChange={this.search} searchSuggestions={this.state.searchSuggestions} />
           </div>
           <PlayList playlist={this.state.playlist} />
         </div>

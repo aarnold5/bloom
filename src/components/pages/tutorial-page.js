@@ -57,6 +57,15 @@ class TutorialPage extends Component {
     this.setState({ searching: false });
   };
 
+  handleRunAlgo = () => {
+    const tempSong = {
+      name: 'Moonlight', id: '0JP9xo3adEtGSdUEISiszL', album_cover: 'https://i.scdn.co/image/ab67616d00001e02806c160566580d6335d1f16c',
+    };
+    this.setState((prevState) => ({
+      layers: [...prevState.layers, { song: tempSong }],
+    }));
+  };
+
   render() {
     return (
       <div id="tutorial-page" className="page-container container">
@@ -65,7 +74,7 @@ class TutorialPage extends Component {
           <ToolBar addRootNode={this.rootNode} />
           <div id="tree-space" className="container">
             <Tree />
-            <AltTree layers={this.state.layers} />
+            <AltTree layers={this.state.layers} runAlgo={this.handleRunAlgo} />
             <SearchSuggestions searching={this.state.searching} onSelectSong={this.handleSelectSong} onSearchChange={this.search} searchSuggestions={this.state.searchSuggestions} />
           </div>
           <PlayList playlist={this.state.playlist} />

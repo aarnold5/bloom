@@ -48,7 +48,9 @@ class AltTreeNode extends Component {
     // change code above this line
     return (
       <div id="tree-space">
-        <span className="dot" id={this.state.t} style={inputStyle} onClick={this.changeColor}><img src={this.props.song.album_cover} draggable="false" alt="temp" className="round-img" /></span>
+        <span className="dot" id={this.state.t} style={inputStyle} onClick={this.changeColor}>
+          <img src={this.props.song.album_cover} draggable="false" alt="temp" className="round-img" onClick={this.props.runAlgo} />
+        </span>
       </div>
     );
   }

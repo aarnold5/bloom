@@ -20,7 +20,7 @@ class AltTree extends Component {
     console.log(this.props.layers);
     if (this.props.layers.length !== 0) {
       const nodeList = this.props.layers.map((node) => {
-        return <AltTreeNode key={node.song.id} song={node.song} />;
+        return <AltTreeNode key={node.song.id} song={node.song} runAlgo={this.props.runAlgo} />;
       });
       return nodeList;
     } return <div />;

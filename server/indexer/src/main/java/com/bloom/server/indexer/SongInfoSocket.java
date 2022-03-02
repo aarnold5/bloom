@@ -1,24 +1,16 @@
 package com.bloom.server.indexer;
 
-import java.io.Console;
 import java.io.PrintWriter;
 import java.net.HttpURLConnection;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Base64;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 import java.util.logging.Logger;
 
 import javax.net.ssl.HttpsURLConnection;
 
-import com.fasterxml.jackson.core.JsonParseException;
 import com.google.api.core.ApiFuture;
-import com.google.api.services.storage.Storage.Objects.List;
 import com.google.auth.oauth2.GoogleCredentials;
-import com.google.cloud.firestore.CollectionReference;
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.WriteResult;
 import com.google.firebase.cloud.FirestoreClient;
@@ -35,7 +27,6 @@ import com.google.gson.JsonObject;
 //to deploy (from 'indexer' directory): gcloud functions deploy songinforeciever --trigger-http --entry-point com.bloom.server.indexer.SongInfoSocket --runtime java11 --allow-unauthenticated
 
 public class SongInfoSocket implements HttpFunction {
-    private static final Logger logger = Logger.getLogger(SongInfoSocket.class.getName());
 
     private static final Gson gson = new Gson();
     @Override
@@ -46,8 +37,7 @@ public class SongInfoSocket implements HttpFunction {
         if(FirebaseApp.getApps().isEmpty())
             FirebaseApp.initializeApp(options);
         Firestore db = FirestoreClient.getFirestore();
-        //check url parameters for "name" field
-        //"world" is default value
+
         String contentType = request.getContentType().orElse("");
         if(contentType.equals("application/json")) {
             

@@ -21,12 +21,12 @@ export function fetchTrees(callback) {
 
 async function printTrees() {
   const querySnapshot = await getDocs(collection(firestoreDB, 'users/Ihoc1nuTr9lL92TngABS/trees'));
-  const treesReturn = {
-    trees: [],
-  };
+  const treesReturn = {};
   querySnapshot.forEach((doc) => {
-    treesReturn.trees.push({ id: doc.id, title: doc.get('name') });
+    treesReturn[doc.id] = doc.get('name');
   });
   console.log(treesReturn);
+
+  
   return treesReturn;
 }

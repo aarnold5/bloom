@@ -27,7 +27,7 @@ async function printTrees() {
   querySnapshot.forEach((doc) => {
     treesReturn.trees.push({ id: doc.id, title: doc.get('name') });
   });
-  console.log(treesReturn);
+  // console.log(treesReturn);
 }
 
 printTrees();

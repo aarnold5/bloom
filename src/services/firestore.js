@@ -14,12 +14,7 @@ const firebaseConfig = {
 const firebaseApp = initializeApp(firebaseConfig);
 const firestoreDB = getFirestore(firebaseApp);
 
-export function fetchTrees(callback) {
-  // get names & id of trees in JSON list
-  return callback(printTrees());
-}
-
-async function printTrees() {
+export async function fetchTrees() {
   const querySnapshot = await getDocs(collection(firestoreDB, 'users/Ihoc1nuTr9lL92TngABS/trees'));
   const treesReturn = {
     trees: [],
@@ -27,6 +22,16 @@ async function printTrees() {
   querySnapshot.forEach((doc) => {
     treesReturn.trees.push({ id: doc.id, title: doc.get('name') });
   });
-  console.log(treesReturn);
   return treesReturn;
+}
+
+export async function fetchPlaylist() {
+  const querySnapshot = await getDocs(collection(firestoreDB, 'users/Ihoc1nuTr9lL92TngABS/playlist'));
+  const playlistReturn = {
+    playlist: [],
+  };
+  querySnapshot.forEach((doc) => {
+    playlistReturn.playlist.push({ id: doc.id, title: doc.get('title'), albumCover: doc.get('albumCover') });
+  });
+  return playlistReturn;
 }

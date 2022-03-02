@@ -16,7 +16,7 @@ class PlayList extends Component {
         </button>
         <div id="playlist" className="container">
           {this.props.playlist.entrySeq().map(([id, song]) => {
-            return <Song title={song.title} albumCover={song.albumCover} song={song.song} />;
+            return <Song key={id} title={song.title} albumCover={song.albumCover} song={song.song} />;
           })}
         </div>
         <button type="button" id="reshuffle-playlist" className="playlist-button">

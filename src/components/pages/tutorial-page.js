@@ -6,31 +6,14 @@ import ToolBar from '../tutorial-components/tool-bar';
 import TreeList from '../tutorial-components/tree-list';
 import Tree from '../tutorial-components/tree';
 import SearchBar from '../tutorial-components/search-bar';
+import * as db from '../../services/firestore';
 
 class TutorialPage extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      trees: iMap({
-        0: {
-          title: 'Tree 1',
-          layers: [],
-        },
-        1: {
-          title: 'Tree 2',
-          layers: [],
-        },
-        2: {
-          title: 'Tree 3',
-          layers: [],
-        },
-        3: {
-          title: 'Tree 4',
-          layers: [],
-        },
-      }),
-
+      trees: [],
       playlist: iMap({
         song1: {
           title: '',
@@ -111,6 +94,27 @@ class TutorialPage extends Component {
         }),
       },
     };
+  }
+
+  /* componentDidMount() {
+    db.fetchTrees((trees) => {})
+      .then((response) => {
+        console.log(response);
+      });
+    // this.setState({ trees: iMap(trees.trees) });
+  } */
+
+  /* componentDidMount() {
+    db.printTrees((trees) => {
+      console.log(trees);
+      // this.setState({ trees: iMap(trees.trees) });
+    });
+  } */
+
+  componentDidMount() {
+    db.fetchTrees()
+      .then((result) => this.setState({ trees: result.trees }));
+    // this.setState({ trees: iMap(trees.trees) });
   }
 
   render() {

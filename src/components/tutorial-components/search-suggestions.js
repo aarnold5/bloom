@@ -13,7 +13,9 @@ class SearchSuggestions extends Component {
   renderSearchSuggestions() {
     if (this.props.searchSuggestions.length > 0) {
       const sugList = this.props.searchSuggestions.map((suggestion) => {
-        return <Suggestion name={suggestion.name} albumCover={suggestion.album_cover} />;
+        // console.log(suggestion);
+        // eslint-disable-next-line max-len
+        return <Suggestion onSelectSong={() => this.props.onSelectSong(suggestion.id)} key={suggestion.id} id={suggestion.id} name={suggestion.name} albumCover={suggestion.album_cover} />;
       });
       return sugList;
     }

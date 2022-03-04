@@ -6,7 +6,7 @@ class AltTreeNode extends Component {
     super(props);
     this.state = {
       c: 'green',
-      t: props.t,
+      // t: props.t,
       // parent: props.parent,
       // y: props.y,
       // song: props.song,
@@ -47,7 +47,8 @@ class AltTreeNode extends Component {
     }
     // change code above this line
     return (
-      <span className="dot" id={this.state.t} style={inputStyle} onClick={this.changeColor}>
+      <span className="dot" id={this.props.id} style={inputStyle} onClick={this.changeColor}>
+        {console.log(this.props.id)}
         <img src={this.props.song.album_cover} draggable="false" alt="temp" className="round-img" onClick={this.props.runAlgo} />
       </span>
     );

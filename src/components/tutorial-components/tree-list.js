@@ -8,7 +8,6 @@ function TreeList(props) {
 
   return (
     <div id="tree-list" className="vertical-container container">
-      {console.log(props.trees)}
       {treeList}
     </div>
   );

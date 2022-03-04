@@ -7,6 +7,7 @@ import * as db from '../../services/firestore';
 import SearchSuggestions from '../tutorial-components/search-suggestions';
 import { bloomSearch } from '../tutorial-components/search';
 import AltTree from '../tutorial-components/alt-tree';
+import Tree from '../tutorial-components/tree';
 
 class TutorialPage extends Component {
   constructor(props) {
@@ -74,7 +75,8 @@ class TutorialPage extends Component {
             onSearchChange={this.search}
             searchSuggestions={this.state.searchSuggestions}
           />
-          <AltTree layers={this.state.layers} runAlgo={this.handleRunAlgo} />
+          <Tree />
+          <AltTree currid={this.state.currid} layers={this.state.layers} runAlgo={this.handleRunAlgo} />
           <PlayList playlist={this.state.playlist} />
         </div>
       </div>

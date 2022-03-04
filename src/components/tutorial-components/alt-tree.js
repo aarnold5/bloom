@@ -65,15 +65,16 @@ class AltTree extends Component {
   renderNodes() {
     if (this.props.layers.length !== 0) { // if layers isn't empty
       if (this.props.layers.length > 0) {
-        const layersList = this.props.layers.map((layer) => {
+        const layersList = this.props.layers.map((layer, lindex) => {
           if (layer.length > 1) {
-            const nodeList = layer.map((node) => {
-              return <li><AltTreeNode key={node.song.id} song={node.song} runAlgo={this.props.runAlgo} /></li>;
+            const nodeList = layer.map((node, nindex) => {
+              console.log(node);
+              return <li><AltTreeNode key={this.props.currid} id={lindex + nindex} song={node.song} runAlgo={this.props.runAlgo} /></li>;
             });
             return <div className="layer">{nodeList}</div>;
           }
           // else render layer with only one node
-          return <div className="layer"><li><AltTreeNode key={layer.song.id} song={layer.song} runAlgo={this.props.runAlgo} /></li></div>;
+          return <div className="layer"><li><AltTreeNode key={this.props.currid} id={lindex} song={layer.song} runAlgo={this.props.runAlgo} /></li></div>;
         });
         return layersList;
       }

@@ -1,26 +1,50 @@
-/* eslint-disable consistent-return */
+/* eslint-disable react/no-unused-class-component-methods */
+/* eslint-disable no-plusplus */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/no-access-state-in-setstate */
 /* eslint-disable class-methods-use-this */
 import React, { Component } from 'react';
 import update from 'react-addons-update';
 import TreeNode from './tree-node';
+// import Edge from './tree-edge';
 
-// eslint-disable-next-line no-unused-vars
+// eslint-disable
 // TODO create tree with edges and nodes combined
 class Tree extends Component {
   constructor(props) {
     super(props);
     this.state = {
       // c: 'green',
-      layers: [[<TreeNode t={0} />], [<TreeNode t={1} parent="0" />, <TreeNode t={2} parent="0" />]],
-      ll: 1,
+      layers: [],
+      ll: 0,
       multi: 2,
-      currid: 3,
+      currid: 1,
     };
   }
 
-  // eslint-disable-next-line consistent-return
+  // cred:https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/log
+  getBaseLog(x, y) {
+    return Math.log(y) / Math.log(x);
+  }
+
+  getChildren = (pid) => {
+    const childNum = 2;
+    let layer;
+    if (pid === 1) {
+      layer = 0;
+    } else {
+      layer = Math.floor(this.getBaseLog(childNum, pid));
+    }
+    const layerLen = childNum ** layer;
+    let total = 0;
+    for (let i = 0; i <= layer; i++) {
+      total += childNum ** i;
+    }
+    const pos = layerLen - (total - pid);
+    const c1 = total + (pos * childNum);
+    return [String(c1 - 1), String(c1)];
+  };
+
   centerOfElement = (id) => {
     const elt = document.getElementById(id);
     console.log(elt);
@@ -30,7 +54,7 @@ class Tree extends Component {
         pos.left + (pos.width / 2),
         pos.top + (pos.height / 2)]
       );
-    }
+    } return 0;
   };
 
   addNode = () => {
@@ -52,7 +76,22 @@ class Tree extends Component {
     this.setState((prevState) => ({ currid: prevState.currid + 1 }));
   };
 
-  showEdges = (pid, cid) => {
+  addLayer = () => {
+    const newLayer = [];
+    let id = this.state.currid;
+    for (let i = 0; i < 2 ** this.state.ll; i++) {
+      newLayer.push(<TreeNode t={String(id)} />);
+      id += 1;
+    }
+    this.setState((prevState) => ({
+      layers: [...prevState.layers, newLayer],
+      currid: id,
+      ll: prevState.ll + 1,
+    }));
+  };
+
+  showEdge = (pid, cid) => {
+    console.log(`childID:${cid}`);
     const loc1 = this.centerOfElement(pid);
     const loc2 = this.centerOfElement(cid);
 
@@ -60,6 +99,8 @@ class Tree extends Component {
       stroke: 'red',
       position: 'absolute',
     };
+    console.log(`parent:${String(loc1)}`);
+    console.log(`Child:${String(loc2)}`);
 
     if (loc1 && loc2) {
       const x1 = loc1[0];
@@ -74,30 +115,14 @@ class Tree extends Component {
       }
       const dd = `M ${String(x1)} ${String(y1)}L${String(x2)} ${String(y2)}`;
       // const dd = 'M '+ String(x1)+ ' '+ String(y1) +'l0 50'+' '+'c1 23.5 -25.5 15 ' +String(stretch)+ ' 20 c -15.5 5 -16.5 13 -18.5 43.5' +'L'+String(x2) + ' ' + String(y2);
-
-      console.log(dd);
-      return (
-        <div className="lines" style={{ fillOpacity: '0' }}>
-          {/*   <svg>
+      /*   <svg>
         <line style={inputStyle} x1={String(loc1[0])} y1={String(loc1[1])} x2={String(loc2[0])} y2={String(loc2[1])}/>
-      </svg> */}
-          <svg>
-            <path style={inputStyle} d={dd} />
-          </svg>
-        </div>
-      );
-    }
+      </svg> */
+      return (
+        <path style={inputStyle} d={dd} />);
+    } return <div />;
   };
 
-  /*
-  showEdges2 = () => {
-    return this.state.layers.map((list) => <div>{this.se(list)}</div>);
-  }
-  se = (list) => {
-    if (list[0].parent){
-      return list.map((n) => <li>{this.showEdges('0','1')}</li>);
-    }
-  } */
   showNodespt2 = (list) => {
     return list.map((node) => <li>{node}</li>);
   };
@@ -106,15 +131,38 @@ class Tree extends Component {
     return this.state.layers.map((list) => <div className="layer">{this.showNodespt2(list)}</div>);
   };
 
-  /* changeColor = () => {
-    if (this.state.c === 'green') {
-      this.setState({ c: 'blue' });
-    } else if (this.state.c === 'blue') {
-      this.setState({ c: 'orange' });
-    } else {
-      this.setState({ c: 'green' });
+  showEdges() {
+    const edges = [];
+    let id = 1;
+    console.log(`what i want${String(this.state.layers.length)}`);
+    for (let i = 0; i < this.state.layers.length - 2; i++) {
+      for (let j = 0; j < this.state.layers[i].length; j++) {
+        const children = this.getChildren(id);
+        console.log(children);
+        const e1 = this.showEdge(id, children[0]);
+        if (e1) {
+          edges.push(e1);
+        }
+        const e2 = this.showEdge(id, children[1]);
+        if (e2) {
+          edges.push(e2);
+        }
+        id += 1;
+      }
     }
-  }; */
+    if (edges.length > 0) {
+      console.log(edges);
+      return (
+        <div className="lines" style={{ fillOpacity: '0' }}>
+          <svg>
+            {edges.map((edge) => { return edge; })}
+          </svg>
+        </div>
+      );
+    } else {
+      return (<div>this bitch empty</div>);
+    }
+  }
 
   render() {
     return (
@@ -122,22 +170,18 @@ class Tree extends Component {
         <div>
           <button
             type="button"
-            onClick={this.addNode}
+            onClick={this.addLayer}
           >Add Node
           </button>
 
           {this.showNodes()}
+          {this.showEdges()}
 
           {/* <TreeNode a={this.state.c}/> */}
         </div>
+
         <div>
           {/* this.showEdges('0', '2') */}
-          {this.showEdges('0', '1')}
-          {this.showEdges('1', '3')}
-          {this.showEdges('0', '2')}
-          {this.showEdges('1', '4')}
-          {this.showEdges('2', '5')}
-          {this.showEdges('2', '6')}
         </div>
       </div>
     );

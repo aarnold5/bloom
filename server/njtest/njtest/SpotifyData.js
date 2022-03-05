@@ -2,8 +2,8 @@
 
 
 var clientId = 'd45e1813a6564588837b5f187309b617';
-var clientSecret; //This is the new secret. Sent to you in an email.
-var redirectUri = 'http://localhost:8888'
+var clientSecret = '62aa2ebebc3c408cb399bc94e0d03df7'; //This is the new secret. Sent to you in an email.
+var redirectUri = 'http://localhost:8888/callback'
 var song_IDs = ['1rX5L6pyl3rVWb55D8Cprr',
     '4NzBs3wFWc7bGnk6zhxJuF',
     '15NQ3x1f2GUhqs8oBXhTqp',
@@ -6041,10 +6041,9 @@ var artist_IDs = ['3TVXtAsR1Inumwj472S9r4',
 
 var artist_names = ['Drake', 'Ed Sheeran', 'Bad Bunny', 'Ariana Grande', 'The Weeknd', 'Justin Bieber', 'Post Malone', 'Eminem', 'Taylor Swift', 'BTS', 'J Balvin', 'Kanye West', 'Billie Eilish', 'Juice WRLD', 'Coldplay', 'Ozuna', 'XXXTENTACION', 'Khalid', 'Imagine Dragons', 'Dua Lipa', 'Travis Scott', 'Rihanna', 'Maroon 5', 'Shawn Mendes', 'David Guetta', 'Calvin Harris', 'Bruno Mars', 'Daddy Yankee', 'Sam Smith', 'Queen', 'Kendrick Lamar', 'The Chainsmokers', 'One Direction', 'Chris Brown', 'Beyoncé', 'Future', 'Sia', 'Nicki Minaj', 'Lady Gaga', 'Halsey', 'Selena Gomez', 'J. Cole', 'Anuel AA', 'The Beatles', 'Adele', 'Maluma', 'Katy Perry', 'Twenty One Pilots', 'Marshmello', 'Linkin Park', 'Lil Uzi Vert', 'Kygo', 'Avicii', 'Farruko', 'Lana Del Rey', 'Camila Cabello', 'Jason Derulo', 'Demi Lovato', 'Red Hot Chili Peppers', 'Rauw Alejandro', 'Shakira', 'Arctic Monkeys', 'Nicky Jam', 'OneRepublic', 'Martin Garrix', 'Panic! At The Disco', 'Miley Cyrus', 'Michael Jackson', 'Harry Styles', 'KAROL G', 'Doja Cat', 'G-Eazy', 'Pitbull', 'Cardi B', 'Major Lazer', 'Ellie Goulding', 'Charlie Puth', 'DaBaby', 'Sebastian Yatra', 'Lil Wayne', 'Young Thug', 'Sech', 'Wiz Khalifa', '21 Savage', 'Lil Baby', 'Fall Out Boy', 'Diplo', 'Pop Smoke', 'Mac Miller', 'Logic', 'Migos', 'Myke Towers', 'Metallica', 'Tyga', 'Alan Walker', 'John Mayer', 'P!nk', 'Lil Peep', 'ZAYN', 'DJ Snake', 'Lauv', 'James Arthur', 'AC/DC', 'Lil Nas X', 'Little Mix', 'Macklemore', 'Zedd', 'Trippie Redd', 'Bob Marley & The Wailers', 'A$AP Rocky', '5 Seconds of Summer', 'A Boogie Wit da Hoodie', 'NF', 'Kodak Black', 'Elton John', 'Robin Schulz', 'Frank Ocean', 'Olivia Rodrigo', 'Bebe Rexha', 'Gunna', 'Green Day', 'Metro Boomin', 'Romeo Santos', 'Justin Timberlake', 'Clean Bandit', 'YoungBoy Never Broke Again', 'DJ Khaled', 'Zara Larsson', 'Anne-Marie', 'Luis Miguel', 'Lewis Capaldi', 'Michael Bublé', 'Tyler, The Creator', 'Enrique Iglesias', 'Black Eyed Peas', 'BLACKPINK', 'Pink Floyd', 'SZA', 'Jonas Blue', 'Ty Dolla $ign', 'The Rolling Stones', 'Nirvana', 'Flo Rida', 'JAY-Z', 'Tiësto', 'Luis Fonsi', 'blackbear', 'Machine Gun Kelly', '$uicideboy$', 'Britney Spears', 'Fleetwood Mac', 'Russ', "Guns N' Roses", 'Reik', 'Bastille', 'Banda MS de Sergio Lizárraga', 'Childish Gambino', 'Marília Mendonça', 'Anitta', 'Camilo', 'Skrillex', 'Kid Cudi', '2Pac', 'Mariah Carey', 'Alessia Cara', 'Hozier', 'Gorillaz', 'Big Sean', '50 Cent', 'Usher', 'David Bowie', 'The Neighbourhood', 'Polo G', 'Becky G', 'The Kid LAROI', 'Lorde', 'The Killers', 'Ava Max', 'Jhay Cortez', 'Foo Fighters', 'Meek Mill', 'Luke Combs', 'Tory Lanez', 'John Legend', 'Meghan Trainor', 'Daft Punk', 'blink-182', 'U2', 'Led Zeppelin', 'French Montana', 'Rita Ora', 'Rae Sremmurd', 'Troye Sivan', 'Gucci Mane', 'Radiohead', 'Mumford & Sons', 'Manuel Turizo', 'Megan Thee Stallion', 'The 1975', 'System Of A Down', '6ix9ine', 'Jack Johnson', 'Muse', 'Snoop Dogg', 'Joji', 'Roddy Ricch', 'Jorge & Mateus', 'Elvis Presley', 'The Notorious B.I.G.', 'Swae Lee', 'Don Omar', 'Bazzi', 'Playboi Carti', 'Hailee Steinfeld', 'Paramore', 'Christina Aguilera', 'Bon Jovi', 'Jess Glynne', 'Julia Michaels', 'Oasis', 'Ne-Yo', 'Melanie Martinez', 'Disclosure', 'Tame Impala', 'Dalex', 'Slipknot', 'The Lumineers', 'Fifth Harmony', 'Florida Georgia Line', 'Justin Quiles', 'Christian Nodal', 'Cheat Codes', 'Alicia Keys', 'Chance the Rapper', 'Felix Jaehn', 'Sean Paul', 'Luke Bryan', 'Frank Sinatra', 'Tove Lo', 'Kings of Leon', '6LACK', 'Piso 21', 'Labrinth', 'ABBA', 'Gusttavo Lima', 'Natti Natasha', 'Five Finger Death Punch', 'Jason Mraz', 'Alesso', 'The Script', 'Glee Cast', 'Creedence Clearwater Revival', 'Florence + The Machine', 'Galantis', 'Paulo Londra', 'Bruce Springsteen', 'Madonna', 'Alok', 'TWICE', 'Whitney Houston', 'Zé Neto & Cristiano', 'Rammstein', 'Zion & Lennox', 'Kehlani', 'Niall Horan', 'Lenny Tavárez', 'My Chemical Romance', 'Morat', 'Kane Brown', 'Arcangel', 'Lil Pump', 'Macklemore & Ryan Lewis', 'Morgan Wallen', 'Bryson Tiller', 'Nickelback', 'Capital Bra', 'Kelly Clarkson', 'Jonas Brothers', 'Avril Lavigne', 'NAV', 'James Bay', 'Bring Me The Horizon', 'Wisin', 'Thomas Rhett', 'Alejandro Fernández', 'Aerosmith', 'YG', 'Disturbed', 'Jennifer Lopez', 'Vance Joy', 'Amy Winehouse', 'Lil Tjay', 'Lil Skies', 'Stevie Wonder', 'Lil Tecca', 'Dr. Dre', 'Miguel', 'Henrique & Juliano', 'Tones And I', 'Backstreet Boys', 'Maná', 'Jack Harlow', 'Kevin Gates', 'Ryan Lewis', 'YNW Melly', 'Flume', 'Wisin & Yandel', 'Kesha', 'Yandel', 'Nio Garcia', 'Phil Collins', 'Duki', 'Jason Aldean', 'Akon', 'Prince Royce', 'Hans Zimmer', 'Eagles', 'Three Days Grace', 'Matheus & Kauan', 'Jeremih', 'Fetty Wap', 'Billy Joel', 'Glass Animals', 'Aventura', 'Lin-Manuel Miranda', 'George Ezra', 'Lil Mosey', 'Wesley Safadão', 'The Offspring', 'Avenged Sevenfold', 'Jessie J', 'The Strokes', '2 Chainz', 'Steve Aoki', 'benny blanco', 'Céline Dion', 'Jul', 'Alejandro Sanz', 'Dan + Shay', 'Mark Ronson', 'Trey Songz', '24kGoldn', 'Ricky Martin', 'Lizzo', 'Pentatonix', "Why Don't We", 'CNCO', 'Seeb', 'Ninho', 'Passenger', 'Calibre 50', 'Lukas Graham', 'Don Toliver', 'H.E.R.', 'Train', 'Pearl Jam', 'Foster The People', 'Pablo Alborán', 'Ricardo Arjona', 'Bob Dylan', 'Johnny Cash', 'Anderson .Paak', 'Marc Anthony', 'James Blunt', 'Daniel Caesar', 'Cartel De Santa', 'Quavo', 'Lost Frequencies', 'Dire Straits', 'Sam Hunt', 'PARTYNEXTDOOR', 'Bryan Adams', 'ScHoolboy Q', 'Bee Gees', 'Sigala', 'Nelly', 'Maiara & Maraisa', 'Charli XCX', 'Alec Benjamin', 'Arijit Singh', 'Liam Payne', 'Rudimental', 'Ski Mask The Slump God', 'Marvin Gaye', 'Lil Yachty', 'Offset', 'Jhené Aiko', 'BROCKHAMPTON', 'Armin van Buuren', 'Blake Shelton', 'Zac Brown Band', 'The Vamps', 'Carlos Vives', 'Danny Ocean', 'alt-J', 'Mike Posner', 'Måneskin', 'Bon Iver', 'The Police', 'Skillet', 'Iron Maiden', 'LANY', 'Rex Orange County', 'Cage The Elephant', 'The Black Keys', 'Summer Walker', 'Tim McGraw', 'ILLENIUM', 'Lil Durk', 'Rise Against', 'Birdy', 'Dean Lewis', 'Jeremy Zucker', 'Mau y Ricky', 'Conan Gray', 'A$AP Ferg', 'Juanes', 'The Doors', 'Soda Stereo', 'Bizarrap', 'Madison Beer', 'Maren Morris', 'Carly Rae Jepsen', 'ROSALÍA', 'Calum Scott', 'Weezer', 'T.I.', 'R3HAB', 'Bradley Cooper', 'Papa Roach', 'RAF Camora', 'Joan Sebastian', 'Journey', 'Mabel', 'Korn', 'Chris Stapleton', 'Lunay', 'iann dior', 'The Cure', 'Juan Gabriel', 'SAINt JHN', 'Boyce Avenue', 'Kenny Chesney', 'Iggy Azalea', 'Os Barões Da Pisadinha', 'EXO', 'Noah Cyrus', 'Norah Jones', 'Paul McCartney', "Destiny's Child", 'Becky Hill', 'Jesse & Joy', 'John Williams', 'Vicente Fernández', 'Bibi Blocksberg', 'Eric Church', 'Imanbek', 'Nick Jonas', 'Aminé', 'Normani', 'PNL', 'NLE Choppa', 'Hillsong UNITED', 'Tate McRae', 'Jon Bellion', 'The xx', 'Matoma', 'Simon & Garfunkel', 'Depeche Mode', 'X Ambassadors', 'Sabrina Carpenter', 'Rich The Kid', 'The Beach Boys', 'Kali Uchis', 'Ufo361', 'Hillsong Worship', 'MARINA', 'La Arrolladora Banda El Limón De Rene Camacho', 'Los Ángeles Azules', 'Volbeat', 'Breaking Benjamin', 'Christina Perri', 'Bonez MC', 'Grupo Firme', 'R.E.M.', 'MAGIC!', 'Jimi Hendrix', 'Years & Years', 'Sam Feldt', 'JP Cooper', 'bbno$', 'KHEA', 'El Alfa', 'KYLE', 'George Michael', 'Eric Clapton', 'Rick Ross', 'Kid Ink', 'The Fray', 'MEDUZA', 'Dimitri Vegas & Like Mike', 'All Time Low', 'The Game', 'Earth, Wind & Fire', 'Dermot Kennedy', 'T-Pain', 'Robbie Williams', 'Milky Chance', 'Grey', 'Stormzy', 'Stray Kids', 'DNCE', 'AJR', 'Shinedown', 'Cali Y El Dandee', 'Lynyrd Skynyrd', 'Outkast', 'B.o.B', 'Samra', 'Van Morrison', "Rag'n'Bone Man", 'Jax Jones', 'Of Monsters and Men', 'Plan B', 'The Smiths', 'C. Tangana', 'A Day To Remember', 'Keith Urban', 'Black Sabbath', 'Van Halen', 'Daryl Hall & John Oates', 'Rage Against The Machine', 'Kodaline', 'The Cranberries', 'Andy Grammer', 'Aya Nakamura', 'Quinn XCII', 'Juan Magán', 'Ludovico Einaudi', 'The White Stripes', 'Rod Stewart', 'Casper Magico', 'De La Ghetto', 'Sfera Ebbasta', 'Topic', 'Prince', 'PnB Rock', 'Sabaton', 'Brytiago', 'Hollywood Undead', 'Sublime', 'MGMT', 'Carrie Underwood', 'Aretha Franklin', 'Nelly Furtado', 'Damso', 'Shaggy', 'Enya', 'Evanescence', 'GIMS', 'Melendi', 'WALK THE MOON', 'Axwell /\\ Ingrosso', 'George Strait', 'TOTO', 'Rels B', 'RAYE', 'Dave', 'José José', 'Jay Wheeler', 'Red Velvet', 'Don Diablo', 'Sum 41', 'Ozzy Osbourne', 'Astrid S', 'Scorpions', 'ODESZA', 'TINI', 'Marilyn Manson', 'Danna Paola', 'Two Door Cinema Club', 'Joyner Lucas', 'Clairo', 'Bibi und Tina', 'Mustard', 'Zoé', 'Jorja Smith', 'Tainy', 'Pedro Capó', 'Luciano', 'Bryant Myers', 'Colbie Caillat', 'Rascal Flatts', 'Ella Mai', 'gnash', 'Martin Jensen', 'Rod Wave', 'Nacho', 'Luan Santana', 'Joel Corry', 'Hardwell', 'Kontra K', 'Louis Tomlinson', 'Arizona Zervas', 'Dolly Parton', 'David Bisbal', 'The Smashing Pumpkins', 'Mike WiLL Made-It', 'SEVENTEEN', 'Noriel', 'Carlos Rivera', 'MC Kevinho', 'R. Kelly', 'Sido', 'Mac DeMarco', 'The Clash', '3 Doors Down', 'The Kooks', 'Desiigner', 'Kacey Musgraves', 'Sara Bareilles', 'MØ', 'Alan Jackson', 'Natanael Cano', 'Lord Huron', 'Joey Bada$$', 'Ms. Lauryn Hill', 'M83', 'Ali Gatie', 'Jessie Reyez', 'KISS', 'Leon Bridges', 'Vampire Weekend', 'Fergie', 'Moneybagg Yo', 'Bethel Music', 'Maria Becerra', 'Marco Antonio Solís', 'Cosculluela', 'Annie Lennox', 'League of Legends', 'Wham!', 'Jaden', 'Stefflon Don', 'Gotye', 'Olly Murs', 'Pharrell Williams', 'Aitana', 'DMX', 'Aloe Blacc', 'Apache 207', 'OMI', 'Willy William', 'Ha*Ash', 'Nat King Cole', 'James TW', 'Dierks Bentley', 'Westlife', 'Regard', 'Goodboys', 'Snow Patrol', 'Gwen Stefani', 'Limp Bizkit', 'Queens of the Stone Age', 'Ciara', 'Sleeping At Last', 'Chief Keef', 'Kelly Rowland', 'Tom Odell', 'Thirty Seconds To Mars', 'La Oreja de Van Gogh', 'Mötley Crüe', 'Nekfeu', 'Booba', 'Portugal. The Man', 'Bill Withers', 'MAX', 'John Newman', 'Dilsinho', 'The Jackson 5', 'Lofi Fruits Music', 'Blueface', 'El Fantasma', 'Loud Luxury', 'Trevor Daniel', 'ANAVITÓRIA', 'Santana', 'Lady A', 'Thalia', 'Ella Fitzgerald', 'girl in red', 'Keane', 'The Who', 'Ben Howard', 'Lil Dicky', 'Leona Lewis', 'Old Dominion', 'Calle 13', 'Michael Silverman', 'Sade', 'Charlie Brown Jr.', 'Denzel Curry', 'Owl City', 'Gerardo Ortiz', 'Swedish House Mafia', 'Bruno & Marrone', 'Feid', 'CHVRCHES', 'Alice In Chains', 'Brent Faiyaz', 'Afrojack', 'Niska', 'Incubus', 'Gryffin', 'Miranda Lambert', 'Mike Perry', 'Elevation Worship', 'Powfu', 'Saweetie', 'Tee Grizzley', 'Sting', 'Yo Gotti', 'Los Tigres Del Norte', 'Mon Laferte', "Gigi D'Agostino", 'Daya', 'Sean Kingston', 'Eladio Carrion', 'MKTO', 'Ezhel', 'Taio Cruz', 'The Pussycat Dolls', 'John Lennon', 'Stromae', 'Chayanne', 'Gera MX', 'Roxette', 'TKKG', 'Beret', 'Kollegah', 'Frédéric Chopin', 'Wale', 'Darell', 'AJ Tracey', 'Summer Cem', 'Shania Twain', 'Conor Maynard', 'Kylie Minogue', 'Ruth B.', 'fun.', 'Yung Gravy', 'WILLOW', 'Ghostemane', 'Gente De Zona', 'Jasmine Thompson', 'Nas', 'Paul Simon', 'Arcade Fire', 'Lionel Richie', 'Die drei !!!', 'Guaynaa', 'Surfaces', 'Jon Pardi', 'Luísa Sonza', 'Sufjan Stevens', 'Chencho Corleone', 'Bullet For My Valentine', 'Nina Simone', 'The National', 'Nipsey Hussle', 'KSI', 'beabadoobee', 'Mitski', 'Los Temerarios', 'Lily Allen', 'Lee Brice', '*NSYNC', 'Jack Ü', 'Felipe Araújo', 'Rich Brian', 'Wolfgang Amadeus Mozart', 'Cigarettes After Sex', 'Yusuf / Cat Stevens', 'Ice Cube', 'Neil Young', 'Kevin Roldan', 'Internet Money', 'Greeicy', 'Dido', 'Bea Miller', 'CRO', 'Kiiara', 'Martin Solveig', 'Simple Plan', 'Banda El Recodo', 'will.i.am', 'Ramin Djawadi', 'Tears For Fears', 'IU', 'Yellow Claw', 'Ferrugem', 'Tina Turner', 'Beastie Boys', 'Tracy Chapman', 'Selena', 'Brad Paisley', 'Cyndi Lauper', 'KALEO', 'Jowell & Randy', "Olivia O'Brien", 'Granular', 'Pineapple StormTv', 'Audioslave', 'Lil Kleine', 'Alex Rose', 'Chelsea Cutler', 'DJ Luian', 'TOMORROW X TOGETHER', 'Joaquín Sabina', 'Electric Light Orchestra', 'DENNIS', 'Natalia Lafourcade', 'Mc Don Juan', 'Oh Wonder', 'Sofía Reyes', 'Tech N9ne', 'Mambo Kingz', 'Baby Lullaby Academy', 'ZZ Top', 'deadmau5', 'BØRNS', 'Lenny Kravitz', 'Deftones', 'LUDMILLA', 'Tungevaag', 'Brett Young', 'Mary J. Blige', 'NCT 127', 'The Goo Goo Dolls', 'Skepta', 'Kris Kross Amsterdam', 'Jay Chou', 'Tom Walker', 'La Adictiva Banda San José de Mesillas', 'Santa Fe Klan', 'Alina Baraz', 'Blur', 'Lauren Daigle', 'Mr. Probz', 'YUNGBLUD', 'TLC', 'Tori Kelly', 'Timbaland', 'Alvaro Soler', 'Salmo', 'Cher', 'Dennis Lloyd', 'Willie Nelson', 'Spice Girls', 'Río Roma', 'Wallows', 'Lalo Ebratt', 'Juan Luis Guerra 4.40', 'Angus & Julia Stone', 'Gavin James', 'Bing Crosby', 'Sasha Alex Sloan', 'Natiruts', 'Maggie Lindemann', 'Will Smith', 'Dadju', 'Gustavo Cerati', 'Lykke Li', 'Emeli Sandé', 'Jack & Jack', 'Dominic Fike', 'The Head And The Heart', 'Lupe Fiasco', 'Melim', 'Jeezy', 'Oliver Tree', 'Capo Plaza', 'ZHU', 'Beck', 'The All-American Rejects', 'Pabllo Vittar', 'Gustavo Mioto', 'Lil Xan', 'Pink Sweat$', 'AURORA', 'Diego & Victor Hugo', 'Thiaguinho', 'Matuê', 'Supertramp', 'Pixies', 'Icona Pop', 'Falling In Reverse', 'Salaam Remi', 'Jacquees', 'Genesis', 'The Temptations', 'Sin Bandera', 'Vince Staples', 'Evaluna Montaner', 'Foreigner', 'Duke Dumont', 'Talking Heads', 'Brantley Gilbert', 'Johann Sebastian Bach', 'Louis Armstrong', 'Snakehips', 'Bruno Martini', 'Nicki Nicole', 'Counting Crows', 'Oliver Heldens', 'Grouplove', 'NEFFEX', 'Andrea Bocelli', 'Simone & Simaria', 'JID', 'AWOLNATION', 'Giveon', 'Dean Martin', 'Benjamin Blümchen', 'Megadeth', 'Gloria Trevi', 'Gemitaiz', 'MC Kevin o Chris', 'Tinie Tempah', 'Julieta Venegas', 'Bunbury', 'Chase Atlantic', 'Ruel', 'RIN', 'Los Enanitos Verdes', 'Empire of the Sun', 'Lil Jon', 'Toby Keith', 'Burna Boy', 'Brett Eldredge', 'Junior H', 'A Tribe Called Quest', 'Juicy J', 'Official HIGE DANdism', 'Dynoro', 'Marracash', 'Missy Elliott', 'Chris Young', 'Pantera', 'Frenna', 'Laura Pausini', 'ONE OK ROCK', 'Leonard Cohen', 'Ultimo', 'Los Bukis', 'Foals', 'Kina', 'Dave Matthews Band', 'Death Cab for Cutie', 'Sam Cooke', 'Hungria Hip Hop', 'The Score', 'Alanis Morissette', 'KC Rebell', 'Seether', 'HONNE', 'Tyler Childers', 'Max Richter', 'Showtek', 'Kelsea Ballerini', 'James Blake', 'Craig David', 'Cash Cash', 'SCH', 'Dustin Lynch', 'Timmy Trumpet', 'Intocable', 'M.I.A.', 'Gzuz', 'MadeinTYO', 'a-ha', 'Daughtry', 'Ben&Ben', 'Camila', 'Lindsey Stirling', 'Canserbero', 'Chet Faker', 'Eurythmics', 'Beach House', 'Otis Redding', 'A R I Z O N A', 'Micro TDH', 'Petit Biscuit', 'The Kinks', 'Chicago', 'Jamiroquai', 'MF DOOM', 'Jake Owen', 'Trueno', 'No Doubt']
 
-
-
 var SpotifyWebApi = require('spotify-web-api-node');
 var fetch = require('node-fetch')
+
 //var  XMLHttpRequest = require(' XMLHttpRequest');
 
 // credentials are optional
@@ -6061,7 +6060,30 @@ function to a var to use it later in other functions. Because of this, the acces
 calls to helper functions that are made within the body of getAccessToken(). I will label all helper functions, and where
 to place things for testing, as well as running things within a loop with a timer to obey spotify REST principles.
  */
-function getAccessToken(){
+function main(){
+    const scopes = [
+        'ugc-image-upload',
+        'user-read-playback-state',
+        'user-modify-playback-state',
+        'user-read-currently-playing',
+        'streaming',
+        'app-remote-control',
+        'user-read-email',
+        'user-read-private',
+        'playlist-read-collaborative',
+        'playlist-modify-public',
+        'playlist-read-private',
+        'playlist-modify-private',
+        'user-library-modify',
+        'user-library-read',
+        'user-top-read',
+        'user-read-playback-position',
+        'user-read-recently-played',
+        'user-follow-read',
+        'user-follow-modify'
+    ];
+    var state = 'NH'
+
     spotifyApi.clientCredentialsGrant().then(
          async function (data) {
              console.log('The access token expires in ' + data.body['expires_in']);
@@ -6069,30 +6091,33 @@ function getAccessToken(){
 
              // Save the access token so that it's used in future calls
              spotifyApi.setAccessToken(data.body['access_token'])
+             var accessToken = data.body['access_token']
              //console.log(data.body['access_token'])
              //Test helper functions below on one call.
                // findTopTracks(artist_IDs[0])
-
-
+             var authorizeURL = spotifyApi.createAuthorizeURL(scopes, state);
+             //console.log(authorizeURL)
 
              //Run helper function within loop to comply with spotify's wait limit.
              async function makeALoopWait() {
-                 const exampleArray = song_IDs
+                 const exampleArray = artist_IDs
 
                  const delay = async (ms = 1000) =>
                      new Promise(resolve => setTimeout(resolve, ms))
 
-
+                    var count = 0;
                  for (let i = 0; i < exampleArray.length; i += 1) {
                      //place calls to the api here with helper function.
-                     findMetaData(song_IDs[i])
+                     console.log('on artist id: ' + i)
+                     findTopTracks(artist_IDs[i])
 
 
+                     await delay(4000)
 
-                     await delay(400)
                  }
-             }//makeALoopWait()  //uncomment to run on a loop through all artists. Just doing Drake right now.
-             findTopTracks(artist_IDs[0])
+             }
+             makeALoopWait()  //uncomment to run on a loop through all artists. Just doing Drake right now.
+
 
          },
         function (err) {
@@ -6110,6 +6135,7 @@ function findSongID(track, artist) {
     spotifyApi.searchTracks('track:' + track + ' artist:' + artist)
         .then(function (data) {
             //console.log('Searching for ' + track, data.body);
+            console.log(data.body)
             //console.log(data.body['tracks']['items'][0]['id']);
             var id = data.body['tracks']['items'][0]['id'] //song id for pulling metadata.
             song_IDs.push(id);
@@ -6117,6 +6143,7 @@ function findSongID(track, artist) {
             for (let id in song_IDs) {
                 console.log(song_IDs[id]);
                 findMetaData(song_IDs[id])
+
             }
 
         }, function (err) {
@@ -6125,7 +6152,71 @@ function findSongID(track, artist) {
 }
 
 
-/* returns an artist's spotify ID given just their name. Used for finding top tracks with an artist ID.
+
+function getArtistAlbums(artistID) {
+    spotifyApi.getArtistAlbums(artistID).then(
+        function(data) {
+            //console.log(data.body['items']);
+
+            var mySet = new Set()
+            var albums = [] //stores the names of the albums (has repeats)
+            var album_IDs = [] //stores the IDs of the albums (they're all distinct, despite repeats)
+            var cleaned_album_IDs = []
+
+            for (var album in data.body['items']) {
+                //console.log(data.body['items'][album]['name'])
+                albums.push(data.body['items'][album]['name'])
+                album_IDs.push(data.body['items'][album]['id'])
+            }
+
+            var i = 0
+            while (i < albums.length - 1){
+                if (albums[i] in mySet){
+                    i ++
+                }
+                else{
+                    mySet.add(albums[i])
+                    cleaned_album_IDs.push(album_IDs[i])
+                    i ++
+                }
+            }
+            console.log(cleaned_album_IDs)
+        },
+        function(err) {
+            console.error(err);
+        }
+    );
+}
+
+
+function getTracksFromAlbum(albumID) {
+    // Get album
+    spotifyApi.getAlbum(albumID)
+        .then(function(data) {
+            for(var track in data.body['tracks']['items']){
+                console.log(data.body['tracks']['items'][track]['id'])
+            }
+        }, function(err) {
+            console.error(err);
+        });
+}
+
+async function getArtistGenre(artistID) {
+    return new Promise(function (resolve, reject){
+        spotifyApi.getArtist(artistID)
+            .then(function (data) {
+                // console.log(data.body)
+                resolve(data)
+            }, function (err) {
+                reject(err);
+            });
+    });
+}
+
+
+
+/*
+returns an artist's spotify ID given just their name. Used for finding top tracks with an artist ID.
  */
 async function findArtistID(artist) {
         spotifyApi.searchArtists(artist)
@@ -6148,13 +6239,14 @@ async function findMetaData(id) {
     return new Promise(function (resolve, reject){
             spotifyApi.getAudioFeaturesForTrack(id)
             .then(function (data) {
-                //console.log(data.body)
+               // console.log(data.body)
                 resolve(data)
             }, function (err) {
                 reject(err);
             });
     });
 }
+
 
 
 /* returns a JSON object containing top tracks for a given artist's ID. Will use this to build out the base dataset for
@@ -6168,16 +6260,36 @@ function findTopTracks(artistID) {
             for(var tracks in data.body) {
                for (var track in data.body[tracks]) {
                    var id = data.body[tracks][track]['id']
-                   var metaData = await findMetaData(id)
-                   //console.log(data.body[key][track]['id'])
-                   for(var data_tag in metaData.body) {
-                       data.body[tracks][track][data_tag] = metaData.body[data_tag]
 
+                   try {
+                       var metaData = await findMetaData(id)
+                       var artistInfo = await getArtistGenre(artistID)
+
+                   } catch (error) {
+                       console.error('no song data found for' + id)
+                       for (var data_tag in metaData.body) {
+                           data.body[tracks][track][data_tag] = null
+                           console.log("No metadata found. Marking the vectors as null")
+                       }
                    }
-                   console.log(data.body[tracks][track])
-                   var url = "https://us-central1-bloom-838b5.cloudfunctions.net/songinforeciever";
-                   //fetch(url, {method: "POST", headers: {'Content-Type': 'application/json'}, body: JSON.stringify(data.body[key][track])});
+                   // add data key here that pairs 'image' with the best image url for Alaina
+                   //console.log(data.body[key][track]['id'])
 
+                   data.body[tracks][track]['genres'] = artistInfo['body']['genres']
+                   for(var data_tag in metaData.body) { //here we have to loop through every piece of metadata. and add it to the JSON
+                        data.body[tracks][track][data_tag] = metaData.body[data_tag]
+                   }
+                   //console.log(data.body[tracks][track]['album']['images'][1])
+                   //console.log(data.body[tracks][0]['artists'][0]['name'])
+                   //console.log(data.body[tracks][track]['name'])
+                   //console.log(data.body[tracks][track]['id'])
+                   //console.log(data.body[tracks][track]['album']['images'][1])
+                   console.log(data.body[tracks][track])
+
+
+
+                   var url = "https://us-central1-bloom-838b5.cloudfunctions.net/songinforeciever";
+                   fetch(url, {method: "POST", headers: {'Content-Type': 'application/json'}, body: JSON.stringify(data.body[tracks][track])})
                 }
             }
             console.log("end ============================================================================")
@@ -6187,5 +6299,57 @@ function findTopTracks(artistID) {
 
 }
 
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+//User and Playlist methods
+
+function signInUser(name){
+    spotifyApi.getUser(name)
+        .then(function(data) {
+            console.log('Some information about this user', data.body);
+        }, function(err) {
+            console.log('Something went wrong!', err);
+        });
+}
+
+function getCurrentUser(){
+// Get the authenticated user
+    spotifyApi.getMe()
+        .then(function(data) {
+            console.log('Some information about the authenticated user', data.body);
+        }, function(err) {
+            console.log('Something went wrong!', err);
+        });
+}
+
+async function createEmptyPlaylist(playlistName) {
+    getAuthKey()
+
+    const result = await fetch('https://api.spotify.com/v1/users/fnh6px78guvi666lyrtmr04p4/playlists', {
+        method: 'POST',
+        headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + tok
+
+        },
+        body:JSON.stringify( {
+            "name": playlistName,
+            "description": "New playlist description",
+            "public": false
+        })
+    });
+    console.log(result)
+}
+
+async function addTracksToPlaylist(api) {
+    api.addTracksToPlaylist('4GgHpw8ilvihxsYWMcAhpv', song_IDs[0])
+        .then(function (data) {
+            console.log('Added tracks to playlist!');
+        }, function (err) {
+            console.log('Something went wrong!', err);
+        });
+}
+
+
 //run the main function.
-getAccessToken()
+main()

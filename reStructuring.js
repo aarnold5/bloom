@@ -2,15 +2,22 @@ var SpotifyWebApi = require('spotify-web-api-node');
 const express = require('express')
 var fetch = require('node-fetch')
 
-// This file is copied from: https://github.com/thelinmichael/spotify-web-api-node/blob/master/examples/tutorial/00-get-access-token.js
+// This file is based off of code from: https://github.com/thelinmichael/spotify-web-api-node/blob/master/examples/tutorial/00-get-access-token.js
+
+var spotifyApi = new SpotifyWebApi({
+    clientId: 'd45e1813a6564588837b5f187309b617',
+    clientSecret: '62aa2ebebc3c408cb399bc94e0d03df7',
+    redirectUri: 'http://localhost:8888/callback'
+});
+
 
 var authKey = null
 var spotifyID = 'fnh6px78guvi666lyrtmr04p4'
 var playlist_name_to_ID = {}
-var test_songs_to_add = [ '4TEaJcvzB913p8iCoul3uJ', '0BWx2N8CosqHVKkofenY3R', '48GBbQiTSlXX5i0cn3iIiJ', '2zxEc1GCSCxbHIXTfhraRC'] //test song ids to add to a playlist
+var test_songs_to_add = [ '4TEaJcvzB913p8iCoul3uJ', '4TEaJcvzB913p8iCoul3uJ', '4TEaJcvzB913p8iCoul3uJ','4TEaJcvzB913p8iCoul3uJ','4TEaJcvzB913p8iCoul3uJ','4TEaJcvzB913p8iCoul3uJ','4TEaJcvzB913p8iCoul3uJ'] //test song ids to add to a playlist
 
-function getAuthKey(){
-    let authKey = new Promise(async function (resolve, reject)  {
+async function getAuthKey(){
+    let authKey = await new Promise(async function (resolve, reject)  {
     const scopes = [
         'ugc-image-upload',
         'user-read-playback-state',
@@ -34,11 +41,7 @@ function getAuthKey(){
     ];
 
     // credentials are optional
-    var spotifyApi = new SpotifyWebApi({
-        clientId: 'd45e1813a6564588837b5f187309b617',
-        clientSecret: '62aa2ebebc3c408cb399bc94e0d03df7',
-        redirectUri: 'http://localhost:8888/callback'
-    });
+
 
     const app = express();
 
@@ -68,33 +71,21 @@ function getAuthKey(){
                 spotifyApi.setAccessToken(access_token);
                 spotifyApi.setRefreshToken(refresh_token);
 
-                let key = data.body['access_token']
-                resolve(key)
-
-                // run helper functions that require access token here
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+                let authKey = data.body['access_token']
+                resolve(authKey)
 
 
-                    //getMe(spotifyApi)
-                    //getUserPlaylists(spotifyApi, spotifyID)
-
-                    addTracksToPlaylist(spotifyApi, '6t5s9Nf9nilTKas0haTX2i', test_songs_to_add)
-
-
-
-
-
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
                 console.log(
                     `Successfully retrieved access token. Expires in ${expires_in} s.`
                 );
+
                 res.send('Success! You can now close the window.');
 
                 setInterval(async () => {
                     const data = await spotifyApi.refreshAccessToken();
-                    const access_token = data.body['access_token'];
+                    const access_token = await data.body['access_token'];
 
                     console.log('The access token has been refreshed!');
                     console.log('access_token:', access_token);
@@ -116,13 +107,28 @@ function getAuthKey(){
     );
     })
 
+    // run helper functions that require access token here
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+//Need to do something like, if user clicks this, run this function with certain params.
+
+    
+
+
+
+
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
 } //end of main function
 
 //These helper functions were taken from https://github.com/thelinmichael/spotify-web-api-node, to whom I give full credit.
 
+
+
+
+
 // helper functions for handling user data (making playlists, adding songs to playlists, playing songs, adding to queue)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
 
 
 /*

@@ -89,7 +89,7 @@ def load_data(db):
 
     spotify_df = pd.DataFrame()
     for doc in docs:
-        spotify_df = spotify_df.append(doc.to_dict(), ignore_index = True)
+        spotify_df = pd.concat([spotify_df, pd.DataFrame([doc.to_dict()])], ignore_index = True)
 
     return spotify_df
 
@@ -152,7 +152,7 @@ def create_necessary_outputs(playlist_ids, df):
     for song in playlist_ids:
         song = song.replace("\"", "")
         if df['id'].str.contains(song).any():
-            playlist = playlist.append({'id': song}, ignore_index = True)
+            playlist = pd.concat([playlist, pd.DataFrame([{'id': song}])], ignore_index = True)
 
     #ensure there are no songs in the playlist
     #songs = sp.playlist(id_dic[playlist_name])['tracks']['items']
@@ -228,7 +228,9 @@ def generate_playlist_recos(df, features, nonplaylist_features, top_many):
     #good options: cosine similarity, cosine distances
     
     non_playlist_df = df[df['id'].isin(nonplaylist_features['id'].values)]
-    non_playlist_df['sim'] = pw.cosine_distances(nonplaylist_features.drop('id', axis = 1).values, features.values.reshape(1, -1))[:,0]
+    #print(non_playlist_df)
+    #print(pw.cosine_distances(nonplaylist_features.drop('id', axis = 1).values, features.values.reshape(1, -1)))
+    non_playlist_df['sim'] = pw.cosine_distances(nonplaylist_features.drop('id', axis = 1).values, features.values.reshape(1, -1))
     non_playlist_df_top_x = non_playlist_df.sort_values('sim',ascending = True).head(top_many)
     #print(non_playlist_df_top_x)
     #non_playlist_df_top_x['url'] = non_playlist_df_top_x['id'].apply(lambda x: sp.track(x)['album']['images'][1]['url'])
@@ -255,9 +257,6 @@ pd.set_option('display.max_columns', None)
 #pname = "Bloom Algorithm Testing"
 
 def perform_analysis(pname):
-    
-    #print(pname.split("[")[1].split("]")[0].split(","))
-    #asd
     #Firebase stuff
     project_id = "bloom-838b5"
     cred = credentials.ApplicationDefault()
@@ -290,15 +289,21 @@ def algorithm(request):
     if request_json and 'songs' in request_json:
         pname = request_json['songs']
     elif request_args and 'songs' in request_args:
-        pname = request_args['songs']
+        pname = request_args.get('data')
     else:
         pname = ''
 
+    pname = request.data.decode('UTF-8')
+
+    #print(request_args['songs'])
     recos = perform_analysis(pname)
     req = "{\"songs\":["
-    for id in range(len(recos) - 1):
-        req = req + "\"" + recos[id] + "\","
-    req = req + "\"" + recos[len(recos)-1] + "\"]}"
+    for id in range(len(recos.values) - 1):
+        req = req + "\"" + recos.values[id] + "\","
+        print(req)
+    req = req + "\"" + recos.values[len(recos.values)-1] + "\"]}"
+    print(req)
+    print("Done!")
     return '{}'.format(escape(req))
 
 @functions_framework.http

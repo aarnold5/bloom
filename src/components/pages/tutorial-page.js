@@ -1,134 +1,82 @@
-/* eslint-disable max-len */
 import React, { Component } from 'react';
-import { Map as iMap } from 'immutable';
+import debounce from 'lodash.debounce';
 import PlayList from '../tutorial-components/playlist';
 import ToolBar from '../tutorial-components/tool-bar';
 import TreeList from '../tutorial-components/tree-list';
+import * as db from '../../services/firestore';
+import SearchSuggestions from '../tutorial-components/search-suggestions';
+import { bloomSearch } from '../tutorial-components/search';
+import AltTree from '../tutorial-components/alt-tree';
 import Tree from '../tutorial-components/tree';
-import SearchBar from '../tutorial-components/search-bar';
-import { fetchTrees } from '../../services/firestore';
 
 class TutorialPage extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      trees: iMap({
-        0: {
-          title: 'Tree 1',
-          layers: [],
-        },
-        1: {
-          title: 'Tree 2',
-          layers: [],
-        },
-        2: {
-          title: 'Tree 3',
-          layers: [],
-        },
-        3: {
-          title: 'Tree 4',
-          layers: [],
-        },
-      }),
-
-      playlist: iMap({
-        song1: {
-          title: '',
-          albumCover: 'https://media.architecturaldigest.com/photos/5890e88033bd1de9129eab0a/1:1/w_870,h_870,c_limit/Artist-Designed%20Album%20Covers%202.jpg',
-          thingToPassToFunctionToPlayTheSong: '',
-        },
-        song2: {
-          title: '',
-          albumCover: 'https://i.mdel.net/i/db/2019/12/1255378/1255378-800w.jpg',
-          thingToPassToFunctionToPlayTheSong: '',
-        },
-        song3: {
-          title: '',
-          albumCover: 'https://media2.wnyc.org/i/620/620/l/80/1/dark_side_moonLARGE.jpg',
-          thingToPassToFunctionToPlayTheSong: '',
-        },
-        song4: {
-          title: '',
-          albumCover: 'https://media.architecturaldigest.com/photos/5890e88033bd1de9129eab0a/1:1/w_870,h_870,c_limit/Artist-Designed%20Album%20Covers%202.jpg',
-          thingToPassToFunctionToPlayTheSong: '',
-        },
-        song5: {
-          title: '',
-          albumCover: 'https://i.mdel.net/i/db/2019/12/1255378/1255378-800w.jpg',
-          thingToPassToFunctionToPlayTheSong: '',
-        },
-        song6: {
-          title: '',
-          albumCover: 'https://media2.wnyc.org/i/620/620/l/80/1/dark_side_moonLARGE.jpg',
-          thingToPassToFunctionToPlayTheSong: '',
-        },
-        song7: {
-          title: '',
-          albumCover: 'https://i.mdel.net/i/db/2019/12/1255378/1255378-800w.jpg',
-          thingToPassToFunctionToPlayTheSong: '',
-        },
-        song8: {
-          title: '',
-          albumCover: 'https://media2.wnyc.org/i/620/620/l/80/1/dark_side_moonLARGE.jpg',
-          thingToPassToFunctionToPlayTheSong: '',
-        },
-      }),
-
-      currTree: {
-        title: 'Tree 1',
-        totalLayers: 2,
-        nodes: iMap({
-          node1: {
-            a: 'green',
-            songTitle: '',
-            song: '',
-            albumCover: '',
-          },
-          node2: {
-            a: 'green',
-            songTitle: '',
-            song: '',
-            albumCover: '',
-          },
-          node3: {
-            a: 'green',
-            songTitle: '',
-            song: '',
-            albumCover: '',
-          },
-          node4: {
-            a: 'green',
-            songTitle: '',
-            song: '',
-            albumCover: '',
-          },
-          node5: {
-            a: 'green',
-            songTitle: '',
-            song: '',
-            albumCover: '',
-          },
-        }),
-      },
+      trees: [],
+      playlist: [],
+      searchSuggestions: [],
+      layers: [],
+      currid: 0,
+      searching: false,
     };
+
+    this.search = debounce(this.search, 300);
   }
 
   componentDidMount() {
-    fetchTrees((trees) => {
-      this.setState({ trees: trees.trees });
-    });
+    db.fetchTrees()
+      .then((result) => this.setState({ trees: result.trees }));
+    db.fetchPlaylist()
+      .then((result) => this.setState({ playlist: result.playlist }));
   }
+
+  search = (text) => {
+    bloomSearch(text).then((searchSuggestions) => {
+      this.setState({
+        searchSuggestions,
+      });
+    });
+  };
+
+  rootNode = () => {
+    // do something to add node
+    this.setState({ searching: true });
+  };
+
+  handleSelectSong = (song) => {
+    this.setState((prevState) => ({
+      layers: [...prevState.layers, { song }],
+    }));
+    this.setState({ searching: false });
+    this.setState((prevState) => ({ currid: prevState.currid + 1 }));
+    db.popPlaylist(song);
+  };
+
+  handleRunAlgo = () => {
+    const tempSong = {
+      name: 'Moonlight', id: '0JP9xo3adEtGSdUEISiszL', album_cover: 'https://i.scdn.co/image/ab67616d00001e02806c160566580d6335d1f16c',
+    };
+    this.setState((prevState) => ({
+      layers: [...prevState.layers, [{ song: tempSong }, { song: tempSong }]],
+    }));
+  };
+
   render() {
     return (
       <div id="tutorial-page" className="page-container container">
         <TreeList trees={this.state.trees} />
         <div className="right-half container">
-          <ToolBar />
-          <div id="tree-space" className="container">
-            <Tree currTree={this.state.currTree} />
-            <SearchBar />
-          </div>
+          <ToolBar addRootNode={this.rootNode} />
+          <SearchSuggestions
+            searching={this.state.searching}
+            onSelectSong={this.handleSelectSong}
+            onSearchChange={this.search}
+            searchSuggestions={this.state.searchSuggestions}
+          />
+          <Tree />
+          <AltTree currid={this.state.currid} layers={this.state.layers} runAlgo={this.handleRunAlgo} />
           <PlayList playlist={this.state.playlist} />
         </div>
       </div>

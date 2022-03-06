@@ -49,6 +49,69 @@ export async function popPlaylist(song) {
   });
 }
 
+export async function fetchInputPlaylist() {
+  const querySnapshot = await getDocs(collection(firestoreDB, 'users/Ihoc1nuTr9lL92TngABS/trees/2q5uA3rO1YnSd7pYXLUK/input-playlist'));
+  const playlistReturn = {
+    playlist: [],
+  };
+  querySnapshot.forEach((d) => {
+    playlistReturn.playlist.push({ id: d.id, title: d.get('title'), albumCover: d.get('albumCover') });
+  });
+  return playlistReturn;
+}
+
+export const getRecs = () => {
+  const fields = {
+    songs: await fetchInputPlaylist(),
+  };
+  return new Promise((resolve, reject) => {
+    axios.post('https://us-central1-bloom-838b5.cloudfunctions.net/algorithm', fields, {
+      headers: { 'Content-Type': 'application/json' },
+    })
+      .then((response) => {
+        // console.log(response.data.results);
+        resolve(response.data.results);
+      })
+      .catch((error) => {
+        console.log(`api error: ${error}`);
+        reject(error);
+      });
+  });
+};
+
+export const saveTree = (tree) => {
+  const fields = tree;
+  return new Promise((resolve, reject) => {
+    axios.post('https://us-central1-bloom-838b5.cloudfunctions.net/treeSaver', fields, {
+      headers: { 'Content-Type': 'application/json' },
+    })
+      .then((response) => {
+        console.log(response.data.results);
+        resolve(response.data.results);
+      })
+      .catch((error) => {
+        console.log(`api error: ${error}`);
+        reject(error);
+      });
+  });
+};
+
+export const loadTree = () => {
+  const fields = tree;
+  return new Promise((resolve, reject) => {
+    axios.post('https://us-central1-bloom-838b5.cloudfunctions.net/treeLoader', fields, {
+      headers: { 'Content-Type': 'application/json' },
+    })
+      .then((response) => {
+        resolve(response.data.results);
+      })
+      .catch((error) => {
+        console.log(`api error: ${error}`);
+        reject(error);
+      });
+  });
+};
+
 export const addFirstNode = (node) => {
   const fields = {
     query: node,

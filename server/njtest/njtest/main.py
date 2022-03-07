@@ -134,7 +134,7 @@ def authenticate_to_spotify():
 
     return sp, id_name, list_photo
 
-def create_necessary_outputs(playlist_ids, df):
+def create_necessary_outputs(db, playlist_ids, df):
     """ 
     Pull songs from a specific playlist.
 
@@ -148,13 +148,13 @@ def create_necessary_outputs(playlist_ids, df):
     """
     
     #generate playlist dataframe
-    
+
     playlist = pd.DataFrame()
     playlist_ids = playlist_ids.split("[")[1].split("]")[0].split(",")
-    for song in playlist_ids:
-        song = song.replace("\"", "")
-        if df['id'].str.contains(song).any():
-            playlist = pd.concat([playlist, pd.DataFrame([{'id': song}])], ignore_index = True)
+    ids = []
+    docs = db.collection(u'users/Ihoc1nuTr9lL92TngABS/trees/2q5uA3rO1YnSd7pYXLUK/input-playlist').stream()
+    for doc in docs:
+        playlist = pd.concat([playlist, pd.DataFrame([{'id': doc.get(u'id')}])], ignore_index = True)
 
     #ensure there are no songs in the playlist
     #songs = sp.playlist(id_dic[playlist_name])['tracks']['items']
@@ -268,9 +268,9 @@ def perform_analysis(pname):
     float_cols = np.concatenate([spotify_df.dtypes[spotify_df.dtypes == 'float64'].index.values,spotify_df.dtypes[spotify_df.dtypes == 'int64'].index.values])
     spotify_df, complete_feature_set = perform_feature_engineering(spotify_df, float_cols)
     #sp, id_name, list_photo = authenticate_to_spotify()
-    test_playlist = create_necessary_outputs(pname, spotify_df)
+    test_playlist = create_necessary_outputs(db, pname, spotify_df)
     complete_feature_set_playlist_vector, complete_feature_set_nonplaylist = generate_playlist_feature(complete_feature_set, test_playlist, 1)
-    recs_top10 = generate_playlist_recos(spotify_df, complete_feature_set_playlist_vector, complete_feature_set_nonplaylist, 3)
+    recs_top10 = generate_playlist_recos(spotify_df, complete_feature_set_playlist_vector, complete_feature_set_nonplaylist, 2)
     return recs_top10['id']
 
 @functions_framework.http
@@ -285,6 +285,19 @@ def algorithm(request):
         <https://flask.palletsprojects.com/en/1.1.x/api/#flask.make_response>.
     """
 
+    if request.method == 'OPTIONS':
+        headers = {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'POST',
+            'Access-Control-Allow-Headers': 'Content-Type',
+            'Access-Control-Max-Age': '3600'
+        }
+
+        return ('', 204, headers)
+    
+    headers = {
+        'Access-Control-Allow-Origin': '*'
+    }
     request_json = request.get_json(silent=True)
     request_args = request.args
 
@@ -306,21 +319,7 @@ def algorithm(request):
     req = req + "\"" + recos.values[len(recos.values)-1] + "\"]}"
     print(req)
     print("Done!")
-    return '{}'.format(escape(req))
-
-@functions_framework.http
-def hello_http(request):
-    """HTTP Cloud Function.
-    Args:
-        request (flask.Request): The request object.
-        <https://flask.palletsprojects.com/en/1.1.x/api/#incoming-request-data>
-    Returns:
-        The response text, or any set of values that can be turned into a
-        Response object using `make_response`
-        <https://flask.palletsprojects.com/en/1.1.x/api/#flask.make_response>.
-    """
-
-    return 'Hello World!'
+    return ('{}'.format(escape(req)), 200, headers)
 
 #print(perform_analysis("{\"songs\"=[\"05JdgtCKkZ5CoOjM5KS4EG\",\"0EH7sgeiFqDa3eS7ieW2zs\",\"0SLtqCrXBRrnkxSOMA3X4W\"]}"))
 #hello_http(flask.Request)

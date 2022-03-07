@@ -8,7 +8,7 @@ import * as db from '../../services/firestore';
 import SearchSuggestions from '../tutorial-components/search-suggestions';
 import { bloomSearch } from '../tutorial-components/search';
 import AltTree from '../tutorial-components/alt-tree';
-// import DefaultTree from '../tutorial-components/default-tree';
+// import AltDefaultTree from '../tutorial-components/alt-default-tree';
 
 class TutorialPage extends Component {
   constructor(props) {
@@ -25,6 +25,7 @@ class TutorialPage extends Component {
       issueRootWarning: false,
       isLoading: false,
       renderDefault: true,
+      fillingNodeID: -1,
     };
 
     this.search = debounce(this.search, 300);
@@ -36,6 +37,11 @@ class TutorialPage extends Component {
     /* db.fetchPlaylist()
       .then((result) => this.setState({ playlist: result.playlist })); */
   }
+
+  /* handleFillNode = (id) => {
+    this.setState({ searching: true });
+    this.setState({ fillingNodeID: id });
+  }; */
 
   search = (text) => {
     bloomSearch(text).then((searchSuggestions) => {
@@ -78,7 +84,6 @@ class TutorialPage extends Component {
   };
 
   handleSelectSong = (song) => {
-    this.setState({ allowRootAdd: false });
     this.setState((prevState) => ({
       layers: [...prevState.layers, { song }],
     }));
@@ -94,7 +99,7 @@ class TutorialPage extends Component {
       .then((songIDsList) => { console.log(songIDsList[0]); });
     // db.saveTree();
     const tempSong = {
-      name: 'Moonlight', id: '0JP9xo3adEtGSdUEISiszL', album_cover: 'https://i.scdn.co/image/ab67616d00001e02806c160566580d6335d1f16c',
+      name: 'Moonlight', id: '0JP9xo3adEtGSdUEISiszL', album_cover: 'https[]://i.scdn.co/image/ab67616d00001e02806c160566580d6335d1f16c',
     };
     this.setState((prevState) => ({
       layers: [...prevState.layers, [{ song: tempSong }, { song: tempSong }]],
@@ -142,6 +147,7 @@ class TutorialPage extends Component {
             onSearchChange={this.search}
             searchSuggestions={this.state.searchSuggestions}
           />
+          {/* <AltDefaultTree fillNode={this.handleFillNode} layers={this.state.layers} /> */}
           <AltTree currid={this.state.currid} layers={this.state.layers} runAlgo={this.handleRunAlgo} />
           <PlayList playlist={this.state.playlist} />
         </div>

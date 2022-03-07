@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { Component } from 'react';
 
-class AltTreeNode extends Component {
+class AltDefaultNode extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -42,11 +42,22 @@ class AltTreeNode extends Component {
       inputStyle = { background: '#FFFA7F' };
     }
     // change code above this line
-    return (
-      <span className="dot" id={this.props.id} style={inputStyle} onClick={this.changeColor}>
-        <img src={this.props.song.album_cover} draggable="false" alt="temp" className="round-img" onClick={this.props.runAlgo} />
-      </span>
-    );
+    // eslint-disable-next-line no-plusplus
+
+    if (this.props.song) {
+      console.log(this.props.song);
+      return (
+        <span className="dot" id={this.props.id} style={inputStyle} onClick={this.changeColor}>
+          <img src={this.props.song.album_cover} draggable="false" alt="temp" className="round-img" onClick={this.props.fillNode} />
+        </span>
+      );
+    } else {
+      return (
+        <span className="dot" id={this.props.id} style={inputStyle} onClick={this.changeColor}>
+          <img src="../../favicon.png" draggable="false" alt="temp" className="round-img" onClick={this.props.fillNode} />
+        </span>
+      );
+    }
   }
 }
-export default AltTreeNode;
+export default AltDefaultNode;

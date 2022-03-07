@@ -1,21 +1,22 @@
 /* eslint-disable react/no-unused-class-component-methods */
-/* eslint-disable no-unused-vars */
 /* eslint-disable no-plusplus */
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/no-access-state-in-setstate */
 /* eslint-disable class-methods-use-this */
 import React, { Component } from 'react';
 import update from 'react-addons-update';
-import TreeNode from './alt-tree-node';
-// import UnfilledNode from './unfilled-node';
+// import TreeNode from './tree-node';
+import UnfilledNode from './unfilled-node';
+// import Edge from './tree-edge';
 
-// eslint-disable-next-line no-unused-vars
+// eslint-disable
 // TODO create tree with edges and nodes combined
 class DefaultTree extends Component {
   constructor(props) {
     super(props);
     this.state = {
       // c: 'green',
-      layers: [[<TreeNode t="1" />], [<TreeNode t="2" />, <TreeNode t="3" />], [<TreeNode t="4" />, <TreeNode t="5" />, <TreeNode t="6" />, <TreeNode t="7" />]],
+      layers: [[<UnfilledNode t="1" />], [<UnfilledNode t="2" />, <UnfilledNode t="3" />], [<UnfilledNode t="4" />, <UnfilledNode t="5" />, <UnfilledNode t="6" />, <UnfilledNode t="7" />]],
       ll: 0,
       multi: 2,
       currid: 1,
@@ -37,7 +38,6 @@ class DefaultTree extends Component {
     }
     const layerLen = childNum ** layer;
     let total = 0;
-    // eslint-disable-next-line no-plusplus
     for (let i = 0; i <= layer; i++) {
       total += childNum ** i;
     }
@@ -61,7 +61,7 @@ class DefaultTree extends Component {
   addNode = () => {
     if (this.state.layers[this.state.ll].length >= this.state.multi) {
       this.setState((prevState) => ({
-        layers: [...prevState.layers, [<TreeNode t={this.state.currid} />]],
+        layers: [...prevState.layers, [<UnfilledNode t={this.state.currid} />]],
         ll: prevState.ll + 1,
         multi: prevState.multi * 2,
       }));
@@ -69,7 +69,7 @@ class DefaultTree extends Component {
       this.setState(update(this.state, {
         layers: {
           [this.state.ll]: {
-            $set: [...this.state.layers[this.state.ll], <TreeNode t={this.state.currid} />],
+            $set: [...this.state.layers[this.state.ll], <UnfilledNode t={this.state.currid} />],
           },
         },
       }));
@@ -81,7 +81,7 @@ class DefaultTree extends Component {
     const newLayer = [];
     let id = this.state.currid;
     for (let i = 0; i < 2 ** this.state.ll; i++) {
-      newLayer.push(<TreeNode t={String(id)} />);
+      newLayer.push(<UnfilledNode t={String(id)} />);
       id += 1;
     }
     this.setState((prevState) => ({
@@ -188,5 +188,4 @@ class DefaultTree extends Component {
     );
   }
 }
-
 export default DefaultTree;

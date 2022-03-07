@@ -116,6 +116,7 @@ class TutorialPage extends Component {
     this.setState({ isLoading: true });
     db.getRecs()
       .then((result) => {
+        console.log(result);
         db.songIDsToSongs(result.songs)
           .then((songs) => {
             console.log(songs);

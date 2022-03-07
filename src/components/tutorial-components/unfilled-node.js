@@ -1,12 +1,16 @@
-/* eslint-disable react/no-unused-state */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { Component } from 'react';
 
-class AltTreeNode extends Component {
+class UnfilledNode extends Component {
   constructor(props) {
     super(props);
     this.state = {
       c: 'green',
+      // t: props.t,
+      // parent: props.parent,
+      // y: props.y,
+      // song: props.song,
+      // album: props.album,
     };
   }
 
@@ -43,11 +47,10 @@ class AltTreeNode extends Component {
     }
     // change code above this line
     return (
-      <span className="dot" id={this.props.id} style={inputStyle} onClick={this.changeColor}>
-        {console.log(this.props.id)}
-        <img src={this.props.song.album_cover} draggable="false" alt="temp" className="round-img" onClick={this.props.runAlgo} />
+      <span className="dot" style={inputStyle} onClick={this.changeColor}>
+        <img src="../favicon.png" draggable="false" alt="temp" className="round-img" onClick={this.props.runAlgo} />
       </span>
     );
   }
 }
-export default AltTreeNode;
+export default UnfilledNode;

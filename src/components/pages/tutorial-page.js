@@ -8,7 +8,6 @@ import * as db from '../../services/firestore';
 import SearchSuggestions from '../tutorial-components/search-suggestions';
 import { bloomSearch } from '../tutorial-components/search';
 import AltTree from '../tutorial-components/alt-tree';
-import Tree from '../tutorial-components/tree';
 // import DefaultTree from '../tutorial-components/default-tree';
 
 class TutorialPage extends Component {
@@ -19,11 +18,13 @@ class TutorialPage extends Component {
       trees: [],
       playlist: [],
       searchSuggestions: [],
-      currTree: null,
       layers: [],
       currid: 0,
       searching: false,
       allowRootAdd: true,
+      issueRootWarning: false,
+      isLoading: false,
+      renderDefault: true,
     };
 
     this.search = debounce(this.search, 300);
@@ -32,8 +33,8 @@ class TutorialPage extends Component {
   componentDidMount() {
     db.fetchTrees()
       .then((result) => this.setState({ trees: result.trees }));
-    db.fetchPlaylist()
-      .then((result) => this.setState({ playlist: result.playlist }));
+    /* db.fetchPlaylist()
+      .then((result) => this.setState({ playlist: result.playlist })); */
   }
 
   search = (text) => {
@@ -45,10 +46,39 @@ class TutorialPage extends Component {
   };
 
   rootNode = () => {
-    this.setState({ searching: true });
+    if (this.state.allowRootAdd) {
+      this.setState({ searching: true });
+      /* this.setState({
+        layers: [
+          [{
+            song: {
+              id: '',
+              album_cover: 'https://media.architecturaldigest.com/photos/5890e88033bd1de9129eab0a/1:1/w_870,h_870,c_limit/Artist-Designed%20Album%20Covers%202.jpg',
+              name: '',
+            },
+          }],
+          [{
+            song: {
+              id: '',
+              album_cover: 'https://media.architecturaldigest.com/photos/5890e88033bd1de9129eab0a/1:1/w_870,h_870,c_limit/Artist-Designed%20Album%20Covers%202.jpg',
+              name: '',
+            },
+          }, {
+            song: {
+              id: '',
+              album_cover: 'https://media.architecturaldigest.com/photos/5890e88033bd1de9129eab0a/1:1/w_870,h_870,c_limit/Artist-Designed%20Album%20Covers%202.jpg',
+              name: '',
+            },
+          }],
+        ],
+      }); */
+    } else {
+      this.setState({ issueRootWarning: true });
+    }
   };
 
   handleSelectSong = (song) => {
+    this.setState({ allowRootAdd: false });
     this.setState((prevState) => ({
       layers: [...prevState.layers, { song }],
     }));
@@ -58,10 +88,10 @@ class TutorialPage extends Component {
   };
 
   // eslint-disable-next-line class-methods-use-this
-  handleRunAlgo = () => {
+  // version draft for later use
+  /* handleRunAlgo = () => {
     db.getRecs()
       .then((songIDsList) => { console.log(songIDsList[0]); });
-
     // db.saveTree();
     const tempSong = {
       name: 'Moonlight', id: '0JP9xo3adEtGSdUEISiszL', album_cover: 'https://i.scdn.co/image/ab67616d00001e02806c160566580d6335d1f16c',
@@ -69,7 +99,7 @@ class TutorialPage extends Component {
     this.setState((prevState) => ({
       layers: [...prevState.layers, [{ song: tempSong }, { song: tempSong }]],
     }));
-  };
+  }; */
 
   handleLoadNewTree = (tree) => {
     this.setState({ currTree: this.loadTree(tree.id) });
@@ -78,16 +108,25 @@ class TutorialPage extends Component {
 
   // eslint-disable-next-line class-methods-use-this
   handleGetRecs = () => {
-    console.log('recs requested');
+    this.setState({ isLoading: true });
     db.getRecs()
       .then((result) => {
-        console.log(result.songs);
         db.songIDsToSongs(result.songs)
           .then((songs) => {
             console.log(songs);
+            this.setState({ isLoading: false });
+            this.setState({ playlist: songs.songs });
+            // songs.songs.map((song) => db.addToOutputPlaylist(song));
           });
       });
   };
+
+  // eslint-disable-next-line consistent-return
+  renderRootWarning() {
+    if (this.state.issueRootWarning) {
+      return <p>sorry! you can only add one root node</p>;
+    }
+  }
 
   render() {
     return (
@@ -96,13 +135,13 @@ class TutorialPage extends Component {
         <div className="right-half container">
           <button type="button" onClick={this.handleGetRecs}>GetRecs</button>
           <ToolBar addRootNode={this.rootNode} />
+          {this.renderRootWarning()}
           <SearchSuggestions
             searching={this.state.searching}
             onSelectSong={this.handleSelectSong}
             onSearchChange={this.search}
             searchSuggestions={this.state.searchSuggestions}
           />
-          <Tree />
           <AltTree currid={this.state.currid} layers={this.state.layers} runAlgo={this.handleRunAlgo} />
           <PlayList playlist={this.state.playlist} />
         </div>

@@ -3,7 +3,7 @@ import TreeListComponent from './tree-list-component';
 
 function TreeList(props) {
   const treeList = props.trees.map((tree) => {
-    return <TreeListComponent key={tree.id} title={tree.title} onSelectDifferentTree={props.onSelectDifferentTree(tree)} />;
+    return <TreeListComponent key={tree.id} tree={tree} onSelectDifferentTree={props.onSelectDifferentTree(tree)} />;
   });
 
   return (

@@ -24,7 +24,7 @@ export async function fetchTrees() {
     trees: [],
   };
   querySnapshot.forEach((d) => {
-    treesReturn.trees.push({ id: d.id, title: d.get('name') });
+    treesReturn.trees.push({ id: d.id, name: d.get('name') });
   });
   return treesReturn;
 }
@@ -35,7 +35,7 @@ export async function fetchPlaylist() {
     playlist: [],
   };
   querySnapshot.forEach((d) => {
-    playlistReturn.playlist.push({ id: d.id, title: d.get('title'), albumCover: d.get('albumCover') });
+    playlistReturn.playlist.push({ id: d.id, title: d.get('name'), albumCover: d.get('album_cover') });
   });
   return playlistReturn;
 }
@@ -49,31 +49,43 @@ export async function popPlaylist(song) {
   });
 }
 
+export async function addToOutputPlaylist(song) {
+  // console.log(song);
+  await setDoc(doc(firestoreDB, '/users/Ihoc1nuTr9lL92TngABS/trees/2q5uA3rO1YnSd7pYXLUK/output-playlist', song.id), {
+    id: song.id,
+    name: song.name,
+    album_cover: song.album_cover,
+  });
+}
+
 export async function fetchInputPlaylist() {
   const querySnapshot = await getDocs(collection(firestoreDB, 'users/Ihoc1nuTr9lL92TngABS/trees/2q5uA3rO1YnSd7pYXLUK/input-playlist'));
   const playlistReturn = {
     playlist: [],
   };
   querySnapshot.forEach((d) => {
-    playlistReturn.playlist.push({ id: d.id, title: d.get('title'), albumCover: d.get('albumCover') });
+    playlistReturn.playlist.push({ id: d.id, name: d.get('name'), album_cover: d.get('album_cover') });
   });
   return playlistReturn;
 }
 
-/* export async function songIDsToSongs(songids) {
-  const ret = { songs: [] };
-  songids.forEach((id) => {
-    const song = {};
-    const songRef = await getDoc(doc(firestoreDB, 'songs', id));
-    song.title = songRef.get('name');
-    song.album_cover = songRef.get('album_cover');
-    song.id = id;
-    ret.songs.push(song);
-  });
-  return ret;
-} */
-
 export async function songIDsToSongs(songids) {
+  const ret = { songs: [] };
+  // eslint-disable-next-line no-plusplus
+  for (let i; i < songids.length; i++) {
+    // eslint-disable-next-line no-await-in-loop
+    const songRef = await getDoc(doc(firestoreDB, 'songs', songids[i]));
+    const song = {
+      name: songRef.get('name'),
+      album_cover: songRef.get('album_cover'),
+      id: songids[i],
+    };
+    ret.songs.push(song);
+  }
+  return ret;
+}
+
+/* export async function songIDsToSongs(songids) {
   const ret = { songs: [] };
   ret.songs = songids.map((id) => {
     console.log(id);
@@ -81,14 +93,14 @@ export async function songIDsToSongs(songids) {
     getDoc(doc(firestoreDB, 'songs', id))
       .then((songRef) => {
         console.log(songRef);
-        song.title = songRef.get('name');
+        song.name = songRef.get('name');
         song.album_cover = songRef.get('album_cover');
         song.id = id;
       });
     return song;
   });
   return ret;
-}
+} */
 
 export const getRecs = () => {
   const fields = {

@@ -74,7 +74,8 @@ class AltTree extends Component {
             return <div className="layer">{nodeList}</div>;
           }
           // else render layer with only one node
-          return <div className="layer"><li><AltTreeNode key={this.props.currid} id={lindex} song={layer.song} runAlgo={this.props.runAlgo} /></li></div>;
+          console.log(layer[0]);
+          return <div className="layer"><li><AltTreeNode key={this.props.currid} id={lindex} song={layer[0].song} runAlgo={this.props.runAlgo} /></li></div>;
         });
         return layersList;
       }

@@ -1,6 +1,8 @@
+/* eslint-disable react/no-access-state-in-setstate */
 /* eslint-disable react/no-unused-state */
 import React, { Component } from 'react';
 import debounce from 'lodash.debounce';
+import update from 'react-addons-update';
 import PlayList from '../tutorial-components/playlist';
 import ToolBar from '../tutorial-components/tool-bar';
 import TreeList from '../tutorial-components/tree-list';
@@ -26,6 +28,8 @@ class TutorialPage extends Component {
       isLoading: false,
       renderDefault: true,
       fillingNodeID: -1,
+      ll: 0,
+      multi: 1,
     };
 
     this.search = debounce(this.search, 300);
@@ -83,10 +87,35 @@ class TutorialPage extends Component {
     }
   };
 
+  addNode = (song) => {
+    if (this.state.layers.length === 0) {
+      this.setState({
+        layers: [[{ song }]],
+      });
+      console.log('first');
+    } else if (this.state.layers[this.state.ll].length >= this.state.multi) {
+      this.setState((prevState) => ({
+        layers: [...prevState.layers, [{ song }]],
+        ll: prevState.ll + 1,
+        multi: prevState.multi * 2,
+      }));
+    } else {
+      this.setState(update(this.state, {
+        layers: {
+          [this.state.ll]: {
+            $set: [...this.state.layers[this.state.ll], { song }],
+          },
+        },
+      }));
+    }
+    this.setState((prevState) => ({ currid: prevState.currid + 1 }));
+  };
+
   handleSelectSong = (song) => {
-    this.setState((prevState) => ({
+    /* this.setState((prevState) => ({
       layers: [...prevState.layers, { song }],
-    }));
+    })); */
+    this.addNode(song);
     this.setState({ searching: false });
     this.setState((prevState) => ({ currid: prevState.currid + 1 }));
     db.popPlaylist(song);

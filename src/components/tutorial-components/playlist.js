@@ -1,6 +1,9 @@
+/* eslint-disable class-methods-use-this */
+/* eslint-disable new-cap */
 /* eslint-disable react/prefer-stateless-function */
 import React, { Component } from 'react';
 import Song from './song';
+import * as spt from '../../spotifyTesting';
 
 class PlayList extends Component {
   constructor(props) {
@@ -8,10 +11,15 @@ class PlayList extends Component {
     this.state = {}; // nothing here yet
   }
 
+  runSpotifyMethods = () => {
+    const spotifyApi = spt.CreateSpotifyObjects();
+    spt.createPlaylist(spotifyApi, 'React Text Playlist');
+  };
+
   render() {
     return (
       <div id="playlist-container" className="container">
-        <button type="button" id="play-playlist" className="playlist-button">
+        <button type="button" id="play-playlist" className="playlist-button" onClick={this.runSpotifyMethods}>
           <i className="fa-solid fa-circle-play" />
         </button>
         <div id="playlist" className="container">

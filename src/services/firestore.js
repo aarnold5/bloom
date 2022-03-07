@@ -41,7 +41,7 @@ export async function fetchPlaylist() {
 }
 
 export async function popPlaylist(song) {
-  console.log(song);
+  // console.log(song);
   await setDoc(doc(firestoreDB, '/users/Ihoc1nuTr9lL92TngABS/trees/2q5uA3rO1YnSd7pYXLUK/input-playlist', song.id), {
     id: song.id,
     name: song.name,
@@ -82,8 +82,9 @@ export const getRecs = () => {
       headers: { 'Content-Type': 'application/json' },
     })
       .then((response) => {
-        // console.log(response.data.results);
-        resolve(response.data.results);
+        console.log(response);
+        console.log(response.data.results);
+        resolve(response.data);
       })
       .catch((error) => {
         console.log(`api error: ${error}`);

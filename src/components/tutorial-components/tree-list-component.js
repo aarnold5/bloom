@@ -3,7 +3,7 @@ import React from 'react';
 
 const TreeListComponent = (props) => {
   return (
-    <button type="button" className="tree-list-component home-page-button container">
+    <button type="button" className="tree-list-component home-page-button container" onClick={props.onSelectDifferentTree}>
       {props.title}
     </button>
   );

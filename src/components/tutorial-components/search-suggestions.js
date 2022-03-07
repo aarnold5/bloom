@@ -22,7 +22,6 @@ class SearchSuggestions extends Component {
   }
 
   renderSearch() {
-    console.log(this.props.searching);
     if (this.props.searching === true) {
       return (
         <div>

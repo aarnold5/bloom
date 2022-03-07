@@ -85,11 +85,13 @@ def create_feature_set(df, float_cols):
 
 def load_data(db):
 
-    docs = db.collection(u'songs').where(u'duration_ms', u'>=', 0).stream()
+    docs = db.collection(u'songs-batched').stream()
 
     spotify_df = pd.DataFrame()
     for doc in docs:
-        spotify_df = pd.concat([spotify_df, pd.DataFrame([doc.to_dict()])], ignore_index = True)
+        sngs = doc.get(u'songs')
+        for sng in sngs:
+            spotify_df = pd.concat([spotify_df, pd.DataFrame([sng])], ignore_index = True)
 
     return spotify_df
 
@@ -146,7 +148,7 @@ def create_necessary_outputs(playlist_ids, df):
     """
     
     #generate playlist dataframe
-
+    
     playlist = pd.DataFrame()
     playlist_ids = playlist_ids.split("[")[1].split("]")[0].split(",")
     for song in playlist_ids:

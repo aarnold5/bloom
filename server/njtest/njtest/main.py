@@ -14,6 +14,7 @@ from firebase_admin import firestore
 
 from flask import request, escape
 import functions_framework
+import json
 
 #import spotipy
 #from spotipy.oauth2 import SpotifyClientCredentials
@@ -314,14 +315,14 @@ def algorithm(request):
 
     #print(request_args['songs'])
     recos = perform_analysis(pname)
-    req = "{\"songs\":["
+    req = '{"songs":['
     for id in range(len(recos.values) - 1):
-        req = req + "\"" + recos.values[id] + "\","
+        req = req + '"' + recos.values[id] + '",'
         print(req)
-    req = req + "\"" + recos.values[len(recos.values)-1] + "\"]}"
+    req = req + '"' + recos.values[len(recos.values)-1] + '"]}'
     print(req)
     print("Done!")
-    return ('{}'.format(escape(req)), 200, headers)
+    return (req, 200, headers)
 
 #print(perform_analysis("{\"songs\"=[\"05JdgtCKkZ5CoOjM5KS4EG\",\"0EH7sgeiFqDa3eS7ieW2zs\",\"0SLtqCrXBRrnkxSOMA3X4W\"]}"))
 #hello_http(flask.Request)

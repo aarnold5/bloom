@@ -88,11 +88,9 @@ export async function fetchInputPlaylist() {
 export async function songIDsToSongs(songids) {
   const ret = { songs: [] };
   ret.songs = songids.map((id) => {
-    console.log(id);
     const song = {};
     getDoc(doc(firestoreDB, 'songs', id))
       .then((songRef) => {
-        console.log(songRef);
         song.name = songRef.get('name');
         song.album_cover = songRef.get('album_cover');
         song.id = id;

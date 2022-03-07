@@ -5,9 +5,7 @@ function Song(props) {
   const playSong = (props) => {
     // code to play the song here
   };
-  console.log(props.song);
-  console.log(props.song.name);
-  console.log(props.name);
+
   if (props.song.album_cover) {
     return (
       <button type="button" className="song song-button" onClick={playSong}><img className="square-img" src={props.song.album_cover} alt="temp" /></button>

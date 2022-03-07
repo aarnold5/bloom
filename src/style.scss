@@ -13,6 +13,11 @@ svg {
   pointer-events: none;
 }
 
+#home-page{
+  background-image: url(https://github.com/aarnold5/bloom/blob/testing-tree-fuctions/src/home-page-picture.png?raw=true);
+  background-size: cover;
+}
+
 .page-container {
   display: flex;
   justify-content: center;

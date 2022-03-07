@@ -138,7 +138,6 @@ class TutorialPage extends Component {
       <div id="tutorial-page" className="page-container container">
         <TreeList trees={this.state.trees} onSelectDifferentTree={() => this.handleLoadNewTree} />
         <div className="right-half container">
-          <button type="button" onClick={this.handleGetRecs}>GetRecs</button>
           <ToolBar addRootNode={this.rootNode} />
           {this.renderRootWarning()}
           <SearchSuggestions
@@ -149,7 +148,7 @@ class TutorialPage extends Component {
           />
           {/* <AltDefaultTree fillNode={this.handleFillNode} layers={this.state.layers} /> */}
           <AltTree currid={this.state.currid} layers={this.state.layers} runAlgo={this.handleRunAlgo} />
-          <PlayList playlist={this.state.playlist} />
+          <PlayList playlist={this.state.playlist} getRecs={this.handleGetRecs} isLoading={this.state.isLoading} />
         </div>
       </div>
     );

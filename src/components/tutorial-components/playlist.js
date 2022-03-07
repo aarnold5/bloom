@@ -13,16 +13,17 @@ class PlayList extends Component {
 
   runSpotifyMethods = () => {
     const spotifyApi = spt.CreateSpotifyObjects();
+    // eslint-disable-next-line no-unused-vars
     const songIDs = this.props.playlist.map((song) => {
       console.log(song);
       return song.id;
     });
-    spt.createPlaylist(spotifyApi, 'New Thing').then((playlistID) => {
+    /* spt.createPlaylist(spotifyApi, 'New Thing').then((playlistID) => {
       spt.addTracksToPlaylist(spotifyApi, playlistID, songIDs);
-    });
-
+    }); */
     /* spt.addTracksToPlaylist(spotifyApi, '1TADXYivcy5xhbudsafzsW', songIDs); */
-    // spt.addTracksToPlaylist(spotifyApi, '54KCx9JxYhl80t0XSyCA2F', ['7EuTFqQnMZoIaGisMRCtf6', '1wAPbQ5XjbZqPl0WDl5mHH', '0u3obb9aO2piYJMfa82XRd']);
+    spt.createPlaylist(spotifyApi, 'New Thing');
+    spt.addTracksToPlaylist(spotifyApi, '54KCx9JxYhl80t0XSyCA2F', ['7EuTFqQnMZoIaGisMRCtf6', '1wAPbQ5XjbZqPl0WDl5mHH', '0u3obb9aO2piYJMfa82XRd']);
     /*  spt.CreateSpotifyObjects()
       .then((spotifyApi) => {
         spt.createPlaylist(spotifyApi, 'New Thing')
@@ -53,7 +54,7 @@ class PlayList extends Component {
             return <Song key={song.id} name={song.name} song={song} />;
           })}
         </div>
-        <button type="button" id="reshuffle-playlist" className="playlist-button">
+        <button type="button" id="reshuffle-playlist" className="playlist-button" onClick={this.props.getRecs}>
           <i className="fa-solid fa-arrows-rotate" />
         </button>
       </div>

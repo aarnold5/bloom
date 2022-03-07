@@ -150,7 +150,7 @@ def create_necessary_outputs(db, playlist_ids, df):
     #generate playlist dataframe
 
     playlist = pd.DataFrame()
-    playlist_ids = playlist_ids.split("[")[1].split("]")[0].split(",")
+    # playlist_ids = playlist_ids.split("[")[1].split("]")[0].split(",")
     ids = []
     docs = db.collection(u'users/Ihoc1nuTr9lL92TngABS/trees/2q5uA3rO1YnSd7pYXLUK/input-playlist').stream()
     for doc in docs:
@@ -261,8 +261,10 @@ pd.set_option('display.max_columns', None)
 def perform_analysis(pname):
     #Firebase stuff
     project_id = "bloom-838b5"
-    cred = credentials.ApplicationDefault()
-    firebase_admin.initialize_app(cred, {'projectId': project_id})
+    if not len(firebase_admin._apps):
+        cred = credentials.ApplicationDefault()
+        firebase_admin.initialize_app(cred, {'projectId': project_id})
+
     db = firestore.client()
     spotify_df = load_data(db)
     float_cols = np.concatenate([spotify_df.dtypes[spotify_df.dtypes == 'float64'].index.values,spotify_df.dtypes[spotify_df.dtypes == 'int64'].index.values])
@@ -294,7 +296,7 @@ def algorithm(request):
         }
 
         return ('', 204, headers)
-    
+
     headers = {
         'Access-Control-Allow-Origin': '*'
     }

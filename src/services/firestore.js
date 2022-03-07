@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import {
-  getFirestore, collection, getDocs, setDoc, doc,
+  getFirestore, collection, getDocs, setDoc, doc, where, query
 } from 'firebase/firestore';
 import axios from 'axios';
 
@@ -58,6 +58,20 @@ export async function fetchInputPlaylist() {
     playlistReturn.playlist.push({ id: d.id, title: d.get('title'), albumCover: d.get('albumCover') });
   });
   return playlistReturn;
+}
+
+export async function songIDsToSongs(songids) {
+  const querySnapshot = await getDocs(collection(firestoreDB, 'users/Ihoc1nuTr9lL92TngABS/trees/2q5uA3rO1YnSd7pYXLUK/input-playlist'));
+  const ret = { songs: []};
+  songids.forEach((id) => {
+    const song = {};
+    songRef = await getDoc(doc(firestoreDB, 'songs', id));
+    song.title = songRef.get('name');
+    song.album_cover = songRef.get('album_cover');
+    song.id = id;
+    ret.songs.push(song);
+  });
+  return ret;
 }
 
 export const getRecs = () => {

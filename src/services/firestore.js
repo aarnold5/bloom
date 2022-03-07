@@ -60,15 +60,32 @@ export async function fetchInputPlaylist() {
   return playlistReturn;
 }
 
-export async function songIDsToSongs(songids) {
+/* export async function songIDsToSongs(songids) {
   const ret = { songs: [] };
   songids.forEach((id) => {
     const song = {};
-    const songRef = getDoc(doc(firestoreDB, 'songs', id));
+    const songRef = await getDoc(doc(firestoreDB, 'songs', id));
     song.title = songRef.get('name');
     song.album_cover = songRef.get('album_cover');
     song.id = id;
     ret.songs.push(song);
+  });
+  return ret;
+} */
+
+export async function songIDsToSongs(songids) {
+  const ret = { songs: [] };
+  ret.songs = songids.map((id) => {
+    console.log(id);
+    const song = {};
+    getDoc(doc(firestoreDB, 'songs', id))
+      .then((songRef) => {
+        console.log(songRef);
+        song.title = songRef.get('name');
+        song.album_cover = songRef.get('album_cover');
+        song.id = id;
+      });
+    return song;
   });
   return ret;
 }
@@ -82,8 +99,6 @@ export const getRecs = () => {
       headers: { 'Content-Type': 'application/json' },
     })
       .then((response) => {
-        console.log(response);
-        console.log(response.data.results);
         resolve(response.data);
       })
       .catch((error) => {

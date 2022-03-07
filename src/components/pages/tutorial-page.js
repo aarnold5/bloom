@@ -78,10 +78,11 @@ class TutorialPage extends Component {
 
   // eslint-disable-next-line class-methods-use-this
   handleGetRecs = () => {
+    console.log('recs requested');
     db.getRecs()
-      .then((songIDsList) => {
-        console.log(songIDsList);
-        db.songIDsToSongs(songIDsList)
+      .then((result) => {
+        console.log(result.songs);
+        db.songIDsToSongs(result.songs)
           .then((songs) => {
             console.log(songs);
           });

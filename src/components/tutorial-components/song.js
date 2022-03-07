@@ -6,8 +6,13 @@ function Song(props) {
     // code to play the song here
   };
 
+  if (props.song.album_cover) {
+    return (
+      <button type="button" className="song song-button" onClick={playSong}><img className="square-img" src={props.song.album_cover} alt="temp" /></button>
+    );
+  } // if it doesn't have a cover, render the title
   return (
-    <button type="button" className="song song-button"><img className="square-img" src={props.albumCover} alt="temp" onClick={playSong} /></button>
+    <button type="button" className="song song-button" onClick={playSong}><p>{props.name}</p></button>
   );
 }
 

@@ -14,7 +14,7 @@ class SearchSuggestions extends Component {
     if (this.props.searchSuggestions.length > 0) {
       const sugList = this.props.searchSuggestions.map((suggestion) => {
         // eslint-disable-next-line max-len
-        return <Suggestion onClick={() => this.props.onSelectSong(suggestion)} key={suggestion.id} id={suggestion.id} name={suggestion.name} albumCover={suggestion.album_cover} />;
+        return <Suggestion onClick={() => this.props.onSelectSong(suggestion)} key={suggestion.id} id={suggestion.id} name={suggestion.name} album_cover={suggestion.album_cover} />;
       });
       return sugList;
     }
@@ -22,7 +22,6 @@ class SearchSuggestions extends Component {
   }
 
   renderSearch() {
-    console.log(this.props.searching);
     if (this.props.searching === true) {
       return (
         <div>

@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import {
-  getFirestore, collection, getDocs, setDoc, doc, where, query
+  getFirestore, collection, getDocs, setDoc, doc, getDoc,
 } from 'firebase/firestore';
 import axios from 'axios';
 
@@ -24,7 +24,7 @@ export async function fetchTrees() {
     trees: [],
   };
   querySnapshot.forEach((d) => {
-    treesReturn.trees.push({ id: d.id, title: d.get('name') });
+    treesReturn.trees.push({ id: d.id, name: d.get('name') });
   });
   return treesReturn;
 }
@@ -35,14 +35,23 @@ export async function fetchPlaylist() {
     playlist: [],
   };
   querySnapshot.forEach((d) => {
-    playlistReturn.playlist.push({ id: d.id, title: d.get('title'), albumCover: d.get('albumCover') });
+    playlistReturn.playlist.push({ id: d.id, title: d.get('name'), albumCover: d.get('album_cover') });
   });
   return playlistReturn;
 }
 
 export async function popPlaylist(song) {
-  console.log(song);
+  // console.log(song);
   await setDoc(doc(firestoreDB, '/users/Ihoc1nuTr9lL92TngABS/trees/2q5uA3rO1YnSd7pYXLUK/input-playlist', song.id), {
+    id: song.id,
+    name: song.name,
+    album_cover: song.album_cover,
+  });
+}
+
+export async function addToOutputPlaylist(song) {
+  // console.log(song);
+  await setDoc(doc(firestoreDB, '/users/Ihoc1nuTr9lL92TngABS/trees/2q5uA3rO1YnSd7pYXLUK/output-playlist', song.id), {
     id: song.id,
     name: song.name,
     album_cover: song.album_cover,
@@ -55,36 +64,52 @@ export async function fetchInputPlaylist() {
     playlist: [],
   };
   querySnapshot.forEach((d) => {
-    playlistReturn.playlist.push({ id: d.id, title: d.get('title'), albumCover: d.get('albumCover') });
+    playlistReturn.playlist.push({ id: d.id, name: d.get('name'), album_cover: d.get('album_cover') });
   });
   return playlistReturn;
 }
 
-export async function songIDsToSongs(songids) {
-  const querySnapshot = await getDocs(collection(firestoreDB, 'users/Ihoc1nuTr9lL92TngABS/trees/2q5uA3rO1YnSd7pYXLUK/input-playlist'));
-  const ret = { songs: []};
-  songids.forEach((id) => {
-    const song = {};
-    songRef = await getDoc(doc(firestoreDB, 'songs', id));
-    song.title = songRef.get('name');
-    song.album_cover = songRef.get('album_cover');
-    song.id = id;
+/* export async function songIDsToSongs(songids) {
+  const ret = { songs: [] };
+  // eslint-disable-next-line no-plusplus
+  for (let i; i < songids.length; i++) {
+    // eslint-disable-next-line no-await-in-loop
+    const songRef = await getDoc(doc(firestoreDB, 'songs', songids[i]));
+    const song = {
+      name: songRef.get('name'),
+      album_cover: songRef.get('album_cover'),
+      id: songids[i],
+    };
     ret.songs.push(song);
+  }
+  return ret;
+} */
+
+export async function songIDsToSongs(songids) {
+  const ret = { songs: [] };
+  ret.songs = songids.map((id) => {
+    const song = {};
+    getDoc(doc(firestoreDB, 'songs', id))
+      .then((songRef) => {
+        song.name = songRef.get('name');
+        song.album_cover = songRef.get('album_cover');
+        song.id = id;
+      });
+    return song;
   });
   return ret;
 }
 
 export const getRecs = () => {
   const fields = {
-    songs: await fetchInputPlaylist(),
+    songs: fetchInputPlaylist(),
   };
   return new Promise((resolve, reject) => {
     axios.post('https://us-central1-bloom-838b5.cloudfunctions.net/algorithm', fields, {
       headers: { 'Content-Type': 'application/json' },
     })
       .then((response) => {
-        // console.log(response.data.results);
-        resolve(response.data.results);
+        resolve(response.data);
       })
       .catch((error) => {
         console.log(`api error: ${error}`);
@@ -110,7 +135,7 @@ export const saveTree = (tree) => {
   });
 };
 
-export const loadTree = () => {
+export const loadTree = (tree) => {
   const fields = tree;
   return new Promise((resolve, reject) => {
     axios.post('https://us-central1-bloom-838b5.cloudfunctions.net/treeLoader', fields, {

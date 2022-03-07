@@ -10,7 +10,7 @@ function Suggestion(props) {
       }} */
       onClick={props.onClick}
     >
-      <img alt={props.name} src={props.albumCover} className="tiny-img" />
+      <img alt={props.name} src={props.album_cover} className="tiny-img" />
       <p>{props.name}</p>
     </button>
   );

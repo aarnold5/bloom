@@ -2,6 +2,7 @@ body, html {
   font-family: "Roboto", sans-serif;
   background: #D2E7C8;
 }
+
 svg {
   position: absolute;
   top: 0;
@@ -11,6 +12,12 @@ svg {
   z-index: 1;
   pointer-events: none;
 }
+
+#home-page{
+  background-image: url(https://github.com/aarnold5/bloom/blob/testing-tree-fuctions/src/home-page-picture.png?raw=true);
+  background-size: cover;
+}
+
 .page-container {
   display: flex;
   justify-content: center;
@@ -264,4 +271,8 @@ button.searchSuggestion:hover{
 input {
   border-radius: 4px;
   width: 200px;
+}
+
+.disabled-button {
+  opacity: 50%;
 }

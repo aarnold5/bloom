@@ -2,12 +2,10 @@ package com.bloom.server.indexer;
 
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 import com.google.auth.oauth2.GoogleCredentials;
-import com.google.cloud.firestore.CollectionReference;
 import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.functions.HttpFunction;
@@ -16,12 +14,10 @@ import com.google.cloud.functions.HttpResponse;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.FirestoreClient;
-import com.google.firestore.v1.Document;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
 
 
 //to deploy: gcloud functions deploy treeSaver --trigger-http --entry-point com.bloom.server.indexer.TreeSaver --runtime java11 --allow-unauthenticated
@@ -75,6 +71,7 @@ public class TreeSaver implements HttpFunction {
             //TODO: actually get specific tree
             DocumentReference treeRef = db.document("users/Ihoc1nuTr9lL92TngABS/trees/2q5uA3rO1YnSd7pYXLUK");
             Map<String, Object> data = new HashMap<String, Object>();
+            data.put("name", "Metal");
             data.put("nodes", nodes);
             data.put("numNodes", id);
             data.put("numLayers", layerDepth);

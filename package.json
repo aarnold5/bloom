@@ -8,7 +8,9 @@
     "test": "eslint src",
     "build": "npm run clean; NODE_ENV=production webpack --color",
     "winbuild": "npm run clean & SET NODE_ENV=production& webpack --color",
-    "clean": "rimraf dist"
+    "clean": "rimraf dist",
+    "lint": "eslint --fix --ext .js,.jsx ."
+    
   },
   "repository": {
     "type": "git",
@@ -28,7 +30,7 @@
     "autoprefixer": "^10.4.2",
     "babel-loader": "^8.2.3",
     "css-loader": "^6.5.1",
-    "eslint": "^8.8.0",
+    "eslint": "^8.10.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-plugin-import": "^2.25.4",
     "eslint-plugin-jsx-a11y": "^6.5.1",
@@ -50,6 +52,8 @@
   "dependencies": {
     "axios": "^0.25.0",
     "cors": "^2.8.5",
+    "cross-fetch": "^3.1.5",
+    "express": "^4.17.3",
     "firebase": "^9.6.7",
     "immutable": "^4.0.0",
     "jquery": "^3.6.0",
@@ -59,6 +63,7 @@
     "react-dom": "^17.0.2",
     "react-router": "^6.2.1",
     "react-router-dom": "^6.2.1",
-    "regenerator-runtime": "^0.13.9"
+    "regenerator-runtime": "^0.13.9",
+    "spotify-web-api-node": "^5.0.2"
   }
 }

@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint new-cap: ["error", { "newIsCap": false }] */
 import React, { Component } from 'react';
 import debounce from 'lodash.debounce';
 import PlayList from '../tutorial-components/playlist';
@@ -8,11 +10,12 @@ import SearchSuggestions from '../tutorial-components/search-suggestions';
 import { bloomSearch } from '../tutorial-components/search';
 import AltTree from '../tutorial-components/alt-tree';
 import Tree from '../tutorial-components/tree';
+import { CreateSpotifyObjects, addTracksToPlaylist, createPlaylist } from '../../services/spotifyTesting';
 
 class TutorialPage extends Component {
   constructor(props) {
     super(props);
-
+    CreateSpotifyObjects();
     this.state = {
       trees: [],
       playlist: [],

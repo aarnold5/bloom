@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import {
-  getFirestore, collection, getDocs, setDoc, doc,
+  getFirestore, collection, getDocs, setDoc, doc, getDoc,
 } from 'firebase/firestore';
 import axios from 'axios';
 
@@ -60,9 +60,22 @@ export async function fetchInputPlaylist() {
   return playlistReturn;
 }
 
+export async function songIDsToSongs(songids) {
+  const ret = { songs: [] };
+  songids.forEach((id) => {
+    const song = {};
+    const songRef = getDoc(doc(firestoreDB, 'songs', id));
+    song.title = songRef.get('name');
+    song.album_cover = songRef.get('album_cover');
+    song.id = id;
+    ret.songs.push(song);
+  });
+  return ret;
+}
+
 export const getRecs = () => {
   const fields = {
-    songs: await fetchInputPlaylist(),
+    songs: fetchInputPlaylist(),
   };
   return new Promise((resolve, reject) => {
     axios.post('https://us-central1-bloom-838b5.cloudfunctions.net/algorithm', fields, {
@@ -96,7 +109,7 @@ export const saveTree = (tree) => {
   });
 };
 
-export const loadTree = () => {
+export const loadTree = (tree) => {
   const fields = tree;
   return new Promise((resolve, reject) => {
     axios.post('https://us-central1-bloom-838b5.cloudfunctions.net/treeLoader', fields, {

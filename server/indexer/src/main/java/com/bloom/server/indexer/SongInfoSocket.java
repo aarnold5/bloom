@@ -47,11 +47,11 @@ public class SongInfoSocket implements HttpFunction {
             
             String id = requestJson.get("id").getAsString();
             String name = requestJson.get("name").getAsString();
-            if(name.length() > 99) {
-                response.getWriter().write("Bloom cannot handle song titles longer than 99 words currently.\n");
-                response.setStatusCode(HttpsURLConnection.HTTP_ENTITY_TOO_LARGE);
-                return;
-            }
+            // if(name.length() > 99) {
+            //     response.getWriter().write("Bloom cannot handle song titles longer than 99 words currently.\n");
+            //     response.setStatusCode(HttpsURLConnection.HTTP_ENTITY_TOO_LARGE);
+            //     return;
+            // }
             String sanitizedTrackName = name.toLowerCase();
 
             Map<String, Object> docData = new HashMap<String, Object>();

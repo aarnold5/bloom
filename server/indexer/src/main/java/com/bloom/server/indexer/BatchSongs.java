@@ -21,6 +21,13 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.FirestoreClient;
 
+/**
+ * @author Addison Wessel
+ * Bloom: song batcher
+ * 
+ * This class / function grabs all songs in the "songs" database and places them in documents of 1000 songs. 
+ * This allows the algorithm to do 1000 times fewer calls to the database. 
+ */
 //to deploy: gcloud functions deploy song_batcher --trigger-http --entry-point com.bloom.server.indexer.BatchSongs --runtime java11 --allow-unauthenticated
 public class BatchSongs implements HttpFunction {
 

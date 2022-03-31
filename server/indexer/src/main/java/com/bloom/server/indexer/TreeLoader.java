@@ -26,6 +26,12 @@ import com.google.gson.JsonPrimitive;
 
 
 //to deploy: gcloud functions deploy treeLoader --trigger-http --entry-point com.bloom.server.indexer.TreeLoader --runtime java11 --allow-unauthenticated
+
+/**
+ * @author Addison Wessel
+ * 
+ * This loads all the nodes in a user's tree into a JSON object and returns it. 
+ */
 public class TreeLoader implements HttpFunction{
     private static final Gson gson = new Gson();
     @Override

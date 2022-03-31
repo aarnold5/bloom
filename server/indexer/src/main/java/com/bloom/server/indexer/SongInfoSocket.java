@@ -25,6 +25,13 @@ import com.google.gson.JsonObject;
 
 //to deploy (from 'indexer' directory): gcloud functions deploy songinforeciever --trigger-http --entry-point com.bloom.server.indexer.SongInfoSocket --runtime java11 --allow-unauthenticated
 
+/**
+ * @author Addison Wessel
+ * 
+ * Reciever for Spotify song data being placed on the Database. 
+ * It gets a song JSON from Elias's crawler, and then converts it to a format for Firestore. 
+ * Then it places it on Firestore with the proper credentials. 
+ */
 public class SongInfoSocket implements HttpFunction {
 
     private static final Gson gson = new Gson();

@@ -21,6 +21,12 @@ import com.google.gson.JsonObject;
 
 
 //to deploy: gcloud functions deploy treeSaver --trigger-http --entry-point com.bloom.server.indexer.TreeSaver --runtime java11 --allow-unauthenticated
+
+/**
+ * @author Addison Wessel
+ * 
+ * Recieves a JSON object containig the tree, and converts it to a format saveable on Firestore. It then saves it. 
+ */
 public class TreeSaver implements HttpFunction {
     private static final Gson gson = new Gson();
     @Override

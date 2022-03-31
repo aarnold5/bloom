@@ -6,7 +6,8 @@ const SpotifyWebApi = require('spotify-web-api-node');
 
 const fetch = require('cross-fetch');
 
-const authKey = 'BQBdZ6Frlwbt8mwymPBLQBosivp6WSXXmciye0PO_cuS4HUtKP8RSiQsX1xy3JHUsgHflrOpj34n3iGYayKvwaVPxFlws-4VlTjhOq_XfRT-eIRQWHwIQHCRqa8GxQrvKi1rk8WSfRjzqtLzICS8Iy6ocinXbK7QdWjpGpTwTk2YWnZZasr8OECmJ7zNR272pZOdGxIlauS7ilVDBjCrAqSzRCiGzbMct8pq2wmanZkImR6j4wvvkr2LuBtxhosBprD4T9l_7lIILKYmaq6tWKd8dE75HMxN2cJzpUAK-F97nMdFjwnI';
+//Paste auth key generated manually from fetchingAuth.js into this variable to interact with Spotify. Yes, I know it sucks. 
+const authKey = 'BQDy2brkWVVHtDzaNO__x-Q4WNmZBM9TriPoJcWOFvhfLwwfSKG8U_2hu8EHwtY_3MR7C0TnwZ7Iva4ZIVRoPD01VK7dCAUMM6bBIWaSvuIAX0ERUQ24-9AuqTExAdvz2MyGNP_1GZjTkH741nlxN5UZNt1iKOHMHyRmkGiuB67ltkGSWh4VauFzSEUj0D54p5SqSpJAfInwjsrFjl3cPe6MAAlx3rD5-Rb4PPjBo9i6QRm9koMKUN6SOETrpC6tUhZO7ewtTsKJL2rTS_vUNeLIH8WdM4ykumrQMR-wS4h-4KRVGP35'; 
 
 const spotifyID = 'fnh6px78guvi666lyrtmr04p4';
 const playlistNameToID = {};

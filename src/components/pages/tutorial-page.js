@@ -15,7 +15,6 @@ import { CreateSpotifyObjects, addTracksToPlaylist, createPlaylist } from '../..
 class TutorialPage extends Component {
   constructor(props) {
     super(props);
-    CreateSpotifyObjects();
     this.state = {
       trees: [],
       playlist: [],

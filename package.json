@@ -12,14 +12,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/aarnold5/bloom.git"
+    "url": "git+https://github.com/momodeus/bloom.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/aarnold5/bloom/issues"
+    "url": "https://github.com/momodeus/bloom/issues"
   },
-  "homepage": "https://github.com/aarnold5/bloom#readme",
+  "homepage": "https://github.com/momodeus/bloom#readme",
   "devDependencies": {
     "@babel/core": "^7.16.12",
     "@babel/eslint-parser": "^7.16.5",

@@ -1,8 +1,7 @@
 import React from 'react';
 
 function Song(props) {
-  // eslint-disable-next-line no-shadow
-  const playSong = (props) => {
+  const playSong = () => {
     // code to play the song here
   };
 

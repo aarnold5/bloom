@@ -1,6 +1,5 @@
-/* eslint-disable react/no-unused-state */
-/* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { Component } from 'react';
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 
 class AltTreeNode extends Component {
   constructor(props) {
@@ -29,6 +28,7 @@ class AltTreeNode extends Component {
     return `background:${this.state.a}`;
   };
  */
+
   render() {
     let inputStyle = {
       background: '#96A66D',

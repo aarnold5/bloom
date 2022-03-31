@@ -1,5 +1,5 @@
 /* eslint-disable react/no-access-state-in-setstate */
-/* eslint-disable react/no-unused-state */
+
 import React, { Component } from 'react';
 import debounce from 'lodash.debounce';
 import update from 'react-addons-update';
@@ -10,7 +10,6 @@ import * as db from '../../services/firestore';
 import SearchSuggestions from '../tutorial-components/search-suggestions';
 import { bloomSearch } from '../tutorial-components/search';
 import AltTree from '../tutorial-components/alt-tree';
-// import AltDefaultTree from '../tutorial-components/alt-default-tree';
 
 class TutorialPage extends Component {
   constructor(props) {
@@ -38,14 +37,7 @@ class TutorialPage extends Component {
   componentDidMount() {
     db.fetchTrees()
       .then((result) => this.setState({ trees: result.trees }));
-    /* db.fetchPlaylist()
-      .then((result) => this.setState({ playlist: result.playlist })); */
   }
-
-  /* handleFillNode = (id) => {
-    this.setState({ searching: true });
-    this.setState({ fillingNodeID: id });
-  }; */
 
   search = (text) => {
     bloomSearch(text).then((searchSuggestions) => {
@@ -58,30 +50,6 @@ class TutorialPage extends Component {
   rootNode = () => {
     if (this.state.allowRootAdd) {
       this.setState({ searching: true });
-      /* this.setState({
-        layers: [
-          [{
-            song: {
-              id: '',
-              album_cover: 'https://media.architecturaldigest.com/photos/5890e88033bd1de9129eab0a/1:1/w_870,h_870,c_limit/Artist-Designed%20Album%20Covers%202.jpg',
-              name: '',
-            },
-          }],
-          [{
-            song: {
-              id: '',
-              album_cover: 'https://media.architecturaldigest.com/photos/5890e88033bd1de9129eab0a/1:1/w_870,h_870,c_limit/Artist-Designed%20Album%20Covers%202.jpg',
-              name: '',
-            },
-          }, {
-            song: {
-              id: '',
-              album_cover: 'https://media.architecturaldigest.com/photos/5890e88033bd1de9129eab0a/1:1/w_870,h_870,c_limit/Artist-Designed%20Album%20Covers%202.jpg',
-              name: '',
-            },
-          }],
-        ],
-      }); */
     } else {
       this.setState({ issueRootWarning: true });
     }
@@ -112,17 +80,13 @@ class TutorialPage extends Component {
   };
 
   handleSelectSong = (song) => {
-    /* this.setState((prevState) => ({
-      layers: [...prevState.layers, { song }],
-    })); */
     this.addNode(song);
     this.setState({ searching: false });
     this.setState((prevState) => ({ currid: prevState.currid + 1 }));
     db.popPlaylist(song);
   };
 
-  // eslint-disable-next-line class-methods-use-this
-  // version draft for later use
+  // DRAFT FOR LATER USE
   /* handleRunAlgo = () => {
     db.getRecs()
       .then((songIDsList) => { console.log(songIDsList[0]); });
@@ -140,7 +104,6 @@ class TutorialPage extends Component {
     this.setState({ layers: this.loadTree(tree.id).layers });
   };
 
-  // eslint-disable-next-line class-methods-use-this
   handleGetRecs = () => {
     this.setState({ isLoading: true });
     db.getRecs()
@@ -151,7 +114,6 @@ class TutorialPage extends Component {
             console.log(songs);
             this.setState({ isLoading: false });
             this.setState({ playlist: songs.songs });
-            // songs.songs.map((song) => db.addToOutputPlaylist(song));
           });
       });
   };
@@ -176,7 +138,6 @@ class TutorialPage extends Component {
             onSearchChange={this.search}
             searchSuggestions={this.state.searchSuggestions}
           />
-          {/* <AltDefaultTree fillNode={this.handleFillNode} layers={this.state.layers} /> */}
           <AltTree currid={this.state.currid} layers={this.state.layers} runAlgo={this.handleRunAlgo} />
           <PlayList playlist={this.state.playlist} getRecs={this.handleGetRecs} isLoading={this.state.isLoading} />
         </div>

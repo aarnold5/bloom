@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 
 class AltTreeNode extends Component {
   constructor(props) {

@@ -1,3 +1,5 @@
+/* eslint-disable react/no-access-state-in-setstate */
+
 import React, { Component } from 'react';
 import debounce from 'lodash.debounce';
 import update from 'react-addons-update';

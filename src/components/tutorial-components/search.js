@@ -1,4 +1,5 @@
 import axios from 'axios';
+/* eslint-disable import/prefer-default-export */
 
 export const bloomSearch = (term) => {
   const fields = {

@@ -1,8 +1,6 @@
-/* eslint-disable class-methods-use-this */
 import React, { Component } from 'react';
 import AltTreeNode from './alt-tree-node';
 
-// eslint-disable-next-line no-unused-vars
 // TODO create tree with edges and nodes combined
 class AltTree extends Component {
   constructor(props) {

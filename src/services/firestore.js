@@ -17,7 +17,6 @@ const firebaseConfig = {
 const firebaseApp = initializeApp(firebaseConfig);
 const firestoreDB = getFirestore(firebaseApp);
 
-// eslint-disable-next-line import/prefer-default-export
 export async function fetchTrees() {
   const querySnapshot = await getDocs(collection(firestoreDB, 'users/Ihoc1nuTr9lL92TngABS/trees'));
   const treesReturn = {
@@ -41,7 +40,6 @@ export async function fetchPlaylist() {
 }
 
 export async function popPlaylist(song) {
-  // console.log(song);
   await setDoc(doc(firestoreDB, '/users/Ihoc1nuTr9lL92TngABS/trees/2q5uA3rO1YnSd7pYXLUK/input-playlist', song.id), {
     id: song.id,
     name: song.name,
@@ -50,7 +48,6 @@ export async function popPlaylist(song) {
 }
 
 export async function addToOutputPlaylist(song) {
-  // console.log(song);
   await setDoc(doc(firestoreDB, '/users/Ihoc1nuTr9lL92TngABS/trees/2q5uA3rO1YnSd7pYXLUK/output-playlist', song.id), {
     id: song.id,
     name: song.name,
@@ -68,22 +65,6 @@ export async function fetchInputPlaylist() {
   });
   return playlistReturn;
 }
-
-/* export async function songIDsToSongs(songids) {
-  const ret = { songs: [] };
-  // eslint-disable-next-line no-plusplus
-  for (let i; i < songids.length; i++) {
-    // eslint-disable-next-line no-await-in-loop
-    const songRef = await getDoc(doc(firestoreDB, 'songs', songids[i]));
-    const song = {
-      name: songRef.get('name'),
-      album_cover: songRef.get('album_cover'),
-      id: songids[i],
-    };
-    ret.songs.push(song);
-  }
-  return ret;
-} */
 
 export async function songIDsToSongs(songids) {
   const ret = { songs: [] };
@@ -160,7 +141,6 @@ export const addFirstNode = (node) => {
       headers: { 'Content-Type': 'application/json' },
     })
       .then((response) => {
-        // console.log(response.data.results);
         resolve(response.data.results);
       })
       .catch((error) => {

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-// import debounce from 'lodash.debounce';
 
 class SearchBar extends Component {
   constructor(props) {
@@ -13,7 +12,6 @@ class SearchBar extends Component {
   onInputChange = (event) => {
     this.props.onSearchChange(event.target.value);
     this.setState({ searchterm: event.target.value });
-    // console.log(event.target.value);
   };
 
   render() {

@@ -7,8 +7,6 @@
 - npm start.
 - Go to http://localhost:8080/ to see the site.
 
----
-
 ## UI Rundown
 
 The Bloom site currently has three pages.
@@ -48,7 +46,6 @@ The **play button** on the far left that you use *after* clicking the **recommen
 
 *The Tutorial Page will eventually have instructions to show you what to click and guide you through the process.*
 
----
 ## Team: 
  - Alaina Arnold
  - Claire Collins

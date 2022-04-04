@@ -55,9 +55,22 @@ find_song = (search, tree) =>{
     change_attribute(attr, tree.right, target);  
  }
 
- visualize_tree = (tree) => {
-     
- }
+//cannot delete root
+delete_node = (tree, target) =>{
+    if (tree){
+        if (tree.left.root===target) {
+            tree.left=null;
+        }
+        else if (tree.right.root===target){
+            tree.right=null;
+        }
+        else {
+            delete_node(tree.left, target);
+            delete_node(tree.right, target);
+        }
+    }
+}
+
 
 
 

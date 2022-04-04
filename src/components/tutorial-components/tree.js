@@ -46,8 +46,8 @@ class Tree extends Component {
   };
 
   centerOfElement = (id) => {
-    const elt = document.getElementById(id);  //New elements that have been added are returning null shown by console log below until second another layer is created
-    console.log(elt); //will return null for last (layer i.e. nodes 2 and 3 return null in tree{rootID:1, left:2, right:3))
+    const elt = document.getElementById(id);  //New elements that have been added are returning null shown by console log below until another layer is created
+    console.log(elt); //will return null for last layer (i.e. nodes 2 and 3 return null in tree{rootID:1, leftID:2, rightID:3))
     if (elt) {
       const pos = elt.getBoundingClientRect();
       return ([

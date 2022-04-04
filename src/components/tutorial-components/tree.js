@@ -160,7 +160,7 @@ class Tree extends Component {
         </div>
       );
     } else {
-      return (<div>this bitch empty</div>);
+      return (<div></div>);
     }
   }
 

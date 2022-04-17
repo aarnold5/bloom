@@ -1,8 +1,6 @@
 import pandas as pd
 import numpy as np
 
-#import os
-
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics import pairwise_distances
 import sklearn.metrics.pairwise as pw
@@ -16,13 +14,10 @@ from flask import request, escape
 import functions_framework
 import json
 
-#import spotipy
-#from spotipy.oauth2 import SpotifyClientCredentials
-#from spotipy.oauth2 import SpotifyOAuth
-#import spotipy.util as util
+import socket
 
-#import warnings
-#warnings.filterwarnings("ignore")
+HOST = "127.0.0.1"
+PORT = 1234
 
 #simple function to create OHE features
 def ohe_prep(df, column, new_name): 
@@ -84,6 +79,13 @@ def create_feature_set(df, float_cols):
     
     return final
 
+def load_data_local():
+    return pd.read_csv("data.csv")
+
+def export_db(db):
+    spotify_df = load_data(db)
+    spotify_df.to_csv("data.csv")
+
 def load_data(db):
 
     docs = db.collection(u'songs-batched').stream()
@@ -112,28 +114,6 @@ def perform_feature_engineering(df, float_cols):
     complete_feature_set = create_feature_set(df, float_cols=float_cols)
 
     return df, complete_feature_set
-
-def authenticate_to_spotify():
-    #Connor's client ID and secret, make sure to blank these out before pushing
-    dir_path = os.path.dirname(os.path.realpath(__file__))
-    id = open(dir_path + '/client_id.txt','r').read()
-    secret = open(dir_path + '/client_secret.txt','r').read()
-
-    #auth_manager = SpotifyClientCredentials(client_id=id, client_secret=secret)
-    #sp = spotipy.Spotify(auth_manager=auth_manager)
-    token = util.prompt_for_user_token(scope = 'user-library-read playlist-modify-public playlist-modify-private playlist-read-private streaming', client_id= id, client_secret=secret, redirect_uri='http://localhost:8881/')
-    sp = spotipy.Spotify(auth=token)
-
-    #gather playlist names and images. 
-    #images aren't going to be used until I start building a UI
-    id_name = {}
-    list_photo = {}
-    for i in sp.current_user_playlists()['items']:
-
-        id_name[i['name']] = i['uri'].split(':')[2]
-        list_photo[i['uri'].split(':')[2]] = i['images'][0]['url']
-
-    return sp, id_name, list_photo
 
 def create_necessary_outputs(db, playlist_ids, df):
     """ 
@@ -276,7 +256,7 @@ def perform_analysis(pname):
     recs_top10 = generate_playlist_recos(spotify_df, complete_feature_set_playlist_vector, complete_feature_set_nonplaylist, 2)
     return recs_top10['id']
 
-@functions_framework.http
+
 def algorithm(request):
     """HTTP Cloud Function.
     Args:
@@ -326,3 +306,30 @@ def algorithm(request):
 
 #print(perform_analysis("{\"songs\"=[\"05JdgtCKkZ5CoOjM5KS4EG\",\"0EH7sgeiFqDa3eS7ieW2zs\",\"0SLtqCrXBRrnkxSOMA3X4W\"]}"))
 #hello_http(flask.Request)
+#Firebase stuff
+
+def pull_firebase():
+    project_id = "bloom-838b5"
+    if not len(firebase_admin._apps):
+        cred = credentials.ApplicationDefault()
+        firebase_admin.initialize_app(cred, {'projectId': project_id})
+
+    db = firestore.client()
+    export_db(db)
+
+def boot_server():
+    data = load_data_local()
+
+    #https://realpython.com/python-sockets/ for socket server help
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+        s.bind((HOST, PORT))
+        s.listen()
+        conn, addr = s.accept()
+        with conn:
+            print(f"Connected by {addr}")
+            while True:
+                data = conn.recv(1024)
+                if not data:
+                    break
+                #conn.sendall(algorithm(data))
+                conn.sendall(data)

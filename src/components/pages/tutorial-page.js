@@ -108,13 +108,13 @@ class TutorialPage extends Component {
     this.setState({ isLoading: true });
     db.getRecs()
       .then((result) => {
-        console.log(result);
-        db.songIDsToSongs(result.songs)
-          .then((songs) => {
-            console.log(songs);
-            this.setState({ isLoading: false });
-            this.setState({ playlist: songs.songs });
-          });
+        console.log('tutorial got: ', result);
+        // db.songIDsToSongs(result.songs)
+        //   .then((songs) => {
+        //     console.log(songs);
+        //     this.setState({ isLoading: false });
+        //     this.setState({ playlist: songs.songs });
+        //   });
       });
   };
 

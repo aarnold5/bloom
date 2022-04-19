@@ -3,7 +3,9 @@ import {
   getFirestore, collection, getDocs, setDoc, doc, getDoc,
 } from 'firebase/firestore';
 import axios from 'axios';
+import { io } from 'socket.io-client';
 
+const socket = io.connect('http://localhost:8000');
 const firebaseConfig = {
   apiKey: 'AIzaSyD2qCSgsfdJOShdP3dTluGe7FZo3P18sB4',
   authDomain: 'bloom-838b5.firebaseapp.com',
@@ -56,12 +58,13 @@ export async function addToOutputPlaylist(song) {
 }
 
 export async function fetchInputPlaylist() {
-  const querySnapshot = await getDocs(collection(firestoreDB, 'users/Ihoc1nuTr9lL92TngABS/trees/2q5uA3rO1YnSd7pYXLUK/input-playlist'));
+  const querySnapshot = await getDocs(collection(firestoreDB, '/users/Ihoc1nuTr9lL92TngABS/trees/2q5uA3rO1YnSd7pYXLUK/input-playlist'));
   const playlistReturn = {
     playlist: [],
   };
   querySnapshot.forEach((d) => {
     playlistReturn.playlist.push({ id: d.id, name: d.get('name'), album_cover: d.get('album_cover') });
+    console.log('d: ', d.get('name'));
   });
   return playlistReturn;
 }
@@ -82,21 +85,31 @@ export async function songIDsToSongs(songids) {
 }
 
 export const getRecs = () => {
+  console.log('in getrecs');
   const fields = {
-    songs: fetchInputPlaylist(),
+    meme: 0,
   };
+  fetchInputPlaylist().then((sngs) => {
+    fields.songs = sngs.songs;
+    console.log('fields: ', fields.songs);
   return new Promise((resolve, reject) => {
-    axios.post('https://us-central1-bloom-838b5.cloudfunctions.net/algorithm', fields, {
-      headers: { 'Content-Type': 'application/json' },
-    })
-      .then((response) => {
-        resolve(response.data);
-      })
-      .catch((error) => {
-        console.log(`api error: ${error}`);
-        reject(error);
-      });
+    console.log(JSON.stringify(fields));
+    socket.emit('algo', JSON.stringify(fields.songs), (response) => {
+      resolve(response);
+    });
+    // axios.post('https://us-central1-bloom-838b5.cloudfunctions.net/algorithm', fields, {
+    //   headers: { 'Content-Type': 'application/json' },
+    // })
+    //   .then((response) => {
+    //     resolve(response.data);
+    //   })
+    //   .catch((error) => {
+    //     console.log(`api error: ${error}`);
+    //     reject(error);
+    //   });
   });
+  });
+  
 };
 
 export const saveTree = (tree) => {
@@ -123,6 +136,7 @@ export const loadTree = (tree) => {
       headers: { 'Content-Type': 'application/json' },
     })
       .then((response) => {
+        console.log('raw from main.py: ', response);
         resolve(response.data.results);
       })
       .catch((error) => {

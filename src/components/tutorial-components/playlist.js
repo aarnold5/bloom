@@ -48,7 +48,6 @@ class PlayList extends Component {
         </button>
         <div id="playlist" className="container">
           {this.renderLoading()}
-          {console.log(this.props.playlist)}
           {this.props.playlist.map((song) => {
             console.log(song);
             return <Song key={song.id} name={song.name} song={song} />;

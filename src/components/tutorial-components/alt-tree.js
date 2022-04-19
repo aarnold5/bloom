@@ -81,7 +81,7 @@ class AltTree extends Component {
   }
 
   render() {
-    return <div className="tree">{this.renderNodes()}{console.log(this.props.layers)}</div>;
+    return <div className="tree">{this.renderNodes()}{}</div>;
   }
 }
 

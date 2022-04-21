@@ -3,16 +3,6 @@ body, html {
   background: #D2E7C8;
 }
 
-svg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  z-index: 1;
-  pointer-events: none;
-}
-
 #home-page{
   background-image: url(https://github.com/aarnold5/bloom/blob/testing-tree-fuctions/src/home-page-picture.png?raw=true);
   background-size: cover;

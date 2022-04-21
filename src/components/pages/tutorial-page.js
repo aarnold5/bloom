@@ -130,13 +130,19 @@ class TutorialPage extends Component {
       root: {
         name: 'a',
         rec: false,
+        visible: true,
       },
       left: {
-        root: { name: 'b' },
+        root: {
+          name: 'b',
+          rec: false,
+          visible: true,
+        },
         left: {
           root: {
             name: 'd',
-            rec: false,
+            rec: true,
+            visible: true,
           },
           left: null,
           right: null,
@@ -145,17 +151,23 @@ class TutorialPage extends Component {
           root: {
             name: 'e',
             rec: true,
+            visible: true,
           },
           left: null,
           right: null,
         },
       },
       right: {
-        root: { name: 'c' },
+        root: {
+          name: 'c',
+          rec: false,
+          visible: true,
+        },
         left: {
           root: {
             name: 'f',
-            rec: false,
+            rec: true,
+            visible: true,
           },
           left: null,
           right: null,
@@ -163,7 +175,8 @@ class TutorialPage extends Component {
         right: {
           root: {
             name: 'g',
-            rec: false,
+            rec: true,
+            visible: false,
           },
           left: null,
           right: null,

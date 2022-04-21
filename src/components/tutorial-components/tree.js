@@ -10,11 +10,17 @@ import Xarrow, { useXarrow, Xwrapper } from 'react-xarrows';
 import Draggable from 'react-draggable';
 import TreeNode from './tree-node';
 
-function TreeNode2({ id, album }) {
+function TreeNode2(props) {
   const updateXarrow = useXarrow();
+
+  function showRec() {
+    // call update function to update the tree on the database
+    // props.tree.left.root.visible = true;
+  }
+
   return (
     <Draggable onDrag={updateXarrow} onStop={updateXarrow}>
-      <span id={id} className="dot"><img src={album} draggable="false" alt="temp" className="round-img" /></span>
+      <button type="button" id={props.id} className="dot node-button" onClick={showRec}><img src={props.album} draggable="false" alt="temp" className="round-img" /></button>
     </Draggable>
   );
 }
@@ -30,16 +36,41 @@ class Tree extends React.Component {
       top: t,
       left: l,
     };
-    if (tree) {
+    if (tree && tree.root.visible) {
       if (pref) {
         console.log('pref works');
         if (tree.root.rec) {
-          return <div><div style={inputstyle}><TreeNode2 id={tree.root.name} album="favicon.png" /></div> <Xarrow start={pref} end={tree.root.name} zIndex={3} showHead={false} dashness color="gray" /> {this.getEdges(tree.left, l - i, t + 150, i / 2, tree.root.name)} {this.getEdges(tree.right, l + i, t + 150, i / 2, tree.root.name)}</div>;
+          return (
+            <div>
+              <div style={inputstyle}>
+                <TreeNode2 id={tree.root.name} album="favicon.png" />
+              </div>
+              <Xarrow start={pref} end={tree.root.name} zIndex={3} showHead={false} dashness color="gray" />
+              {this.getEdges(tree.left, l - i, t + 150, i / 2, tree.root.name)}
+              {this.getEdges(tree.right, l + i, t + 150, i / 2, tree.root.name)}
+            </div>
+          );
         } else {
-          return <div><div style={inputstyle}><TreeNode2 id={tree.root.name} album="favicon.png" /></div> <Xarrow start={pref} end={tree.root.name} zIndex={3} showHead={false} color="#637B47" /> {this.getEdges(tree.left, l - i, t + 150, i / 2, tree.root.name)} {this.getEdges(tree.right, l + i, t + 150, i / 2, tree.root.name)}</div>;
+          return (
+            <div>
+              <div style={inputstyle}><TreeNode2 id={tree.root.name} album="favicon.png" />
+              </div>
+              <Xarrow start={pref} end={tree.root.name} zIndex={3} showHead={false} color="#637B47" />
+              {this.getEdges(tree.left, l - i, t + 150, i / 2, tree.root.name)}
+              {this.getEdges(tree.right, l + i, t + 150, i / 2, tree.root.name)}
+            </div>
+          );
         }
       } else {
-        return <div><div style={inputstyle}><TreeNode2 id={tree.root.name} album="favicon.png" /></div> {this.getEdges(tree.left, l - i, t + 150, i / 2, tree.root.name)} {this.getEdges(tree.right, l + i, t + 150, i / 2, tree.root.name)}</div>;
+        return (
+          <div>
+            <div style={inputstyle}>
+              <TreeNode2 id={tree.root.name} album="favicon.png" />
+            </div>
+            {this.getEdges(tree.left, l - i, t + 150, i / 2, tree.root.name)}
+            {this.getEdges(tree.right, l + i, t + 150, i / 2, tree.root.name)}
+          </div>
+        );
       }
     } else {
       return null;

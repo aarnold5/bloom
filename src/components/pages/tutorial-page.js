@@ -9,7 +9,7 @@ import TreeList from '../tutorial-components/tree-list';
 import * as db from '../../services/firestore';
 import SearchSuggestions from '../tutorial-components/search-suggestions';
 import { bloomSearch } from '../tutorial-components/search';
-import AltTree from '../tutorial-components/alt-tree';
+import Tree from '../tutorial-components/tree';
 
 class TutorialPage extends Component {
   constructor(props) {
@@ -126,7 +126,66 @@ class TutorialPage extends Component {
   }
 
   render() {
+    const t = {
+      root: {
+        name: 'a',
+        rec: false,
+        visible: true,
+      },
+      left: {
+        root: {
+          name: 'b',
+          rec: false,
+          visible: true,
+        },
+        left: {
+          root: {
+            name: 'd',
+            rec: true,
+            visible: true,
+          },
+          left: null,
+          right: null,
+        },
+        right: {
+          root: {
+            name: 'e',
+            rec: true,
+            visible: true,
+          },
+          left: null,
+          right: null,
+        },
+      },
+      right: {
+        root: {
+          name: 'c',
+          rec: false,
+          visible: true,
+        },
+        left: {
+          root: {
+            name: 'f',
+            rec: true,
+            visible: true,
+          },
+          left: null,
+          right: null,
+        },
+        right: {
+          root: {
+            name: 'g',
+            rec: true,
+            visible: false,
+          },
+          left: null,
+          right: null,
+        },
+      },
+    };
+
     return (
+
       <div id="tutorial-page" className="page-container container">
         <TreeList trees={this.state.trees} onSelectDifferentTree={() => this.handleLoadNewTree} />
         <div className="right-half container">
@@ -138,7 +197,7 @@ class TutorialPage extends Component {
             onSearchChange={this.search}
             searchSuggestions={this.state.searchSuggestions}
           />
-          <AltTree currid={this.state.currid} layers={this.state.layers} runAlgo={this.handleRunAlgo} />
+          <Tree currid={this.state.currid} tree={t} runAlgo={this.handleRunAlgo} />
           <PlayList playlist={this.state.playlist} getRecs={this.handleGetRecs} isLoading={this.state.isLoading} />
         </div>
       </div>

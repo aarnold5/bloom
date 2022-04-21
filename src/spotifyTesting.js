@@ -6,7 +6,7 @@ const SpotifyWebApi = require('spotify-web-api-node');
 
 const fetch = require('cross-fetch');
 
-const authKey = 'BQDy2brkWVVHtDzaNO__x-Q4WNmZBM9TriPoJcWOFvhfLwwfSKG8U_2hu8EHwtY_3MR7C0TnwZ7Iva4ZIVRoPD01VK7dCAUMM6bBIWaSvuIAX0ERUQ24-9AuqTExAdvz2MyGNP_1GZjTkH741nlxN5UZNt1iKOHMHyRmkGiuB67ltkGSWh4VauFzSEUj0D54p5SqSpJAfInwjsrFjl3cPe6MAAlx3rD5-Rb4PPjBo9i6QRm9koMKUN6SOETrpC6tUhZO7ewtTsKJL2rTS_vUNeLIH8WdM4ykumrQMR-wS4h-4KRVGP35';
+const authKey = 'BQCVmyh5R4IBBgCAi4lVGw2CUpkQP0bOc-53kAZr1nABzfnBwDt803r2zApm6PDIEg_B-Q7NACqh9_1O_S9HKROBI6_0mv1_lTtyWvC3y13R9BoAK6N7HfKTDusbNjoiRa7gBxfi_vMRUD8uwNq1-z2mDmKUJcyUm4MTUQJXDI05bUvuUy0-sPCthculY_-I4MaBIIo4hcVDXvV9STK1ltvnLbKPkq8NrMV_sQEgq29AUfayNboCVqOyTsZ1qUfi_vjdFgmP8hDpebd387a8Hf9-8DbWLYjF9ZXePUH7gOQljHQktMzM';
 
 const spotifyID = 'fnh6px78guvi666lyrtmr04p4';
 const playlistNameToID = {};

@@ -66,19 +66,15 @@ export async function fetchInputPlaylist() {
   return playlistReturn;
 }
 
-export async function songIDsToSongs(songids) {
-  const ret = { songs: [] };
-  ret.songs = songids.map((id) => {
-    const song = {};
-    getDoc(doc(firestoreDB, 'songs', id))
-      .then((songRef) => {
-        song.name = songRef.get('name');
-        song.album_cover = songRef.get('album_cover');
-        song.id = id;
-      });
-    return song;
-  });
-  return ret;
+export async function songIDToSong(id) {
+  const songRef = await getDoc(doc(firestoreDB, 'songs', id));
+  const song = {
+    name: songRef.get('name'),
+    album_cover: songRef.get('album_cover'),
+    id,
+  };
+  console.log(song);
+  return song;
 }
 
 export const getRecs = () => {

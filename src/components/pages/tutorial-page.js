@@ -1,3 +1,5 @@
+/* eslint-disable no-plusplus */
+/* eslint-disable array-callback-return */
 /* eslint-disable react/no-access-state-in-setstate */
 
 import React, { Component } from 'react';
@@ -107,14 +109,25 @@ class TutorialPage extends Component {
   handleGetRecs = () => {
     this.setState({ isLoading: true });
     db.getRecs()
-      .then((result) => {
-        console.log(result);
-        db.songIDsToSongs(result.songs)
-          .then((songs) => {
-            console.log(songs);
-            this.setState({ isLoading: false });
-            this.setState({ playlist: songs.songs });
+      .then((songIDs) => {
+        // eslint-disable-next-line array-callback-return
+        // eslint-disable-next-line no-unused-vars
+        console.log(songIDs.songs);
+        const playlist = songIDs.songs.map((songID) => {
+          const thing = db.songIDToSong(songID)
+            .then((result) => {
+              console.log(result);
+              return result;
+            });
+          thing.map((prom) => {
+            prom.then((res) => {
+              return res;
+            });
           });
+        });
+        console.log(playlist);
+        this.setState({ isLoading: false });
+        // this.setState({ playlist });
       });
   };
 

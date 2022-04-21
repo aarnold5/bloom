@@ -38,7 +38,6 @@ class Tree extends React.Component {
     };
     if (tree && tree.root.visible) {
       if (pref) {
-        console.log('pref works');
         if (tree.root.rec) {
           return (
             <div>

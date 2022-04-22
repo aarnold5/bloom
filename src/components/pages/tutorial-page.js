@@ -19,16 +19,12 @@ class TutorialPage extends Component {
       trees: [],
       playlist: [],
       searchSuggestions: [],
-      layers: [],
-      currid: 0,
       searching: false,
       allowRootAdd: true,
       issueRootWarning: false,
       isLoading: false,
       renderDefault: true,
       fillingNodeID: -1,
-      ll: 0,
-      multi: 1,
     };
 
     this.search = debounce(this.search, 300);
@@ -55,29 +51,6 @@ class TutorialPage extends Component {
     }
   };
 
-  addNode = (song) => {
-    if (this.state.layers.length === 0) {
-      this.setState({
-        layers: [[{ song }]],
-      });
-      console.log('first');
-    } else if (this.state.layers[this.state.ll].length >= this.state.multi) {
-      this.setState((prevState) => ({
-        layers: [...prevState.layers, [{ song }]],
-        ll: prevState.ll + 1,
-        multi: prevState.multi * 2,
-      }));
-    } else {
-      this.setState(update(this.state, {
-        layers: {
-          [this.state.ll]: {
-            $set: [...this.state.layers[this.state.ll], { song }],
-          },
-        },
-      }));
-    }
-    this.setState((prevState) => ({ currid: prevState.currid + 1 }));
-  };
 
   handleSelectSong = (song) => {
     this.addNode(song);
@@ -104,19 +77,17 @@ class TutorialPage extends Component {
     this.setState({ layers: this.loadTree(tree.id).layers });
   };
 
-  handleGetRecs = () => {
-    this.setState({ isLoading: true });
-    db.getRecs()
-      .then((result) => {
-        console.log(result);
-        db.songIDsToSongs(result.songs)
-          .then((songs) => {
-            console.log(songs);
-            this.setState({ isLoading: false });
-            this.setState({ playlist: songs.songs });
+handleGetRecs = () => {
+      this.setState({ isLoading: true });
+      db.getRecs()
+        .then((songIDs) => {
+          // eslint-disable-next-line array-callback-return
+          // eslint-disable-next-line no-unused-vars
+          db.songIDsToSongs(songIDs.songs).then((res)=>{
+            this.setState({ playlist: res.songs, isLoading: false });
           });
-      });
-  };
+        });
+      };
 
   // eslint-disable-next-line consistent-return
   renderRootWarning() {

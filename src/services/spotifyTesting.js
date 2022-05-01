@@ -1,13 +1,14 @@
 /* eslint-disable max-len */
 /* eslint no-plusplus: ["error", { "allowForLoopAfterthoughts": true }] */
 /* eslint-disable no-unused-vars */
+import { getAuthKey } from './auth';
 
 const SpotifyWebApi = require('spotify-web-api-node');
 
 const fetch = require('cross-fetch');
 
-//Paste auth key generated manually from fetchingAuth.js into this variable to interact with Spotify. Yes, I know it sucks. 
-const authKey = 'BQDy2brkWVVHtDzaNO__x-Q4WNmZBM9TriPoJcWOFvhfLwwfSKG8U_2hu8EHwtY_3MR7C0TnwZ7Iva4ZIVRoPD01VK7dCAUMM6bBIWaSvuIAX0ERUQ24-9AuqTExAdvz2MyGNP_1GZjTkH741nlxN5UZNt1iKOHMHyRmkGiuB67ltkGSWh4VauFzSEUj0D54p5SqSpJAfInwjsrFjl3cPe6MAAlx3rD5-Rb4PPjBo9i6QRm9koMKUN6SOETrpC6tUhZO7ewtTsKJL2rTS_vUNeLIH8WdM4ykumrQMR-wS4h-4KRVGP35'; 
+// Paste auth key generated manually from fetchingAuth.js into this variable to interact with Spotify. Yes, I know it sucks.
+const authKey = 'BQDy2brkWVVHtDzaNO__x-Q4WNmZBM9TriPoJcWOFvhfLwwfSKG8U_2hu8EHwtY_3MR7C0TnwZ7Iva4ZIVRoPD01VK7dCAUMM6bBIWaSvuIAX0ERUQ24-9AuqTExAdvz2MyGNP_1GZjTkH741nlxN5UZNt1iKOHMHyRmkGiuB67ltkGSWh4VauFzSEUj0D54p5SqSpJAfInwjsrFjl3cPe6MAAlx3rD5-Rb4PPjBo9i6QRm9koMKUN6SOETrpC6tUhZO7ewtTsKJL2rTS_vUNeLIH8WdM4ykumrQMR-wS4h-4KRVGP35';
 
 const spotifyID = 'fnh6px78guvi666lyrtmr04p4';
 const playlistNameToID = {};

@@ -12,7 +12,7 @@ import fetch from 'cross-fetch';
 const spotifyApi = new SpotifyWebApi({
   clientId: 'd45e1813a6564588837b5f187309b617',
   clientSecret: '62aa2ebebc3c408cb399bc94e0d03df7',
-  redirectUri: 'http://localhost:8888/callback',
+  redirectUri: 'http://localhost:8080/login',
 });
 
 // eslint-disable-next-line import/prefer-default-export
@@ -104,3 +104,6 @@ export async function getAuthKey() {
     ));
   });
 } // end of main function
+
+console.log('getting the key');
+getAuthKey();

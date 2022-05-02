@@ -16,6 +16,8 @@ function TreeNode2(props) {
   function showRec() {
     // call update function to update the tree on the database
     // props.tree.left.root.visible = true;
+    // if (props.tree.root.rec === 1) {
+    // }
   }
 
   return (

@@ -51,7 +51,7 @@ class PlayList extends Component {
           {console.log(this.props.playlist)}
           {this.props.playlist.map((song) => {
             console.log(song);
-            return <Song key={song.id} name={song.name} song={song} />;
+            return <Song key={song.id} name={song.name} album_cover={song.album_cover} song={song} />;
           })}
         </div>
         <button type="button" id="reshuffle-playlist" className="playlist-button" onClick={this.props.getRecs}>

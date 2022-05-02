@@ -40,14 +40,13 @@ class Tree extends React.Component {
     };
     if (tree && tree.root.visible) {
       if (pref) {
-        console.log('pref works');
         if (tree.root.rec) {
           return (
             <div>
               <div style={inputstyle}>
                 <TreeNode2 id={tree.root.name} album="favicon.png" />
               </div>
-              <Xarrow start={pref} end={tree.root.name} zIndex={3} showHead={false} dashness color="gray" />
+              <Xarrow start={pref} end={tree.root.name} startAnchor={'bottom'} endAnchor={'top'} zIndex={3} showHead={false} dashness color="gray" />
               {this.getEdges(tree.left, l - i, t + 150, i / 2, tree.root.name)}
               {this.getEdges(tree.right, l + i, t + 150, i / 2, tree.root.name)}
             </div>
@@ -57,7 +56,7 @@ class Tree extends React.Component {
             <div>
               <div style={inputstyle}><TreeNode2 id={tree.root.name} album="favicon.png" />
               </div>
-              <Xarrow start={pref} end={tree.root.name} zIndex={3} showHead={false} color="#637B47" />
+              <Xarrow start={pref} end={tree.root.name} startAnchor={'bottom'} endAnchor={'top'} zIndex={3} showHead={false} color="#637B47" />
               {this.getEdges(tree.left, l - i, t + 150, i / 2, tree.root.name)}
               {this.getEdges(tree.right, l + i, t + 150, i / 2, tree.root.name)}
             </div>

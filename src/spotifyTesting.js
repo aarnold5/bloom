@@ -51,3 +51,40 @@ export function addTracksToPlaylist(api, playlistID, songArray) {
       console.log('Something went wrong!', err);
     });
 }
+
+/*
+returns the id of song given the track name and artist
+ */
+function findSongID(track, artist, api) {
+  // Search for tracks with given track name and artist name
+  api.searchTracks(`track:${track} artist:${artist}`)
+    .then((data) => {
+      // console.log(data.body['tracks']['items'][0]['id']);
+      const { id } = data.body.tracks.items[0]; // song id for pulling metadata.
+      console.log(id);
+    }, (err) => {
+      console.error(err);
+    });
+}
+
+/* returns an artist's spotify ID given just their name. Used for finding top tracks with an artist ID.
+   */
+async function findArtistID(api, artist) {
+  api.searchArtists(artist)
+    .then(async (data) => {
+      const id = await data.body.artists.items[0].id;
+      console.log(`${artist}: ${id}`);
+      return id;
+    }, (err) => {
+      console.error(err);
+    });
+}
+
+export function getMe(api) {
+  api.getMe()
+    .then((data) => {
+      console.log(data.body.id);
+    }, (err) => {
+      console.log('Something went wrong!', err);
+    });
+}

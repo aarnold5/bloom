@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React from 'react';
 

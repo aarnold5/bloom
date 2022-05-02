@@ -1,8 +1,9 @@
 import React from 'react';
+// import Player from './playTrack';
 
 function Song(props) {
   const playSong = () => {
-    // code to play the song here
+    console.log(props);
   };
   console.log(props.album_cover);
   console.log(props.name);

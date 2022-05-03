@@ -11,24 +11,40 @@ import * as db from '../../services/firestore';
 import SearchSuggestions from '../tutorial-components/search-suggestions';
 import { bloomSearch } from '../tutorial-components/search';
 import Tree from '../tutorial-components/tree';
+import Player from '../tutorial-components/player';
 
 const t = {
   root: {
     name: 'a',
     rec: false,
     visible: true,
+    song: {
+      name: 'AM Remix',
+      id: '05bfbizlM5AX6Mf1RRyMho',
+      album_cover: 'https://i.scdn.co/image/ab67616d00001e022ae66aa58208495074d88fd0',
+    },
   },
   left: {
     root: {
       name: 'b',
       rec: false,
       visible: true,
+      song: {
+        name: 'A Sky Full of Stars',
+        id: '0FDzzruyVECATHXKHFs9eJ',
+        album_cover: 'https://i.scdn.co/image/ab67616d00001e02f864bcdcc245f06831d17ae0',
+      },
     },
     left: {
       root: {
         name: 'd',
         rec: true,
         visible: true,
+        song: {
+          name: 'Anyone',
+          id: '2WnAKZefdRHxtBEkRjFOHC',
+          album_cover: 'https://i.scdn.co/image/ab67616d00001e02e6f407c7f3a0ec98845e4431',
+        },
       },
       left: null,
       right: null,
@@ -38,6 +54,11 @@ const t = {
         name: 'e',
         rec: true,
         visible: true,
+        song: {
+          name: 'All Girls Are The Same',
+          id: '4VXIryQMWpIdGgYR4TrjT1',
+          album_cover: 'https://i.scdn.co/image/ab67616d00001e02f7db43292a6a99b21b51d5b4',
+        },
       },
       left: null,
       right: null,
@@ -48,12 +69,22 @@ const t = {
       name: 'c',
       rec: false,
       visible: true,
+      song: {
+        name: 'A Tu Merced',
+        id: '4r9jkMEnArtWGH2rL2FZl0',
+        album_cover: 'https://i.scdn.co/image/ab67616d00001e02548f7ec52da7313de0c5e4a0',
+      },
     },
     left: {
       root: {
         name: 'f',
         rec: true,
         visible: true,
+        song: {
+          name: 'All Too Well (10 Minute Version) (Taylor\'s Version) (From The Vault)',
+          id: '5enxwA8aAbwZbf5qCHORXi',
+          album_cover: 'https://i.scdn.co/image/ab67616d00001e02318443aab3531a0558e79a4d',
+        },
       },
       left: null,
       right: null,
@@ -63,6 +94,11 @@ const t = {
         name: 'g',
         rec: true,
         visible: false,
+        song: {
+          name: 'Armed And Dangerous',
+          id: '5wujBwqG7INdStqGd4tRMX',
+          album_cover: 'https://i.scdn.co/image/ab67616d00001e02f7db43292a6a99b21b51d5b4',
+        },
       },
       left: null,
       right: null,
@@ -85,6 +121,7 @@ class TutorialPage extends Component {
       renderDefault: true,
       fillingNodeID: -1,
       tree: t,
+      isPlayMode: true,
     };
 
     this.search = debounce(this.search, 300);
@@ -179,7 +216,8 @@ class TutorialPage extends Component {
             searchSuggestions={this.state.searchSuggestions}
           />
           {`Tree: ${this.state.tree}`}
-          <Tree currid={this.state.currid} tree={t} runAlgo={this.handleRunAlgo} />
+          <Tree currid={this.state.currid} tree={t} runAlgo={this.handleRunAlgo} isPlayMode={this.state.isPlayMode} />
+          <Player accessToken={accessToken} trackUri={trackUri} playingTrack />
           <PlayList playlist={this.state.playlist} getRecs={this.handleGetRecs} isLoading={this.state.isLoading} />
         </div>
       </div>

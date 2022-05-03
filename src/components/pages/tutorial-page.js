@@ -122,6 +122,11 @@ class TutorialPage extends Component {
       fillingNodeID: -1,
       tree: t,
       isPlayMode: true,
+      isplayingTrack: false,
+      currentTrack: '',
+      // eslint-disable-next-line max-len
+      accessToken: 'BQCdCdKrpNfclw0olKmv6AWH31HQjrEo16EvigndnETXnoyHzpctEckTRmTYj7XHp8Jjf_g3L9XE0pUk-Mnq6r9zsHplqO3MeqG4HZrMvGrOMni-m40UsfMLr0S84KvrflIqOCrhJlvd7QvM-x6TzdVqAggzrzlqXoXAZvDzIcVJpcn_yhf4fLHVZu-BbagBfibD9wlQh5NiZKbxnJZ9olj7Bvh9w_SxUcdyedOVmFTAsDT3JFNYc_w-8BLPJgbxDJ66crcV_nZjFcCYdXOwtT8w0blIQfeAOIrAcQGsScvZzap3tJY8',
+      trackUri: 'spotify:track:05bfbizlM5AX6Mf1RRyMho',
     };
 
     this.search = debounce(this.search, 300);
@@ -191,6 +196,18 @@ class TutorialPage extends Component {
       });
   };
 
+  // eslint-disable-next-line class-methods-use-this
+  handleClickNode = (song) => {
+    console.log('click');
+    if (this.state.isPlayMode) {
+      console.log(`playSong:${song.name}`);
+      console.log(`playSong:${song.id}`);
+    //   this.setState({ trackUri: `spotify:track:${song.id}` });
+    // } else {
+    //   console.log('showNodes');
+    }
+  };
+
   setLoadingFalse = () => {
     this.setState({ isLoading: false });
   };
@@ -216,8 +233,8 @@ class TutorialPage extends Component {
             searchSuggestions={this.state.searchSuggestions}
           />
           {`Tree: ${this.state.tree}`}
-          <Tree currid={this.state.currid} tree={t} runAlgo={this.handleRunAlgo} isPlayMode={this.state.isPlayMode} />
-          <Player accessToken={accessToken} trackUri={trackUri} playingTrack />
+          <Tree currid={this.state.currid} tree={t} runAlgo={this.handleRunAlgo} isPlayMode={this.state.isPlayMode} onClickNode={this.handleClickNode} />
+          <Player accessToken={this.state.accessToken} trackUri={this.state.trackUri} playingTrack />
           <PlayList playlist={this.state.playlist} getRecs={this.handleGetRecs} isLoading={this.state.isLoading} />
         </div>
       </div>

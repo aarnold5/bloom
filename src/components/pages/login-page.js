@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 // import { Link } from 'react-router-dom';
-import * as auth from '../../services/auth';
 
 class LoginPage extends Component {
   constructor(props) {
@@ -23,7 +22,7 @@ class LoginPage extends Component {
               <input type="password" id="pwd" name="pwd" />
             </label>
           </form>
-          <button id="get-started-button" className="home-page-button" type="button" onClick={auth.getAuthKey()}>Login With Spotify</button>
+          <button id="get-started-button" className="home-page-button" type="button">Login With Spotify</button>
         </div>
       </div>
     );

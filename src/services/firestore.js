@@ -86,7 +86,7 @@ export const getRecs = () => {
     songs: fetchInputPlaylist(),
   };
   return new Promise((resolve, reject) => {
-    axios.post('https://bloom-algo-server.herokuapp.com/algo/', fields, {
+    axios.post('https://us-central1-bloom-838b5.cloudfunctions.net/algorithm', fields, {
       headers: { 'Content-Type': 'application/json' },
     })
       .then((response) => {

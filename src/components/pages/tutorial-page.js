@@ -22,6 +22,7 @@ const t = {
       name: 'AM Remix',
       id: '05bfbizlM5AX6Mf1RRyMho',
       album_cover: 'https://i.scdn.co/image/ab67616d00001e022ae66aa58208495074d88fd0',
+      uri: 'spotify:track:05bfbizlM5AX6Mf1RRyMho',
     },
   },
   left: {
@@ -33,6 +34,7 @@ const t = {
         name: 'A Sky Full of Stars',
         id: '0FDzzruyVECATHXKHFs9eJ',
         album_cover: 'https://i.scdn.co/image/ab67616d00001e02f864bcdcc245f06831d17ae0',
+        uri: 'spotify:track:0FDzzruyVECATHXKHFs9eJ',
       },
     },
     left: {
@@ -44,6 +46,7 @@ const t = {
           name: 'Anyone',
           id: '2WnAKZefdRHxtBEkRjFOHC',
           album_cover: 'https://i.scdn.co/image/ab67616d00001e02e6f407c7f3a0ec98845e4431',
+          uri: 'spotify:track:2WnAKZefdRHxtBEkRjFOHC',
         },
       },
       left: null,
@@ -58,6 +61,7 @@ const t = {
           name: 'All Girls Are The Same',
           id: '4VXIryQMWpIdGgYR4TrjT1',
           album_cover: 'https://i.scdn.co/image/ab67616d00001e02f7db43292a6a99b21b51d5b4',
+          uri: 'spotify:track:4VXIryQMWpIdGgYR4TrjT1',
         },
       },
       left: null,
@@ -73,6 +77,7 @@ const t = {
         name: 'A Tu Merced',
         id: '4r9jkMEnArtWGH2rL2FZl0',
         album_cover: 'https://i.scdn.co/image/ab67616d00001e02548f7ec52da7313de0c5e4a0',
+        uri: 'spotify:track:4r9jkMEnArtWGH2rL2FZl0',
       },
     },
     left: {
@@ -84,6 +89,7 @@ const t = {
           name: 'All Too Well (10 Minute Version) (Taylor\'s Version) (From The Vault)',
           id: '5enxwA8aAbwZbf5qCHORXi',
           album_cover: 'https://i.scdn.co/image/ab67616d00001e02318443aab3531a0558e79a4d',
+          uri: 'spotify:track:5enxwA8aAbwZbf5qCHORXi',
         },
       },
       left: null,
@@ -98,6 +104,7 @@ const t = {
           name: 'Armed And Dangerous',
           id: '5wujBwqG7INdStqGd4tRMX',
           album_cover: 'https://i.scdn.co/image/ab67616d00001e02f7db43292a6a99b21b51d5b4',
+          uri: 'spotify:track:5wujBwqG7INdStqGd4tRMX',
         },
       },
       left: null,
@@ -123,10 +130,10 @@ class TutorialPage extends Component {
       tree: t,
       isPlayMode: true,
       isplayingTrack: false,
-      currentTrack: '',
+      currentTrackUri: '',
       // eslint-disable-next-line max-len
       accessToken: 'BQCdCdKrpNfclw0olKmv6AWH31HQjrEo16EvigndnETXnoyHzpctEckTRmTYj7XHp8Jjf_g3L9XE0pUk-Mnq6r9zsHplqO3MeqG4HZrMvGrOMni-m40UsfMLr0S84KvrflIqOCrhJlvd7QvM-x6TzdVqAggzrzlqXoXAZvDzIcVJpcn_yhf4fLHVZu-BbagBfibD9wlQh5NiZKbxnJZ9olj7Bvh9w_SxUcdyedOVmFTAsDT3JFNYc_w-8BLPJgbxDJ66crcV_nZjFcCYdXOwtT8w0blIQfeAOIrAcQGsScvZzap3tJY8',
-      trackUri: 'spotify:track:05bfbizlM5AX6Mf1RRyMho',
+      // trackUri: 'spotify:track:05bfbizlM5AX6Mf1RRyMho',
     };
 
     this.search = debounce(this.search, 300);
@@ -197,15 +204,16 @@ class TutorialPage extends Component {
   };
 
   // eslint-disable-next-line class-methods-use-this
-  handleClickNode = (song) => {
+  handleClickNode = (song, name) => {
     console.log('click');
-    if (this.state.isPlayMode) {
-      console.log(`playSong:${song.name}`);
-      console.log(`playSong:${song.id}`);
-    //   this.setState({ trackUri: `spotify:track:${song.id}` });
+    console.log(`node: ${name} has been clicked`);
+    // if (this.state.isPlayMode) {
+    // console.log(`playSong:${song.name}`);
+    // console.log(`playSong:${song.id}`);
+    // this.setState({ trackUri: `spotify:track:${song.id}` });
     // } else {
     //   console.log('showNodes');
-    }
+    // }
   };
 
   setLoadingFalse = () => {

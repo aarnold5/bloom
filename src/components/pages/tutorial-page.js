@@ -13,6 +13,18 @@ import { bloomSearch } from '../tutorial-components/search';
 import Tree from '../tutorial-components/tree';
 import Player from '../tutorial-components/player';
 
+const songLookup = {};
+
+function treeToDict(t, dictSoFar) {
+  if (t) {
+    // eslint-disable-next-line no-param-reassign
+    dictSoFar[t.root.name] = t.root.song;
+    treeToDict(t.left, dictSoFar);
+    treeToDict(t.right, dictSoFar);
+  }
+  return dictSoFar;
+}
+
 const t = {
   root: {
     name: 'a',
@@ -129,10 +141,12 @@ class TutorialPage extends Component {
       fillingNodeID: -1,
       tree: t,
       isPlayMode: true,
+      isDragMode: false,
       isplayingTrack: false,
       currentTrackUri: '',
       // eslint-disable-next-line max-len
-      accessToken: 'BQCdCdKrpNfclw0olKmv6AWH31HQjrEo16EvigndnETXnoyHzpctEckTRmTYj7XHp8Jjf_g3L9XE0pUk-Mnq6r9zsHplqO3MeqG4HZrMvGrOMni-m40UsfMLr0S84KvrflIqOCrhJlvd7QvM-x6TzdVqAggzrzlqXoXAZvDzIcVJpcn_yhf4fLHVZu-BbagBfibD9wlQh5NiZKbxnJZ9olj7Bvh9w_SxUcdyedOVmFTAsDT3JFNYc_w-8BLPJgbxDJ66crcV_nZjFcCYdXOwtT8w0blIQfeAOIrAcQGsScvZzap3tJY8',
+      accessToken: 'BQAR0YnleQNva2_jAvg7pkDwZyIYL3Iauoz82XKHnGViB3-TuEN_YE7bHZV48q_65vpLc6nj7XQz-l7izFyLeBA8My9Kt4oU75IhB7Cn4B7KZwXDo09rOiZFNGcqWS1m8RPGpaKKc5d6pYccuPY_P5s5TNaPowTYixG8Czg2m6zbodziH8AmEBBbbe2zpXuatvlVUxSkSTtChUYttqioP3cbZjU4xdtHhMQcA4z6Rx3gScOTklyPHKHMfXPpS31irI_K4CneS83HxTw8_NNFKVA7abqF8N13v4PydT8_OFkQc62Dg0Vy',
+
       // trackUri: 'spotify:track:05bfbizlM5AX6Mf1RRyMho',
     };
 
@@ -142,6 +156,8 @@ class TutorialPage extends Component {
   componentDidMount() {
     db.fetchTrees()
       .then((result) => this.setState({ trees: result.trees }));
+    // eslint-disable-next-line no-new-object
+    treeToDict(t, songLookup);
   }
 
   search = (text) => {
@@ -204,16 +220,15 @@ class TutorialPage extends Component {
   };
 
   // eslint-disable-next-line class-methods-use-this
-  handleClickNode = (song, name) => {
+  setSongPlayback = (nodeName) => {
     console.log('click');
-    console.log(`node: ${name} has been clicked`);
-    // if (this.state.isPlayMode) {
-    // console.log(`playSong:${song.name}`);
-    // console.log(`playSong:${song.id}`);
-    // this.setState({ trackUri: `spotify:track:${song.id}` });
-    // } else {
-    //   console.log('showNodes');
-    // }
+    console.log(`node: ${nodeName} has been clicked!`);
+    if (this.state.isPlayMode) {
+      const songUri = songLookup[nodeName].uri;
+      this.setState({ trackUri: songUri });
+    } else {
+      console.log('showNodes');
+    }
   };
 
   setLoadingFalse = () => {
@@ -241,7 +256,7 @@ class TutorialPage extends Component {
             searchSuggestions={this.state.searchSuggestions}
           />
           {`Tree: ${this.state.tree}`}
-          <Tree currid={this.state.currid} tree={t} runAlgo={this.handleRunAlgo} isPlayMode={this.state.isPlayMode} onClickNode={this.handleClickNode} />
+          <Tree currid={this.state.currid} tree={t} runAlgo={this.handleRunAlgo} isPlayMode={this.state.isPlayMode} onClickNode={this.setSongPlayback} />
           <Player accessToken={this.state.accessToken} trackUri={this.state.trackUri} playingTrack />
           <PlayList playlist={this.state.playlist} getRecs={this.handleGetRecs} isLoading={this.state.isLoading} />
         </div>

@@ -39,7 +39,7 @@ function TreeNode2(props) {
         <button type="button" id={props.id} className="dot node-button">
           <img src={props.album} draggable="false" alt="temp" className="round-img" />
         </button>
-        <button type="button" className="node-name-label" onClick={props.onClickNode}>Play: {props.song.name} </button>
+        <button type="button" className="node-name-label" onClick={() => props.onClickNode(props.id)}>Play: {props.song.name} </button>
       </div>
     </Draggable>
   );

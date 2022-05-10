@@ -154,11 +154,56 @@ class TutorialPage extends Component {
   }
 
   componentDidMount() {
+    document.addEventListener('keydown', this.keydownHandler);
     db.fetchTrees()
       .then((result) => this.setState({ trees: result.trees }));
     // eslint-disable-next-line no-new-object
     treeToDict(t, songLookup);
   }
+
+  componentWillUnmount() {
+    this.removeEventListener('keydown', this.keydownHandler);
+  }
+
+  keydownHandler = (event) => {
+    if (event.key === 'w') {
+      this.setState({ tool_mode: 'weight' });
+    } else if (event.key === 's') {
+      this.setState({ tool_mode: 'select' });
+    } else if (event.key === 'c') {
+      this.setState({ tool_mode: 'cut' });
+    } else if (event.key === 'p') {
+      this.setState({ tool_mode: 'play' });
+    } else if (event.key === '+') {
+      this.setState({ tool_mode: 'plus' });
+    } else if (event.key === '-') {
+      this.setState({ tool_mode: 'minus' });
+    }
+  };
+
+  setPlus = () => {
+    this.setState({ tool_mode: 'plus' });
+  };
+
+  setMinus = () => {
+    this.setState({ tool_mode: 'minus' });
+  };
+
+  setCut = () => {
+    this.setState({ tool_mode: 'cut' });
+  };
+
+  setSel = () => {
+    this.setState({ tool_mode: 'select' });
+  };
+
+  setWeight = () => {
+    this.setState({ tool_mode: 'weight' });
+  };
+
+  setPlay = () => {
+    this.setState({ tool_mode: 'play' });
+  };
 
   search = (text) => {
     bloomSearch(text).then((searchSuggestions) => {
@@ -247,7 +292,15 @@ class TutorialPage extends Component {
       <div id="tutorial-page" className="page-container container">
         <TreeList trees={this.state.trees} onSelectDifferentTree={() => this.handleLoadNewTree} />
         <div className="right-half container">
-          <ToolBar addRootNode={this.rootNode} />
+         <ToolBar addRootNode={this.rootNode}
+            tool={this.state.tool_mode}
+            setPlus={this.setPlus}
+            setCut={this.setCut}
+            setSel={this.setSel}
+            setW={this.setWeight}
+            setPlay={this.setPlay}
+            setMinus={this.setMinus}
+          />
           {this.renderRootWarning()}
           <SearchSuggestions
             searching={this.state.searching}

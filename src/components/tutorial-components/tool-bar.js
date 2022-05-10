@@ -170,4 +170,3 @@ class ToolBar extends React.Component {
 }
 
 export default ToolBar;
-

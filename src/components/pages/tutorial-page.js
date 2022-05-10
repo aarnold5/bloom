@@ -1,3 +1,6 @@
+/* eslint-disable react/jsx-indent-props */
+/* eslint-disable react/jsx-indent */
+/* eslint-disable react/jsx-closing-bracket-location */
 /* eslint-disable react/no-unused-state */
 /* eslint-disable react/no-access-state-in-setstate */
 
@@ -145,7 +148,7 @@ class TutorialPage extends Component {
       isplayingTrack: false,
       currentTrackUri: '',
       // eslint-disable-next-line max-len
-      accessToken: 'BQAzu9hsxVME80VKXU36oiF0mkA35q2qOcyBuCVDE9Ofck_M8euJaHK0Ze4gRl5jus228oaOkPcnDbcbq80nQZ50rCI7SoGSsDaNFDtvjn2v0Ak080fHwADV1AFp-zGIfQNqnt-jiaXKZGyHIgdwk_CVK5hnqjicFmllsimE8uysla32W7vcpyVLF0ufXzu2kF-Q7G-yQpZzkfGbxMpwlqxfqRlqpWJ4PYuVBT5HyrxFUIIG7e_unXKEx30pCucvaroWHTaxfE3t_4ridZM_DCWAQzmfkJnWr69BXBl--Gbgl81L4CWv',
+      accessToken: 'BQAJMyE7aMVVt5ubI_AjI7x1pW0HqYvsI3pa6CuBQIwq9THJBdChLBtCqu68nixUhE_XQWsXEiPi6foslr9482ZQvsx4zMWiM0IAVXqZZCG1XXC779TVQ9tT50Xfjwuvd0VozV99eD2TZ3rn3HAsi4mbG15DIDMKdJ46NFxLlNFg3HiwYwm9FlcMGyvLp-trA6nGrG8sPEVCowKYB0w6ZuoDq2UPiSIzpfL1I6LcaPPCA7XdrVwmbuQVkW4K8PxBSG8dQ2x_b-tcTEszXnZ1wNARQAG9Qqg4toqDYGYi65tq-mgbty45',
 
       // trackUri: 'spotify:track:05bfbizlM5AX6Mf1RRyMho',
     };

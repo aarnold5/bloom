@@ -146,6 +146,8 @@ class TutorialPage extends Component {
       isPlayMode: true,
       isDragMode: false,
       isplayingTrack: false,
+      currentTrack: '',
+      tool_mode: 'select',
       currentTrackUri: '',
       // eslint-disable-next-line max-len
       accessToken: 'BQCWYvlgHaGGLI8BDD-CCgcQrQmulElAAwV-BFLoaKjxZ_SyVO2HLfXz9p_FYpIb0MqGEPP9Y95cNEpa7QebQqxAHW0JxoIq3kWNT2gEEnr-02jGE-54u4cMt4gcly3SqN2FRH8wJmqZREo3qs-IZMJXTlx-ak1mX5Mo6f87GbJ5s0AWJqfEaaAwR8KbH6KPqz5-6NbkI8_1hrYJRrnLQlxp_8MW0FUS8OwwBwP9P2oZKvKNU3AzUJvjAAB8B2KWfEGBn2UvJ_hZuWvcORiigPYAmHc_oNL5jfUQp0uwSTMKDMqB_j5c',
@@ -295,7 +297,7 @@ class TutorialPage extends Component {
       <div id="tutorial-page" className="page-container container">
         <TreeList trees={this.state.trees} onSelectDifferentTree={() => this.handleLoadNewTree} />
         <div className="right-half container">
-         <ToolBar addRootNode={this.rootNode}
+          <ToolBar addRootNode={this.rootNode}
             tool={this.state.tool_mode}
             setPlus={this.setPlus}
             setCut={this.setCut}
@@ -312,7 +314,7 @@ class TutorialPage extends Component {
             searchSuggestions={this.state.searchSuggestions}
           />
           {`Tree: ${this.state.tree}`}
-          <Tree currid={this.state.currid} tree={t} runAlgo={this.handleRunAlgo} isPlayMode={this.state.isPlayMode} onClickNode={this.setSongPlayback} />
+          <Tree currid={this.state.currid} tree={t} runAlgo={this.handleRunAlgo} isPlayMode={this.state.isPlayMode} onClickNode={this.handleClickNode} tool={this.state.tool_mode} />
           <Player accessToken={this.state.accessToken} trackUri={this.state.trackUri} playingTrack />
           <PlayList playlist={this.state.playlist} getRecs={this.handleGetRecs} isLoading={this.state.isLoading} />
         </div>

@@ -32,16 +32,39 @@ function TreeNode2(props) {
       showRec();
     }
   } */
-
-  return (
-    <Draggable onDrag={updateXarrow} onStop={updateXarrow}>
-      <div>
-        <button type="button" id={props.id} className="dot node-button" onClick={() => props.onClickNode(props.id)}>
-          <img src={props.album} draggable="false" alt="temp" className="round-img" />
-        </button>
-      </div>
-    </Draggable>
-  );
+  if (props.tool_mode !== 'select') {
+    if (props.tool_mode === 'play') {
+      return (
+        <Draggable onDrag={updateXarrow} onStop={updateXarrow} disabled>
+          <div>
+            <button type="button" id={props.id} className="dot node-button" onClick={() => props.onClickNode(props.id)}>
+              <img src={props.album} draggable="false" alt="temp" className="round-img" />
+            </button>
+          </div>
+        </Draggable>
+      );
+    } else {
+      return (
+        <Draggable onDrag={updateXarrow} onStop={updateXarrow} disabled>
+          <div>
+            <button type="button" id={props.id} className="dot node-button">
+              <img src={props.album} draggable="false" alt="temp" className="round-img" />
+            </button>
+          </div>
+        </Draggable>
+      );
+    }
+  } else {
+    return (
+      <Draggable onDrag={updateXarrow} onStop={updateXarrow}>
+        <div>
+          <button type="button" id={props.id} className="dot node-button">
+            <img src={props.album} draggable="false" alt="temp" className="round-img" />
+          </button>
+        </div>
+      </Draggable>
+    );
+  }
 }
 
 class Tree extends React.Component {
@@ -61,7 +84,7 @@ class Tree extends React.Component {
           return (
             <div>
               <div style={inputstyle}>
-                <TreeNode2 id={tree.root.name} song={tree.root.song} album={tree.root.song.album_cover} onClickNode={this.props.onClickNode} />
+                <TreeNode2 id={tree.root.name} song={tree.root.song} album={tree.root.song.album_cover} onClickNode={this.props.onClickNode} tool_mode={this.props.tool} />
               </div>
               <Xarrow start={pref} end={tree.root.name} startAnchor="bottom" endAnchor="top" zIndex={3} showHead={false} dashness color="gray" />
               {this.getEdges(tree.left, l - i, t + 150, i / 2, tree.root.name)}
@@ -71,7 +94,7 @@ class Tree extends React.Component {
         } else {
           return (
             <div>
-              <div style={inputstyle}><TreeNode2 id={tree.root.name} song={tree.root.song} album={tree.root.song.album_cover} onClickNode={this.props.onClickNode} />
+              <div style={inputstyle}><TreeNode2 id={tree.root.name} song={tree.root.song} album={tree.root.song.album_cover} onClickNode={this.props.onClickNode} tool_mode={this.props.tool} />
               </div>
               <Xarrow start={pref} end={tree.root.name} startAnchor="bottom" endAnchor="top" zIndex={3} showHead={false} color="#637B47" />
               {this.getEdges(tree.left, l - i, t + 150, i / 2, tree.root.name)}
@@ -83,7 +106,7 @@ class Tree extends React.Component {
         return (
           <div>
             <div style={inputstyle}>
-              <TreeNode2 id={tree.root.name} song={tree.root.song} album={tree.root.song.album_cover} onClickNode={this.props.onClickNode} />
+              <TreeNode2 id={tree.root.name} song={tree.root.song} album={tree.root.song.album_cover} onClickNode={this.props.onClickNode} tool_mode={this.props.tool} />
             </div>
             {this.getEdges(tree.left, l - i, t + 150, i / 2, tree.root.name)}
             {this.getEdges(tree.right, l + i, t + 150, i / 2, tree.root.name)}

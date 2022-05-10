@@ -148,7 +148,7 @@ class TutorialPage extends Component {
       isplayingTrack: false,
       currentTrackUri: '',
       // eslint-disable-next-line max-len
-      accessToken: 'BQAJMyE7aMVVt5ubI_AjI7x1pW0HqYvsI3pa6CuBQIwq9THJBdChLBtCqu68nixUhE_XQWsXEiPi6foslr9482ZQvsx4zMWiM0IAVXqZZCG1XXC779TVQ9tT50Xfjwuvd0VozV99eD2TZ3rn3HAsi4mbG15DIDMKdJ46NFxLlNFg3HiwYwm9FlcMGyvLp-trA6nGrG8sPEVCowKYB0w6ZuoDq2UPiSIzpfL1I6LcaPPCA7XdrVwmbuQVkW4K8PxBSG8dQ2x_b-tcTEszXnZ1wNARQAG9Qqg4toqDYGYi65tq-mgbty45',
+      accessToken: 'BQCWYvlgHaGGLI8BDD-CCgcQrQmulElAAwV-BFLoaKjxZ_SyVO2HLfXz9p_FYpIb0MqGEPP9Y95cNEpa7QebQqxAHW0JxoIq3kWNT2gEEnr-02jGE-54u4cMt4gcly3SqN2FRH8wJmqZREo3qs-IZMJXTlx-ak1mX5Mo6f87GbJ5s0AWJqfEaaAwR8KbH6KPqz5-6NbkI8_1hrYJRrnLQlxp_8MW0FUS8OwwBwP9P2oZKvKNU3AzUJvjAAB8B2KWfEGBn2UvJ_hZuWvcORiigPYAmHc_oNL5jfUQp0uwSTMKDMqB_j5c',
 
       // trackUri: 'spotify:track:05bfbizlM5AX6Mf1RRyMho',
     };

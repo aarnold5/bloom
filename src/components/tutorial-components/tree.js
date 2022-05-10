@@ -36,10 +36,9 @@ function TreeNode2(props) {
   return (
     <Draggable onDrag={updateXarrow} onStop={updateXarrow}>
       <div>
-        <button type="button" id={props.id} className="dot node-button">
+        <button type="button" id={props.id} className="dot node-button" onClick={() => props.onClickNode(props.id)}>
           <img src={props.album} draggable="false" alt="temp" className="round-img" />
         </button>
-        <button type="button" className="node-name-label" onClick={() => props.onClickNode(props.id)}>Play: {props.song.name} </button>
       </div>
     </Draggable>
   );

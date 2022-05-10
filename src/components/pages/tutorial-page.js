@@ -145,7 +145,7 @@ class TutorialPage extends Component {
       isplayingTrack: false,
       currentTrackUri: '',
       // eslint-disable-next-line max-len
-      accessToken: 'BQD2y0TlMSQXL6_NGr9mcKSKY3AhGwxv7JeWo5sfuczaC5gARBzZXlcX7Ixdo1sgWcnaTkRwGi_GFQlOMb8f1UkFBT8bzEq42f9c7Kr_u98CxjSGZxp_hwmBPypZqsnLPM44T0bI_YGoKchfxChO_80n6LCF8DKVvgF7jzCBBlVWW-Iv29RXWQAcrofD1SL9mlJufyPwF0nJ6CyaT3a-mI4uZHFA2rviIQETIa7PcGuCKSagd7eJP0816NilXytJ8W7iYMxNOv-2ZvpbbunNUIEf53r_-i8GRmI30L9y5ZzDOCrkO80K',
+      accessToken: 'BQAzu9hsxVME80VKXU36oiF0mkA35q2qOcyBuCVDE9Ofck_M8euJaHK0Ze4gRl5jus228oaOkPcnDbcbq80nQZ50rCI7SoGSsDaNFDtvjn2v0Ak080fHwADV1AFp-zGIfQNqnt-jiaXKZGyHIgdwk_CVK5hnqjicFmllsimE8uysla32W7vcpyVLF0ufXzu2kF-Q7G-yQpZzkfGbxMpwlqxfqRlqpWJ4PYuVBT5HyrxFUIIG7e_unXKEx30pCucvaroWHTaxfE3t_4ridZM_DCWAQzmfkJnWr69BXBl--Gbgl81L4CWv',
 
       // trackUri: 'spotify:track:05bfbizlM5AX6Mf1RRyMho',
     };

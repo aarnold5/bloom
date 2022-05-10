@@ -43,6 +43,26 @@ function TreeNode2(props) {
           </div>
         </Draggable>
       );
+    } else if (props.tool_mode === 'cut') {
+      return (
+        <Draggable onDrag={updateXarrow} onStop={updateXarrow} disabled>
+          <div>
+            <button type="button" id={props.id} className="dot node-button" onClick={() => props.onClickNode(props.id)}>
+              <img src={props.album} draggable="false" alt="temp" className="round-img" />
+            </button>
+          </div>
+        </Draggable>
+      );
+    } else if (props.tool_mode === 'weight') {
+      return (
+        <Draggable onDrag={updateXarrow} onStop={updateXarrow} disabled>
+          <div>
+            <button type="button" id={props.id} className="dot node-button" onClick={() => props.onClickNode(props.id)}>
+              <img src={props.album} draggable="false" alt="temp" className="round-img" />
+            </button>
+          </div>
+        </Draggable>
+      );
     } else {
       return (
         <Draggable onDrag={updateXarrow} onStop={updateXarrow} disabled>

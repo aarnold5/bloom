@@ -102,6 +102,11 @@ nav {
   background: #96A66D;
   margin: 40px;
   z-index: 3;
+  transition: all 0.3s ease 0s;
+}
+
+.dot:hover{
+  transform: scale(1.1);
 }
 
 .round-img {

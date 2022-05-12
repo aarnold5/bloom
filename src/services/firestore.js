@@ -149,3 +149,21 @@ export const addFirstNode = (node) => {
       });
   });
 };
+
+export const deleteNodes = (tree, songID) => {
+  const fields = {
+    tree, operation: 'DELETE', node_id: songID, attribute: '',
+  };
+  return new Promise((resolve, reject) => {
+    axios.post('https://us-central1-bloom-838b5.cloudfunctions.net/treeFunctions', fields, {
+      headers: { 'Content-Type': 'application/json' },
+    })
+      .then((response) => {
+        resolve(response.data.results);
+      })
+      .catch((error) => {
+        console.log(`api error: ${error}`);
+        reject(error);
+      });
+  });
+};

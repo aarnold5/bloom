@@ -142,7 +142,6 @@ class TutorialPage extends Component {
       isLoading: false,
       renderDefault: true,
       fillingNodeID: -1,
-      tree: t,
       isPlayMode: true,
       isDragMode: false,
       isplayingTrack: false,
@@ -163,7 +162,8 @@ class TutorialPage extends Component {
     db.fetchTrees()
       .then((result) => this.setState({ trees: result.trees }));
     // eslint-disable-next-line no-new-object
-    treeToDict(t, songLookup);
+    db.loadTree()
+      .then((result) => this.setState({ tree: result.tree_json }));
   }
 
   componentWillUnmount() {
@@ -251,6 +251,7 @@ class TutorialPage extends Component {
     console.log(tree.target.id);
     db.loadTree(tree.target.id)
       .then((result) => {
+        console.log(result);
         this.setState({ tree: result });
       });
   };
@@ -293,6 +294,8 @@ class TutorialPage extends Component {
   }
 
   render() {
+    console.log('tree:');
+    console.log(this.state.tree);
     return (
       <div id="tutorial-page" className="page-container container">
         <TreeList trees={this.state.trees} onSelectDifferentTree={() => this.handleLoadNewTree} />
@@ -313,8 +316,8 @@ class TutorialPage extends Component {
             onSearchChange={this.search}
             searchSuggestions={this.state.searchSuggestions}
           />
-          {`Tree: ${this.state.tree}`}
-          <Tree currid={this.state.currid} tree={t} runAlgo={this.handleRunAlgo} isPlayMode={this.state.isPlayMode} onClickNode={this.handleClickNode} tool={this.state.tool_mode} />
+
+          <Tree currid={this.state.currid} tree={this.state.tree} runAlgo={this.handleRunAlgo} isPlayMode={this.state.isPlayMode} onClickNode={this.handleClickNode} tool={this.state.tool_mode} />
           <Player accessToken={this.state.accessToken} trackUri={this.state.trackUri} playingTrack />
           <PlayList playlist={this.state.playlist} getRecs={this.handleGetRecs} isLoading={this.state.isLoading} />
         </div>

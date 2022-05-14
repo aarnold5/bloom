@@ -116,14 +116,11 @@ export const saveTree = (tree) => {
   });
 };
 
-export const loadTree = (tree) => {
-  const fields = tree;
+export const loadTree = () => {
   return new Promise((resolve, reject) => {
-    axios.post('https://us-central1-bloom-838b5.cloudfunctions.net/treeLoader', fields, {
-      headers: { 'Content-Type': 'application/json' },
-    })
+    axios.post('https://us-central1-bloom-838b5.cloudfunctions.net/treeLoader')
       .then((response) => {
-        resolve(response.data.results);
+        resolve(response.data);
       })
       .catch((error) => {
         console.log(`api error: ${error}`);

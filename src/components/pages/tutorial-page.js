@@ -247,8 +247,6 @@ class TutorialPage extends Component {
   }; */
 
   handleLoadNewTree = (tree) => {
-    console.log(tree);
-    console.log(tree.target.id);
     db.loadTree(tree.target.id)
       .then((result) => {
         console.log(result);
@@ -294,8 +292,6 @@ class TutorialPage extends Component {
   }
 
   render() {
-    console.log('tree:');
-    console.log(this.state.tree);
     return (
       <div id="tutorial-page" className="page-container container">
         <TreeList trees={this.state.trees} onSelectDifferentTree={() => this.handleLoadNewTree} />

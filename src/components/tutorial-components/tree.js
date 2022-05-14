@@ -48,7 +48,7 @@ function TreeNode2(props) {
       return (
         <Draggable onDrag={updateXarrow} onStop={updateXarrow} disabled>
           <div>
-            <button type="button" id={props.id} className="dot node-button" onClick={db.deleteNodes(props.tree, props.id)}>
+            <button type="button" id={props.id} className="dot node-button" onClick={db.deleteNodes('Pop Recs', props.id)}>
               <img src={props.album} draggable="false" alt="temp" className="round-img" />
             </button>
           </div>
@@ -140,50 +140,6 @@ class Tree extends React.Component {
   }
 
   render() {
-    const t = {
-      root: {
-        name: 'a',
-        rec: false,
-      },
-      left: {
-        root: { name: 'b' },
-        left: {
-          root: {
-            name: 'd',
-            rec: false,
-          },
-          left: null,
-          right: null,
-        },
-        right: {
-          root: {
-            name: 'e',
-            rec: true,
-          },
-          left: null,
-          right: null,
-        },
-      },
-      right: {
-        root: { name: 'c' },
-        left: {
-          root: {
-            name: 'f',
-            rec: false,
-          },
-          left: null,
-          right: null,
-        },
-        right: {
-          root: {
-            name: 'g',
-            rec: false,
-          },
-          left: null,
-          right: null,
-        },
-      },
-    };
     const w = window.innerWidth;
     const h = window.innerHeight;
     return (

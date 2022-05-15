@@ -14,11 +14,11 @@ import * as db from '../../services/firestore';
 import SearchSuggestions from '../tutorial-components/search-suggestions';
 import { bloomSearch } from '../tutorial-components/search';
 import Tree from '../tutorial-components/tree';
-import Player from '../tutorial-components/player';
+// import Player from '../tutorial-components/player';
 
-const songLookup = {};
+// const songLookup = {};
 
-function treeToDict(t, dictSoFar) {
+/* function treeToDict(t, dictSoFar) {
   if (t) {
     // eslint-disable-next-line no-param-reassign
     dictSoFar[t.root.name] = t.root.song;
@@ -26,9 +26,9 @@ function treeToDict(t, dictSoFar) {
     treeToDict(t.right, dictSoFar);
   }
   return dictSoFar;
-}
+} */
 
-const t = {
+/* const t = {
   root: {
     name: 'a',
     rec: false,
@@ -126,7 +126,7 @@ const t = {
       right: null,
     },
   },
-};
+}; */
 
 class TutorialPage extends Component {
   constructor(props) {
@@ -150,7 +150,7 @@ class TutorialPage extends Component {
       currentTrackUri: '',
       // eslint-disable-next-line max-len
       accessToken: 'BQCWYvlgHaGGLI8BDD-CCgcQrQmulElAAwV-BFLoaKjxZ_SyVO2HLfXz9p_FYpIb0MqGEPP9Y95cNEpa7QebQqxAHW0JxoIq3kWNT2gEEnr-02jGE-54u4cMt4gcly3SqN2FRH8wJmqZREo3qs-IZMJXTlx-ak1mX5Mo6f87GbJ5s0AWJqfEaaAwR8KbH6KPqz5-6NbkI8_1hrYJRrnLQlxp_8MW0FUS8OwwBwP9P2oZKvKNU3AzUJvjAAB8B2KWfEGBn2UvJ_hZuWvcORiigPYAmHc_oNL5jfUQp0uwSTMKDMqB_j5c-CCgcQrQmulElAAwV-BFLoaKjxZ_SyVO2HLfXz9p_FYpIb0MqGEPP9Y95cNEpa7QebQqxAHW0JxoIq3kWNT2gEEnr-02jGE-54u4cMt4gcly3SqN2FRH8wJmqZREo3qs-IZMJXTlx-ak1mX5Mo6f87GbJ5s0AWJqfEaaAwR8KbH6KPqz5-6NbkI8_1hrYJRrnLQlxp_8MW0FUS8OwwBwP9P2oZKvKNU3AzUJvjAAB8B2KWfEGBn2UvJ_hZuWvcORiigPYAmHc_oNL5jfUQp0uwSTMKDMqB_j5c-trA6nGrG8sPEVCowKYB0w6ZuoDq2UPiSIzpfL1I6LcaPPCA7XdrVwmbuQVkW4K8PxBSG8dQ2x_b-tcTEszXnZ1wNARQAG9Qqg4toqDYGYi65tq-mgbty45',
-
+      tree: null,
       // trackUri: 'spotify:track:05bfbizlM5AX6Mf1RRyMho',
     };
 
@@ -160,10 +160,15 @@ class TutorialPage extends Component {
   componentDidMount() {
     document.addEventListener('keydown', this.keydownHandler);
     db.fetchTrees()
-      .then((result) => this.setState({ trees: result.trees }));
+      .then((result) => {
+        this.setState({ trees: result.trees });
+        db.loadTree(result.trees[0].id)
+          .then((res) => {
+            console.log(res);
+            this.setState({ tree: res.tree_json });
+          });
+      });
     // eslint-disable-next-line no-new-object
-    db.loadTree()
-      .then((result) => this.setState({ tree: result.tree_json }));
   }
 
   componentWillUnmount() {
@@ -247,10 +252,11 @@ class TutorialPage extends Component {
   }; */
 
   handleLoadNewTree = (tree) => {
+    console.log(tree.target.id);
     db.loadTree(tree.target.id)
       .then((result) => {
         console.log(result);
-        this.setState({ tree: result });
+        this.setState({ tree: result.tree_json });
       });
   };
 
@@ -269,7 +275,7 @@ class TutorialPage extends Component {
   };
 
   // eslint-disable-next-line class-methods-use-this
-  setSongPlayback = (nodeName) => {
+  /*  setSongPlayback = (nodeName) => {
     console.log('click');
     console.log(`node: ${nodeName} has been clicked!`);
     if (this.state.isPlayMode) {
@@ -278,6 +284,15 @@ class TutorialPage extends Component {
     } else {
       console.log('showNodes');
     }
+  }; */
+
+  // eslint-disable-next-line class-methods-use-this
+  handleDeleteNodes = (e) => {
+    console.log(e.target.id);
+    db.deleteNodes(this.state.tree, e.target.id)
+      .then((result) => {
+        console.log(result);
+      });
   };
 
   setLoadingFalse = () => {
@@ -313,8 +328,15 @@ class TutorialPage extends Component {
             searchSuggestions={this.state.searchSuggestions}
           />
 
-          <Tree currid={this.state.currid} tree={this.state.tree} runAlgo={this.handleRunAlgo} isPlayMode={this.state.isPlayMode} onClickNode={this.handleClickNode} tool={this.state.tool_mode} />
-          <Player accessToken={this.state.accessToken} trackUri={this.state.trackUri} playingTrack />
+          <Tree
+          currid={this.state.currid}
+          tree={this.state.tree}
+          runAlgo={this.handleRunAlgo}
+          isPlayMode={this.state.isPlayMode}
+          onClickNode={this.handleClickNode}
+          tool={this.state.tool_mode}
+          deleteNodes={() => this.handleDeleteNodes} />
+          {/* <Player accessToken={this.state.accessToken} trackUri={this.state.trackUri} playingTrack /> */}
           <PlayList playlist={this.state.playlist} getRecs={this.handleGetRecs} isLoading={this.state.isLoading} />
         </div>
       </div>

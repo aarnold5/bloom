@@ -116,9 +116,11 @@ export const saveTree = (tree) => {
   });
 };
 
-export const loadTree = () => {
+export const loadTree = (treeID) => {
+  const fields = { name: `users/Ihoc1nuTr9lL92TngABS/trees/${treeID}` };
+  console.log(fields.name);
   return new Promise((resolve, reject) => {
-    axios.post('https://us-central1-bloom-838b5.cloudfunctions.net/treeLoader')
+    axios.post('https://us-central1-bloom-838b5.cloudfunctions.net/treeLoader', fields)
       .then((response) => {
         resolve(response.data);
       })

@@ -81,7 +81,7 @@ function TreeNode2(props) {
     return (
       <Draggable onDrag={updateXarrow} onStop={updateXarrow}>
         <div>
-          <button type="button" id={props.id} className="dot node-button" onClick={props.onShowChildren(props.song.id)}>
+          <button type="button" id={props.id} className="dot node-button" value={props.song.id} onClick={props.onShowChildren(props.song.id)}>
             <img src={props.song.album_cover} draggable="false" alt="temp" className="round-img" />
           </button>
         </div>
@@ -124,7 +124,6 @@ class Tree extends React.Component {
       left: l,
     };
     if (tree && tree.root.visible) {
-      console.log(tree.root.rec);
       if (tree && tree.root.rec === 1) {
         return (
           <div style={inputstyle}>
@@ -136,7 +135,7 @@ class Tree extends React.Component {
           return (
             <div>
               <div style={inputstyle}>
-                <TreeNode2 id={tree.root.name} tree={tree} song={tree.root.song} onClickNode={this.props.onClickNode} tool_mode={this.props.tool} deleteNodes={() => this.props.deleteNodes} onShowChildren={() => this.props.onShowChildren} />
+                <TreeNode2 id={tree.root.name} tree={tree} song={tree.root.song} onClickNode={this.props.onClickNode} tool_mode={this.props.tool} deleteNodes={this.props.deleteNodes} onShowChildren={this.props.onShowChildren} />
               </div>
               <Xarrow start={pref} end={tree.root.name} startAnchor="bottom" endAnchor="top" zIndex={3} showHead={false} dashness color="gray" />
               {this.getEdges(tree.left, l - i, t + 150, i / 2, tree.root.name)}
@@ -147,7 +146,7 @@ class Tree extends React.Component {
           return (
             <div>
               <div style={inputstyle}>
-                <TreeNode2 id={tree.root.name} tree={tree} song={tree.root.song} onClickNode={this.props.onClickNode} tool_mode={this.props.tool} deleteNodes={this.props.deleteNodes} onShowChildren={() => this.props.onShowChildren} />
+                <TreeNode2 id={tree.root.name} tree={tree} song={tree.root.song} onClickNode={this.props.onClickNode} tool_mode={this.props.tool} deleteNodes={this.props.deleteNodes} onShowChildren={this.props.onShowChildren} />
               </div>
               <Xarrow start={pref} end={tree.root.name} startAnchor="bottom" endAnchor="top" zIndex={3} showHead={false} color="#637B47" />
               {this.getEdges(tree.left, l - i, t + 150, i / 2, tree.root.name)}
@@ -159,7 +158,7 @@ class Tree extends React.Component {
         return (
           <div>
             <div style={inputstyle}>
-              <TreeNode2 id={tree.root.name} tree={tree} song={tree.root.song} onClickNode={this.props.onClickNode} tool_mode={this.props.tool} deleteNodes={this.props.deleteNodes} onShowChildren={() => this.props.onShowChildren} />
+              <TreeNode2 id={tree.root.name} tree={tree} song={tree.root.song} onClickNode={this.props.onClickNode} tool_mode={this.props.tool} deleteNodes={this.props.deleteNodes} onShowChildren={this.props.onShowChildren} />
             </div>
             {this.getEdges(tree.left, l - i, t + 150, i / 2, tree.root.name)}
             {this.getEdges(tree.right, l + i, t + 150, i / 2, tree.root.name)}

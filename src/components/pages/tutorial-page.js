@@ -164,8 +164,12 @@ class TutorialPage extends Component {
         this.setState({ trees: result.trees });
         db.loadTree(result.trees[0].id)
           .then((res) => {
-            console.log(res);
             this.setState({ tree: res.tree_json });
+            db.generateChildren(res.tree_json, res.tree_json.id)
+              .then((res2) => {
+                this.setState({ tree: res2 });
+                // console.log(res2);
+              });
           });
       });
     // eslint-disable-next-line no-new-object
@@ -299,12 +303,15 @@ class TutorialPage extends Component {
       });
   };
 
+  // eslint-disable-next-line class-methods-use-this
   handleShowChildren = (e) => {
-    console.log(e.target.id);
-    db.showChildren(this.state.tree, e.target.id)
+    // console.log(this.state.tree);
+    // console.log(this.state.tree.id);
+    // console.log(e.target.value);
+    db.showChildren(this.state.tree, this.state.tree.id, e.target.value)
       .then((result) => {
         console.log(result);
-        this.setState({ tree: result.tree_json });
+        this.setState({ tree: result });
       });
   };
 

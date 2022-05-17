@@ -169,9 +169,9 @@ export const deleteNodes = (tree, path, songID) => {
   });
 };
 
-export const generateChildren = (tree, path, songID) => {
+export const generateChildren = (tree, path) => {
   const fields = {
-    tree, operation: 'GENERATE_CHILDREN', node_id: songID, attribute: '', name: path,
+    tree, operation: 'GENERATE_CHILDREN', node_id: '', attribute: '', name: path,
   };
   return new Promise((resolve, reject) => {
     axios.post('https://us-central1-bloom-838b5.cloudfunctions.net/treeFunctions', fields, {
@@ -189,7 +189,7 @@ export const generateChildren = (tree, path, songID) => {
 
 export const showChildren = (tree, path, songID) => {
   const fields = {
-    tree, operation: 'SHOW_CHILDREN', node_id: songID, attribute: '', name: path,
+    tree, operation: 'SHOW', node_id: songID, attribute: '', name: path,
   };
   return new Promise((resolve, reject) => {
     axios.post('https://us-central1-bloom-838b5.cloudfunctions.net/treeFunctions', fields, {

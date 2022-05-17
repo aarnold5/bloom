@@ -127,7 +127,7 @@ class Tree extends React.Component {
       if (tree && tree.root.rec === 1) {
         return (
           <div style={inputstyle}>
-            <TreeNodeUnfilled addSongToNode={() => this.props.addSongToNode} />
+            <TreeNodeUnfilled addSongToNode={this.props.addSongToNode} />
           </div>
         );
       } else if (pref) {

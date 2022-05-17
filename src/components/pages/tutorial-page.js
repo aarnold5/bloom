@@ -317,7 +317,6 @@ class TutorialPage extends Component {
 
   handleAddSongToNode = () => {
     this.setState({ searching: true });
-    console.log('click');
   };
 
   setLoadingFalse = () => {

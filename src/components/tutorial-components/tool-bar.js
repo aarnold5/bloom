@@ -149,7 +149,7 @@ class ToolBar extends React.Component {
             <i className="fa-solid fa-plus" />
           </button>
           <button type="button" className="toolbar-button" onClick={this.props.addRootNode}>
-            <i className="fa-solid fa-seedling" />
+            Make New Tree
           </button>
           <button type="button" className="toolbar-button" onClick={this.props.setCut}>
             <i className="fa-solid fa-scissors" />

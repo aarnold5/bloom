@@ -28,7 +28,7 @@ import Tree from '../tutorial-components/tree';
   return dictSoFar;
 } */
 
-/* const t = {
+/* let t = {
   root: {
     name: 'a',
     rec: false,
@@ -137,7 +137,7 @@ class TutorialPage extends Component {
       playlist: [],
       searchSuggestions: [],
       searching: false,
-      allowRootAdd: true,
+      // allowRootAdd: true,
       issueRootWarning: false,
       isLoading: false,
       renderDefault: true,
@@ -223,12 +223,17 @@ class TutorialPage extends Component {
     });
   };
 
-  rootNode = () => {
-    if (this.state.allowRootAdd) {
-      this.setState({ searching: true });
-    } else {
-      this.setState({ issueRootWarning: true });
-    }
+  handleAddRootNode = () => {
+    db.createTree()
+      .then((result) => {
+        console.log(result.tree_json);
+        // this.setState({ tree: result.tree_json });
+        db.fetchTrees()
+          .then((res) => {
+            this.setState({ trees: res.trees });
+            this.setState({ searching: true });
+          });
+      });
   };
 
   handleSelectSong = (song) => {
@@ -289,9 +294,19 @@ class TutorialPage extends Component {
   // eslint-disable-next-line class-methods-use-this
   handleDeleteNodes = (e) => {
     console.log(e.target.id);
-    db.deleteNodes(this.state.tree, e.target.id)
+    db.deleteNodes(this.state.tree, this.state.tree.id, e.target.id)
       .then((result) => {
         console.log(result);
+        this.setState({ tree: result.tree_json });
+      });
+  };
+
+  handleShowChildren = (e) => {
+    console.log(e.target.id);
+    db.showChildren(this.state.tree, e.target.id)
+      .then((result) => {
+        console.log(result);
+        this.setState({ tree: result.tree_json });
       });
   };
 
@@ -311,7 +326,7 @@ class TutorialPage extends Component {
       <div id="tutorial-page" className="page-container container">
         <TreeList trees={this.state.trees} onSelectDifferentTree={() => this.handleLoadNewTree} />
         <div className="right-half container">
-          <ToolBar addRootNode={this.rootNode}
+          <ToolBar addRootNode={this.handleAddRootNode}
             tool={this.state.tool_mode}
             setPlus={this.setPlus}
             setCut={this.setCut}
@@ -327,15 +342,19 @@ class TutorialPage extends Component {
             onSearchChange={this.search}
             searchSuggestions={this.state.searchSuggestions}
           />
-
-          <Tree
-          currid={this.state.currid}
-          tree={this.state.tree}
-          runAlgo={this.handleRunAlgo}
-          isPlayMode={this.state.isPlayMode}
-          onClickNode={this.handleClickNode}
-          tool={this.state.tool_mode}
-          deleteNodes={() => this.handleDeleteNodes} />
+          <div id="panzoom-element-wrapper">
+            <div id="panzoom-element">
+            <Tree
+              currid={this.state.currid}
+              tree={this.state.tree}
+              runAlgo={this.handleRunAlgo}
+              isPlayMode={this.state.isPlayMode}
+              onClickNode={this.handleClickNode}
+              tool={this.state.tool_mode}
+              deleteNodes={() => this.handleDeleteNodes}
+              onShowChildren={() => this.handleShowChildren} />
+            </div>
+          </div>
           {/* <Player accessToken={this.state.accessToken} trackUri={this.state.trackUri} playingTrack /> */}
           <PlayList playlist={this.state.playlist} getRecs={this.handleGetRecs} isLoading={this.state.isLoading} />
         </div>

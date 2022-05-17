@@ -106,8 +106,8 @@ export const saveTree = (tree) => {
       headers: { 'Content-Type': 'application/json' },
     })
       .then((response) => {
-        console.log(response.data.results);
-        resolve(response.data.results);
+        console.log(response.data);
+        resolve(response.data);
       })
       .catch((error) => {
         console.log(`api error: ${error}`);
@@ -142,7 +142,7 @@ export const addFirstNode = (node) => {
       headers: { 'Content-Type': 'application/json' },
     })
       .then((response) => {
-        resolve(response.data.results);
+        resolve(response.data);
       })
       .catch((error) => {
         console.log(`api error: ${error}`);
@@ -151,16 +151,67 @@ export const addFirstNode = (node) => {
   });
 };
 
-export const deleteNodes = (tree, songID) => {
+export const deleteNodes = (tree, path, songID) => {
   const fields = {
-    tree, operation: 'DELETE', node_id: songID, attribute: '',
+    tree, operation: 'DELETE', node_id: songID, attribute: '', name: path,
   };
   return new Promise((resolve, reject) => {
     axios.post('https://us-central1-bloom-838b5.cloudfunctions.net/treeFunctions', fields, {
       headers: { 'Content-Type': 'application/json' },
     })
       .then((response) => {
-        resolve(response.data.results);
+        resolve(response.data);
+      })
+      .catch((error) => {
+        console.log(`api error: ${error}`);
+        reject(error);
+      });
+  });
+};
+
+export const generateChildren = (tree, path, songID) => {
+  const fields = {
+    tree, operation: 'GENERATE_CHILDREN', node_id: songID, attribute: '', name: path,
+  };
+  return new Promise((resolve, reject) => {
+    axios.post('https://us-central1-bloom-838b5.cloudfunctions.net/treeFunctions', fields, {
+      headers: { 'Content-Type': 'application/json' },
+    })
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((error) => {
+        console.log(`api error: ${error}`);
+        reject(error);
+      });
+  });
+};
+
+export const showChildren = (tree, path, songID) => {
+  const fields = {
+    tree, operation: 'SHOW_CHILDREN', node_id: songID, attribute: '', name: path,
+  };
+  return new Promise((resolve, reject) => {
+    axios.post('https://us-central1-bloom-838b5.cloudfunctions.net/treeFunctions', fields, {
+      headers: { 'Content-Type': 'application/json' },
+    })
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((error) => {
+        console.log(`api error: ${error}`);
+        reject(error);
+      });
+  });
+};
+
+export const createTree = () => {
+  return new Promise((resolve, reject) => {
+    axios.post('https://us-central1-bloom-838b5.cloudfunctions.net/TreeCreator', {
+      headers: { 'Content-Type': 'application/json' },
+    })
+      .then((response) => {
+        resolve(response.data);
       })
       .catch((error) => {
         console.log(`api error: ${error}`);

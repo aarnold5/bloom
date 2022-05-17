@@ -1,3 +1,4 @@
+/* eslint-disable new-cap */
 /* eslint-disable max-len */
 /* eslint-disable no-useless-constructor */
 /* eslint-disable react/no-unused-class-component-methods */
@@ -8,6 +9,7 @@
 import React from 'react';
 import Xarrow, { useXarrow, Xwrapper } from 'react-xarrows';
 import Draggable from 'react-draggable';
+import Panzoom from '@panzoom/panzoom';
 import * as db from '../../services/firestore';
 
 function TreeNode2(props) {
@@ -79,7 +81,7 @@ function TreeNode2(props) {
     return (
       <Draggable onDrag={updateXarrow} onStop={updateXarrow}>
         <div>
-          <button type="button" id={props.id} className="dot node-button">
+          <button type="button" id={props.id} className="dot node-button" onClick={props.onShowChildren(props.song.id)}>
             <img src={props.song.album_cover} draggable="false" alt="temp" className="round-img" />
           </button>
         </div>
@@ -88,11 +90,33 @@ function TreeNode2(props) {
   }
 }
 
+function TreeNodeUnfilled(props) {
+  const updateXarrow = useXarrow();
+  return (
+    <Draggable onDrag={updateXarrow} onStop={updateXarrow}>
+      <div>
+        <button type="button" id={props.id} className="dot node-button" onClick={props.onShowChildren(props.song.id)}>
+          <img src="favicon.png" draggable="false" alt="temp" className="round-img" />
+        </button>
+      </div>
+    </Draggable>
+  );
+}
+
 class Tree extends React.Component {
   constructor(props) {
     super(props);
   }
 
+  /* componentDidMount() {
+    const elem = document.getElementById('panzoom-element');
+    const panzoom = Panzoom(elem, {
+      contain: 'outside', startScale: 1,
+    });
+    panzoom.zoom(1);
+    setTimeout(() => panzoom.pan(100, 100));
+  }
+ */
   getEdges(tree, l, t, i, pref, isPlayMode) {
     const inputstyle = {
       position: 'absolute',
@@ -105,7 +129,7 @@ class Tree extends React.Component {
           return (
             <div>
               <div style={inputstyle}>
-                <TreeNode2 id={tree.root.name} tree={tree} song={tree.root.song} onClickNode={this.props.onClickNode} tool_mode={this.props.tool} deleteNodes={() => this.props.deleteNodes} />
+                <TreeNode2 id={tree.root.name} tree={tree} song={tree.root.song} onClickNode={this.props.onClickNode} tool_mode={this.props.tool} deleteNodes={() => this.props.deleteNodes} onShowChildren={() => this.props.onShowChildren} />
               </div>
               <Xarrow start={pref} end={tree.root.name} startAnchor="bottom" endAnchor="top" zIndex={3} showHead={false} dashness color="gray" />
               {this.getEdges(tree.left, l - i, t + 150, i / 2, tree.root.name)}
@@ -116,7 +140,7 @@ class Tree extends React.Component {
           return (
             <div>
               <div style={inputstyle}>
-                <TreeNode2 id={tree.root.name} tree={tree} song={tree.root.song} onClickNode={this.props.onClickNode} tool_mode={this.props.tool} deleteNodes={this.props.deleteNodes} />
+                <TreeNode2 id={tree.root.name} tree={tree} song={tree.root.song} onClickNode={this.props.onClickNode} tool_mode={this.props.tool} deleteNodes={this.props.deleteNodes} onShowChildren={() => this.props.onShowChildren} />
               </div>
               <Xarrow start={pref} end={tree.root.name} startAnchor="bottom" endAnchor="top" zIndex={3} showHead={false} color="#637B47" />
               {this.getEdges(tree.left, l - i, t + 150, i / 2, tree.root.name)}
@@ -128,7 +152,7 @@ class Tree extends React.Component {
         return (
           <div>
             <div style={inputstyle}>
-              <TreeNode2 id={tree.root.name} tree={tree} song={tree.root.song} onClickNode={this.props.onClickNode} tool_mode={this.props.tool} deleteNodes={this.props.deleteNodes} />
+              <TreeNode2 id={tree.root.name} tree={tree} song={tree.root.song} onClickNode={this.props.onClickNode} tool_mode={this.props.tool} deleteNodes={this.props.deleteNodes} onShowChildren={() => this.props.onShowChildren} />
             </div>
             {this.getEdges(tree.left, l - i, t + 150, i / 2, tree.root.name)}
             {this.getEdges(tree.right, l + i, t + 150, i / 2, tree.root.name)}
@@ -144,7 +168,7 @@ class Tree extends React.Component {
     const w = window.innerWidth;
     const h = window.innerHeight;
     return (
-      <div style={{ display: 'flex', justifyContent: 'space-evenly', width: '100%' }}>
+      <div id="currTree" style={{ display: 'flex', justifyContent: 'space-evenly', width: '100%' }}>
         <Xwrapper>
           {this.getEdges(this.props.tree, w / 2, 100, w / 4, null, this.props.isPlayMode)}
         </Xwrapper>

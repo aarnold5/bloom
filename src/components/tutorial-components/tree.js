@@ -93,7 +93,7 @@ function TreeNode2(props) {
 function TreeNodeUnfilled(props) {
   return (
     <button type="button" className="dot node-button">
-      <img src="plus" draggable="false" alt="temp" className="round-img" />
+      <img src="https://github.com/aarnold5/bloom/blob/adding-delete-node-functionality/src/plus.png?raw=true" draggable="false" alt="temp" className="round-img" />
     </button>
   );
 }

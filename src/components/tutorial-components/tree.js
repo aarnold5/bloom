@@ -92,13 +92,9 @@ function TreeNode2(props) {
 
 function TreeNodeUnfilled(props) {
   return (
-    <Draggable>
-      <div>
-        <button type="button" className="dot node-button">
-          <img src="unfilledNode.png" draggable="false" alt="temp" className="round-img" />
-        </button>
-      </div>
-    </Draggable>
+    <button type="button" className="dot node-button">
+      <img src="plus" draggable="false" alt="temp" className="round-img" />
+    </button>
   );
 }
 

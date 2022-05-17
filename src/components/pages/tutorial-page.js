@@ -231,16 +231,14 @@ class TutorialPage extends Component {
         db.fetchTrees()
           .then((res) => {
             this.setState({ trees: res.trees });
-            this.setState({ searching: true });
           });
       });
   };
 
   handleSelectSong = (song) => {
-    this.addNode(song);
+    // this.addNode(song);
     this.setState({ searching: false });
-    this.setState((prevState) => ({ currid: prevState.currid + 1 }));
-    db.popPlaylist(song);
+    console.log(song);
   };
 
   // DRAFT FOR LATER USE
@@ -310,6 +308,11 @@ class TutorialPage extends Component {
       });
   };
 
+  handleAddSongToNode = () => {
+    this.setState({ searching: true });
+    console.log('click');
+  };
+
   setLoadingFalse = () => {
     this.setState({ isLoading: false });
   };
@@ -352,7 +355,8 @@ class TutorialPage extends Component {
               onClickNode={this.handleClickNode}
               tool={this.state.tool_mode}
               deleteNodes={() => this.handleDeleteNodes}
-              onShowChildren={() => this.handleShowChildren} />
+              onShowChildren={() => this.handleShowChildren}
+              addSongToNode={() => this.handleAddSongToNode} />
             </div>
           </div>
           {/* <Player accessToken={this.state.accessToken} trackUri={this.state.trackUri} playingTrack /> */}

@@ -92,7 +92,7 @@ function TreeNode2(props) {
 
 function TreeNodeUnfilled(props) {
   return (
-    <button type="button" className="dot node-button">
+    <button type="button" className="dot node-button unfilled-node" onClick={props.addSongToNode()}>
       <img src="https://github.com/aarnold5/bloom/blob/adding-delete-node-functionality/src/plus.png?raw=true" draggable="false" alt="temp" className="round-img" />
     </button>
   );
@@ -118,12 +118,17 @@ class Tree extends React.Component {
       top: t,
       left: l,
     };
+    const inputstyleUnfilled = {
+      position: 'absolute',
+      top: t,
+      left: l,
+    };
     if (tree && tree.root.visible) {
       console.log(tree.root.rec);
       if (tree && tree.root.rec === 1) {
         return (
           <div style={inputstyle}>
-            <TreeNodeUnfilled />
+            <TreeNodeUnfilled addSongToNode={() => this.props.addSongToNode} />
           </div>
         );
       } else if (pref) {

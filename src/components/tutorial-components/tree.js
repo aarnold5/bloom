@@ -91,12 +91,11 @@ function TreeNode2(props) {
 }
 
 function TreeNodeUnfilled(props) {
-  const updateXarrow = useXarrow();
   return (
-    <Draggable onDrag={updateXarrow} onStop={updateXarrow}>
+    <Draggable>
       <div>
-        <button type="button" id={props.id} className="dot node-button" onClick={props.onShowChildren(props.song.id)}>
-          <img src="favicon.png" draggable="false" alt="temp" className="round-img" />
+        <button type="button" className="dot node-button">
+          <img src="unfilledNode.png" draggable="false" alt="temp" className="round-img" />
         </button>
       </div>
     </Draggable>
@@ -124,7 +123,14 @@ class Tree extends React.Component {
       left: l,
     };
     if (tree && tree.root.visible) {
-      if (pref) {
+      console.log(tree.root.rec);
+      if (tree && tree.root.rec === 1) {
+        return (
+          <div style={inputstyle}>
+            <TreeNodeUnfilled />
+          </div>
+        );
+      } else if (pref) {
         if (tree.root.rec) {
           return (
             <div>

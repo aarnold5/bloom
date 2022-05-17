@@ -207,7 +207,7 @@ export const showChildren = (tree, path, songID) => {
 
 export const createTree = () => {
   return new Promise((resolve, reject) => {
-    axios.post('https://us-central1-bloom-838b5.cloudfunctions.net/TreeCreator', {
+    axios.post('https://us-central1-bloom-838b5.cloudfunctions.net/treeCreator', {
       headers: { 'Content-Type': 'application/json' },
     })
       .then((response) => {

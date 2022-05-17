@@ -297,7 +297,7 @@ class TutorialPage extends Component {
     db.deleteNodes(this.state.tree, this.state.tree.id, e.target.id)
       .then((result) => {
         console.log(result);
-        this.setState({ tree: result.tree_json });
+        this.setState({ tree: result });
       });
   };
 

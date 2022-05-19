@@ -176,7 +176,7 @@ class TutorialPage extends Component {
   }
 
   componentWillUnmount() {
-    this.removeEventListener('keydown', this.keydownHandler);
+    document.removeEventListener('keydown', this.keydownHandler);
   }
 
   keydownHandler = (event) => {

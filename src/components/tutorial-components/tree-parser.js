@@ -6,7 +6,7 @@
 /* eslint-disable no-return-assign */
 
 // pulls values of or json structure as a list
-to_list = (tree, depth) => {
+const to_list = (tree, depth) => {
   // SET VALUE YOU WANT
   const value = tree.root.song;
   if (!tree.left || !tree.right) {
@@ -21,7 +21,7 @@ to_list = (tree, depth) => {
   return [value, ...to_list(tree.left, depth += 1), ...to_list(tree.right, depth += 1)];
 };
 
-find_song = function (search, tree) {
+const find_song = function (search, tree) {
   if (!tree) {
     return null;
   }
@@ -35,7 +35,7 @@ find_song = function (search, tree) {
   return null;
 };
 
-set_song = function (new_song, tree, old_song) {
+const set_song = function (new_song, tree, old_song) {
   const oldKey = old_song.song;
   if (!tree) {
     return null;
@@ -47,7 +47,7 @@ set_song = function (new_song, tree, old_song) {
   }
 };
 
-ui_set = (tree, pid, song) => {
+const ui_set = (tree, pid, song) => {
   if (tree) {
     if (tree.root.song.id === pid) {
       tree.left.root.song = song;
@@ -58,7 +58,22 @@ ui_set = (tree, pid, song) => {
   }
 };
 
-change_attribute = (attr, tree, target) => {
+const inc_w = (tree, target) => {
+  if (tree) {
+    if (tree.root.song && tree.root.song.id === target) {
+      if (tree.root.weight === 6) {
+        tree.root.weight = 2;
+      } else {
+        tree.root.weight += 1;
+      }
+    } else {
+      inc_w(tree.left, target);
+      inc_w(tree.right, target);
+    }
+  }
+};
+
+const change_attribute = (attr, tree, target) => {
   if (tree === null) {
     return;
   }
@@ -69,25 +84,26 @@ change_attribute = (attr, tree, target) => {
   change_attribute(attr, tree.right, target);
 };
 
-showChildren_fe = (tree, target) => {
+const showChildren_fe = (tree, targetid) => {
+  console.log('show');
+  console.log(targetid);
   if (tree === null) {
     return;
-  }
-  if (tree.root.song.id === target) {
+  } else if (tree.left && tree.root.song.id === targetid) {
     tree.left.root.visible = true;
     tree.right.root.visible = true;
     return;
   }
-  showChildren_fe(tree.left, target);
-  change_attribute(tree.right, target);
+  showChildren_fe(tree.left, targetid);
+  showChildren_fe(tree.right, targetid);
 };
 
 // cannot delete root
-delete_node = (tree, target) => {
-  if (tree) {
-    if (tree.left.root === target) {
+const delete_node = (tree, target) => {
+  if (tree && tree.root.song) {
+    if (tree.left && tree.left.root.song.id === target) {
       tree.left = null;
-    } else if (tree.right.root === target) {
+    } else if (tree.right && tree.right.root.song.id === target) {
       tree.right = null;
     } else {
       delete_node(tree.left, target);
@@ -96,37 +112,43 @@ delete_node = (tree, target) => {
   }
 };
 
-generateChildren_fe = (tree) => {
-  if (tree.root.rec !== 0) return;
-  if (!tree.left) {
-    tree.left = {
-      root: {
-        song: null,
-        visible: false,
-        weight: 4,
-        rec: 1,
-        attr: null,
-      },
-      left: null,
-      right: null,
-    };
-  } else generateChildren_fe(tree.left);
-  if (tree.right === null) {
-    tree.right = {
-      root: {
-        song: null,
-        visible: false,
-        weight: 4,
-        rec: 2,
-        attr: null,
-      },
-      left: null,
-      right: null,
-    };
-  } else generateChildren_fe(tree.right);
+const generateChildren_fe = (tree, _, t_str = 'root_') => {
+  console.log('gen');
+  if (tree.root.rec === 0) {
+    if (!tree.left) {
+      tree.left = {
+        root: {
+          song: null,
+          visible: false,
+          weight: 4,
+          rec: 1,
+          attr: null,
+          name: t_str += 'l_',
+        },
+        left: null,
+        right: null,
+      };
+    } else generateChildren_fe(tree.left, t_str += 'l_');
+    if (tree.right === null) {
+      tree.right = {
+        root: {
+          song: null,
+          visible: false,
+          weight: 4,
+          rec: 2,
+          attr: null,
+          name: t_str += 'r_',
+        },
+        left: null,
+        right: null,
+      };
+    } else generateChildren_fe(tree.right, t_str += 'r_');
+  }
 };
-
-const t = {
+export {
+  generateChildren_fe, showChildren_fe, delete_node, ui_set, inc_w,
+};
+/* const t = {
   root: {
     name: 'a',
     rec: 0,
@@ -264,3 +286,4 @@ ui_set(t2, '4r9jkMEnArtWGH2rL2FZl0', {
   name: 'Armed And Dangerous', id: '5wujBwqG7INdStqGd4tRMX', album_cover: 'https://i.scdn.co/image/ab67616d00001e02f7db43292a6a99b21b51d5b4', uri: 'spotify:track:5wujBwqG7INdStqGd4tRMX',
 });
 console.log('%o', t2);
+ */

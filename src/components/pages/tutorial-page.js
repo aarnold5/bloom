@@ -14,10 +14,11 @@ import * as db from '../../services/firestore';
 import SearchSuggestions from '../tutorial-components/search-suggestions';
 import { bloomSearch } from '../tutorial-components/search';
 import Tree from '../tutorial-components/tree';
+import * as tp from '../tutorial-components/tree-parser';
+
 // import Player from '../tutorial-components/player';
 
 // const songLookup = {};
-
 /* function treeToDict(t, dictSoFar) {
   if (t) {
     // eslint-disable-next-line no-param-reassign
@@ -150,7 +151,32 @@ class TutorialPage extends Component {
       currentTrackUri: '',
       // eslint-disable-next-line max-len
       accessToken: 'BQCWYvlgHaGGLI8BDD-CCgcQrQmulElAAwV-BFLoaKjxZ_SyVO2HLfXz9p_FYpIb0MqGEPP9Y95cNEpa7QebQqxAHW0JxoIq3kWNT2gEEnr-02jGE-54u4cMt4gcly3SqN2FRH8wJmqZREo3qs-IZMJXTlx-ak1mX5Mo6f87GbJ5s0AWJqfEaaAwR8KbH6KPqz5-6NbkI8_1hrYJRrnLQlxp_8MW0FUS8OwwBwP9P2oZKvKNU3AzUJvjAAB8B2KWfEGBn2UvJ_hZuWvcORiigPYAmHc_oNL5jfUQp0uwSTMKDMqB_j5c-CCgcQrQmulElAAwV-BFLoaKjxZ_SyVO2HLfXz9p_FYpIb0MqGEPP9Y95cNEpa7QebQqxAHW0JxoIq3kWNT2gEEnr-02jGE-54u4cMt4gcly3SqN2FRH8wJmqZREo3qs-IZMJXTlx-ak1mX5Mo6f87GbJ5s0AWJqfEaaAwR8KbH6KPqz5-6NbkI8_1hrYJRrnLQlxp_8MW0FUS8OwwBwP9P2oZKvKNU3AzUJvjAAB8B2KWfEGBn2UvJ_hZuWvcORiigPYAmHc_oNL5jfUQp0uwSTMKDMqB_j5c-trA6nGrG8sPEVCowKYB0w6ZuoDq2UPiSIzpfL1I6LcaPPCA7XdrVwmbuQVkW4K8PxBSG8dQ2x_b-tcTEszXnZ1wNARQAG9Qqg4toqDYGYi65tq-mgbty45',
-      tree: null,
+      tree: {
+        root: {
+          name: 'c',
+          rec: 0,
+          visible: true,
+          song: {
+            name: 'A Tu Merced', id: '4r9jkMEnArtWGH2rL2FZl0', album_cover: 'https://i.scdn.co/image/ab67616d00001e02548f7ec52da7313de0c5e4a0', uri: 'spotify:track:4r9jkMEnArtWGH2rL2FZl0',
+          },
+        },
+        left: {
+          root: {
+            name: 'g',
+            rec: 0,
+            visible: true,
+            song: {
+              name: 'Armed And Dangerous',
+              id: '5wujBwqG7INdStqGd4tRMX',
+              album_cover: 'https://i.scdn.co/image/ab67616d00001e02f7db43292a6a99b21b51d5b4',
+              uri: 'spotify:track:5wujBwqG7INdStqGd4tRMX',
+            },
+          },
+          left: null,
+          right: null,
+        },
+        right: null,
+      },
       // trackUri: 'spotify:track:05bfbizlM5AX6Mf1RRyMho',
     };
 
@@ -162,7 +188,7 @@ class TutorialPage extends Component {
     db.fetchTrees()
       .then((result) => {
         this.setState({ trees: result.trees });
-        db.loadTree(result.trees[0].id)
+        /* db.loadTree(result.trees[0].id)
           .then((res) => {
             this.setState({ tree: res.tree_json });
             db.generateChildren(res.tree_json, res.tree_json.id)
@@ -170,7 +196,7 @@ class TutorialPage extends Component {
                 this.setState({ tree: res2 });
                 // console.log(res2);
               });
-          });
+          }); */
       });
     // eslint-disable-next-line no-new-object
   }
@@ -178,6 +204,19 @@ class TutorialPage extends Component {
   componentWillUnmount() {
     document.removeEventListener('keydown', this.keydownHandler);
   }
+
+  onClickfunc = (e) => {
+    const copiedtree = JSON.parse(JSON.stringify(this.state.tree));
+    if (this.state.tool_mode === 'cut' && e.target.id !== null) {
+      tp.delete_node(copiedtree, e.target.id);
+    } else if (this.state.tool_mode === 'select' && e.target.id !== null) {
+      tp.generateChildren_fe(copiedtree);
+      tp.showChildren_fe(copiedtree, e.target.id);
+    } else if (this.state.tool_mode === 'weight' && e.target.id !== null) {
+      tp.inc_w(copiedtree, e.target.id);
+    }
+    this.setState({ tree: copiedtree });
+  };
 
   keydownHandler = (event) => {
     if (event.key === 'w') {
@@ -351,8 +390,6 @@ class TutorialPage extends Component {
             onSearchChange={this.search}
             searchSuggestions={this.state.searchSuggestions}
           />
-          <div id="panzoom-element-wrapper">
-            <div id="panzoom-element">
             <Tree
               currid={this.state.currid}
               tree={this.state.tree}
@@ -362,9 +399,9 @@ class TutorialPage extends Component {
               tool={this.state.tool_mode}
               deleteNodes={() => this.handleDeleteNodes}
               onShowChildren={() => this.handleShowChildren}
-              addSongToNode={() => this.handleAddSongToNode} />
-            </div>
-          </div>
+              addSongToNode={() => this.handleAddSongToNode}
+              clickfunc={() => this.onClickfunc} />
+
           {/* <Player accessToken={this.state.accessToken} trackUri={this.state.trackUri} playingTrack /> */}
           <PlayList playlist={this.state.playlist} getRecs={this.handleGetRecs} isLoading={this.state.isLoading} />
         </div>

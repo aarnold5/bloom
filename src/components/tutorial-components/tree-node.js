@@ -1,56 +1,34 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React from 'react';
+import Draggable from 'react-draggable';
+import { useXarrow } from 'react-xarrows';
 
-class TreeNode extends React.Component {
+class TreeNode2 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      c: 'green',
-      t: props.t,
-      // parent: props.parent,
-      // y: props.y,
-      // song: props.song,
-      // album: props.album,
+      namey: this.props.id,
     };
   }
 
-  changeColor = () => {
-    if (this.state.c === 'green') {
-      this.setState({ c: 'blue' });
-    } else if (this.state.c === 'blue') {
-      this.setState({ c: 'orange' });
-    } else if (this.state.c === 'orange') {
-      this.setState({ c: 'yellow' });
-    } else {
-      this.setState({ c: 'green' });
-    }
-  };
-
-  /*   changeColor = (c) => {
-    this.setState({ a: c });
-  };
-  getStyle = () => {
-    return `background:${this.state.a}`;
-  };
- */
+  /* function playSong(song) {
+    console.log(`playSong:${song.name}`);
+  } */
   render() {
-    let inputStyle = {
-      background: '#96A66D',
-    };
-    // change code below this line
-    if (this.state.c === 'orange') {
-      inputStyle = { background: '#EBA215' };
-    } else if (this.state.c === 'blue') {
-      inputStyle = { background: '#8DB0DA' };
-    } else if (this.state.c === 'yellow') {
-      inputStyle = { background: '#FFFA7F' };
-    }
-    // change code above this line
+    const updateXarrow = useXarrow();
     return (
-      <div id="tree-space">
-        <span className="dot" id={this.state.t} style={inputStyle} onClick={this.changeColor}><img src="../favicon.png" draggable="false" alt="temp" className="round-img" /></span>
-      </div>
+      <Draggable onDrag={updateXarrow} onStop={updateXarrow}>
+        <div>
+          <button type="button"
+            id={this.props.id}
+            className="dot node-button"
+            onClick={() => this.props.onclickfunc(this.props.id)}
+          >
+            <img src={this.props.song.album_cover} id={this.props.song.id} draggable="false" alt="temp" className="round-img" />
+          </button>
+        </div>
+      </Draggable>
     );
   }
 }
-export default TreeNode;
+export default TreeNode2;

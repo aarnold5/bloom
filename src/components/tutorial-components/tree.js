@@ -17,8 +17,17 @@ function TreeNode2(props) {
 
   /* function playSong(song) {
     console.log(`playSong:${song.name}`);
-  }
-
+  } */
+  return (
+    <Draggable onDrag={updateXarrow} onStop={updateXarrow}>
+      <div>
+        <button type="button" id={props.id} className="dot node-button" onClick={props.onclickfunc()}>
+          <img src={props.song.album_cover} id={props.song.id} draggable="false" alt="temp" className="round-img" />
+        </button>
+      </div>
+    </Draggable>
+  );
+  /*
   function showRec() {
     console.log('showRec');
     // call update function to update the tree on the database
@@ -35,7 +44,7 @@ function TreeNode2(props) {
       showRec();
     }
   } */
-  if (props.tool_mode !== 'select') {
+  /* if (props.tool_mode !== 'select') {
     if (props.tool_mode === 'play') {
       return (
         <Draggable onDrag={updateXarrow} onStop={updateXarrow} disabled>
@@ -87,14 +96,17 @@ function TreeNode2(props) {
         </div>
       </Draggable>
     );
-  }
+  } */
 }
 
 function TreeNodeUnfilled(props) {
+  const updateXarrow = useXarrow();
   return (
-    <button type="button" className="dot node-button unfilled-node" onClick={props.addSongToNode()}>
-      <img src="https://github.com/aarnold5/bloom/blob/adding-delete-node-functionality/src/plus.png?raw=true" draggable="false" alt="temp" className="round-img" />
-    </button>
+    <Draggable onDrag={updateXarrow} onStop={updateXarrow}>
+      <button type="button" id={props.id} className="dot node-button unfilled-node" onClick={props.addSongToNode()}>
+        <img src="https://github.com/aarnold5/bloom/blob/adding-delete-node-functionality/src/plus.png?raw=true" draggable="false" alt="temp" className="round-img" />
+      </button>
+    </Draggable>
   );
 }
 
@@ -124,18 +136,19 @@ class Tree extends React.Component {
       left: l,
     };
     if (tree && tree.root.visible) {
-      if (tree && tree.root.rec === 1) {
+      if (tree && tree.root.rec !== 0) {
         return (
           <div style={inputstyle}>
-            <TreeNodeUnfilled addSongToNode={this.props.addSongToNode} />
+            <Xarrow start={pref} end={tree.root.name} startAnchor="bottom" endAnchor="top" zIndex={3} showHead={false} dashness color="gray" />
+            <TreeNodeUnfilled addSongToNode={this.props.addSongToNode} id={tree.root.name} />
           </div>
         );
       } else if (pref) {
-        if (tree.root.rec) {
+        if (tree.root.rec !== 0) {
           return (
             <div>
               <div style={inputstyle}>
-                <TreeNode2 id={tree.root.name} tree={tree} song={tree.root.song} onClickNode={this.props.onClickNode} tool_mode={this.props.tool} deleteNodes={this.props.deleteNodes} onShowChildren={this.props.onShowChildren} />
+                <TreeNode2 id={tree.root.name} tree={tree} song={tree.root.song} onClickNode={this.props.onClickNode} tool_mode={this.props.tool} onclickfunc={this.props.clickfunc} deleteNodes={this.props.deleteNodes} onShowChildren={this.props.onShowChildren} />
               </div>
               <Xarrow start={pref} end={tree.root.name} startAnchor="bottom" endAnchor="top" zIndex={3} showHead={false} dashness color="gray" />
               {this.getEdges(tree.left, l - i, t + 150, i / 2, tree.root.name)}
@@ -146,7 +159,7 @@ class Tree extends React.Component {
           return (
             <div>
               <div style={inputstyle}>
-                <TreeNode2 id={tree.root.name} tree={tree} song={tree.root.song} onClickNode={this.props.onClickNode} tool_mode={this.props.tool} deleteNodes={this.props.deleteNodes} onShowChildren={this.props.onShowChildren} />
+                <TreeNode2 id={tree.root.name} onclickfunc={this.props.clickfunc} tree={tree} song={tree.root.song} onClickNode={this.props.onClickNode} tool_mode={this.props.tool} deleteNodes={this.props.deleteNodes} onShowChildren={this.props.onShowChildren} />
               </div>
               <Xarrow start={pref} end={tree.root.name} startAnchor="bottom" endAnchor="top" zIndex={3} showHead={false} color="#637B47" />
               {this.getEdges(tree.left, l - i, t + 150, i / 2, tree.root.name)}
@@ -158,7 +171,7 @@ class Tree extends React.Component {
         return (
           <div>
             <div style={inputstyle}>
-              <TreeNode2 id={tree.root.name} tree={tree} song={tree.root.song} onClickNode={this.props.onClickNode} tool_mode={this.props.tool} deleteNodes={this.props.deleteNodes} onShowChildren={this.props.onShowChildren} />
+              <TreeNode2 id={tree.root.name} tree={tree} song={tree.root.song} onclickfunc={this.props.clickfunc} onClickNode={this.props.onClickNode} tool_mode={this.props.tool} deleteNodes={this.props.deleteNodes} onShowChildren={this.props.onShowChildren} />
             </div>
             {this.getEdges(tree.left, l - i, t + 150, i / 2, tree.root.name)}
             {this.getEdges(tree.right, l + i, t + 150, i / 2, tree.root.name)}

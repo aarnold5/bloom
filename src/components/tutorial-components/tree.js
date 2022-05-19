@@ -104,7 +104,7 @@ function TreeNodeUnfilled(props) {
   return (
     <Draggable onDrag={updateXarrow} onStop={updateXarrow}>
       <button type="button" id={props.id} className="dot node-button unfilled-node" onClick={props.addSongToNode()}>
-        <img src="https://github.com/aarnold5/bloom/blob/adding-delete-node-functionality/src/plus.png?raw=true" draggable="false" alt="temp" className="round-img" />
+        <img src="../plus.png" draggable="false" alt="temp" className="round-img" />
       </button>
     </Draggable>
   );

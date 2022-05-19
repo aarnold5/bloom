@@ -149,6 +149,7 @@ class TutorialPage extends Component {
       currentTrack: '',
       tool_mode: 'select',
       currentTrackUri: '',
+      showing: false,
       // eslint-disable-next-line max-len
       accessToken: 'BQCWYvlgHaGGLI8BDD-CCgcQrQmulElAAwV-BFLoaKjxZ_SyVO2HLfXz9p_FYpIb0MqGEPP9Y95cNEpa7QebQqxAHW0JxoIq3kWNT2gEEnr-02jGE-54u4cMt4gcly3SqN2FRH8wJmqZREo3qs-IZMJXTlx-ak1mX5Mo6f87GbJ5s0AWJqfEaaAwR8KbH6KPqz5-6NbkI8_1hrYJRrnLQlxp_8MW0FUS8OwwBwP9P2oZKvKNU3AzUJvjAAB8B2KWfEGBn2UvJ_hZuWvcORiigPYAmHc_oNL5jfUQp0uwSTMKDMqB_j5c-CCgcQrQmulElAAwV-BFLoaKjxZ_SyVO2HLfXz9p_FYpIb0MqGEPP9Y95cNEpa7QebQqxAHW0JxoIq3kWNT2gEEnr-02jGE-54u4cMt4gcly3SqN2FRH8wJmqZREo3qs-IZMJXTlx-ak1mX5Mo6f87GbJ5s0AWJqfEaaAwR8KbH6KPqz5-6NbkI8_1hrYJRrnLQlxp_8MW0FUS8OwwBwP9P2oZKvKNU3AzUJvjAAB8B2KWfEGBn2UvJ_hZuWvcORiigPYAmHc_oNL5jfUQp0uwSTMKDMqB_j5c-trA6nGrG8sPEVCowKYB0w6ZuoDq2UPiSIzpfL1I6LcaPPCA7XdrVwmbuQVkW4K8PxBSG8dQ2x_b-tcTEszXnZ1wNARQAG9Qqg4toqDYGYi65tq-mgbty45',
       tree: {
@@ -187,6 +188,7 @@ class TutorialPage extends Component {
 
   componentDidMount() {
     document.addEventListener('keydown', this.keydownHandler);
+    // document.addEventListener('click', this.handleHideChildren);
     db.fetchTrees()
       .then((result) => {
         this.setState({ trees: result.trees });
@@ -205,6 +207,7 @@ class TutorialPage extends Component {
 
   componentWillUnmount() {
     document.removeEventListener('keydown', this.keydownHandler);
+    document.removeEventListener('click', this.handleHideChildren);
   }
 
   onClickfunc = (e) => {
@@ -212,8 +215,14 @@ class TutorialPage extends Component {
     if (this.state.tool_mode === 'cut' && e.target.id !== null) {
       tp.delete_node(copiedtree, e.target.id);
     } else if (this.state.tool_mode === 'select' && e.target.id !== null) {
-      tp.generateChildren_fe(copiedtree);
-      tp.showChildren_fe(copiedtree, e.target.id);
+      if (!this.state.showing) {
+        tp.generateChildren_fe(copiedtree);
+        tp.showChildren_fe(copiedtree, e.target.id);
+        this.setState({ showing: true });
+      } else {
+        tp.hideChildren(copiedtree);
+        this.setState({ showing: false });
+      }
     } else if (this.state.tool_mode === 'weight' && e.target.id !== null) {
       tp.inc_w(copiedtree, e.target.id);
     }
@@ -300,10 +309,8 @@ class TutorialPage extends Component {
   }; */
 
   handleLoadNewTree = (tree) => {
-    console.log(tree.target.id);
     db.loadTree(tree.target.id)
       .then((result) => {
-        console.log(result);
         this.setState({ tree: result.tree_json });
       });
   };
@@ -344,16 +351,12 @@ class TutorialPage extends Component {
       });
   };
 
-  // eslint-disable-next-line class-methods-use-this
-  handleShowChildren = (e) => {
-    // console.log(this.state.tree);
-    // console.log(this.state.tree.id);
-    // console.log(e.target.value);
-    db.showChildren(this.state.tree, this.state.tree.id, e.target.value)
-      .then((result) => {
-        console.log(result);
-        this.setState({ tree: result });
-      });
+  handleHideChildren = () => {
+    const copiedtree = JSON.parse(JSON.stringify(this.state.tree));
+    if (this.state.showing) {
+      tp.hideChildren(copiedtree);
+      this.setState({ tree: copiedtree, showing: false });
+    }
   };
 
   handleAddSongToNode = () => {
@@ -393,6 +396,7 @@ class TutorialPage extends Component {
             searchSuggestions={this.state.searchSuggestions}
           />
             <Tree
+              hidechild={this.handleHideChildren}
               currid={this.state.currid}
               tree={this.state.tree}
               runAlgo={this.handleRunAlgo}

@@ -112,6 +112,17 @@ const delete_node = (tree, target) => {
   }
 };
 
+const hideChildren = (tree) => {
+  if (tree) {
+    if (tree.root.rec !== 0) {
+      tree.root.visible = false;
+    } else {
+      hideChildren(tree.left);
+      hideChildren(tree.right);
+    }
+  }
+};
+
 const generateChildren_fe = (tree, _, t_str = 'root_') => {
   console.log('gen');
   if (tree.root.rec === 0) {
@@ -146,7 +157,7 @@ const generateChildren_fe = (tree, _, t_str = 'root_') => {
   }
 };
 export {
-  generateChildren_fe, showChildren_fe, delete_node, ui_set, inc_w,
+  generateChildren_fe, showChildren_fe, delete_node, ui_set, inc_w, hideChildren,
 };
 /* const t = {
   root: {

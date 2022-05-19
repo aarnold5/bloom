@@ -156,6 +156,7 @@ class TutorialPage extends Component {
           name: 'c',
           rec: 0,
           visible: true,
+          weight: 4,
           song: {
             name: 'A Tu Merced', id: '4r9jkMEnArtWGH2rL2FZl0', album_cover: 'https://i.scdn.co/image/ab67616d00001e02548f7ec52da7313de0c5e4a0', uri: 'spotify:track:4r9jkMEnArtWGH2rL2FZl0',
           },
@@ -165,6 +166,7 @@ class TutorialPage extends Component {
             name: 'g',
             rec: 0,
             visible: true,
+            weight: 4,
             song: {
               name: 'Armed And Dangerous',
               id: '5wujBwqG7INdStqGd4tRMX',

@@ -161,7 +161,7 @@ class Tree extends React.Component {
               <div style={inputstyle}>
                 <TreeNode2 id={tree.root.name} onclickfunc={this.props.clickfunc} tree={tree} song={tree.root.song} onClickNode={this.props.onClickNode} tool_mode={this.props.tool} deleteNodes={this.props.deleteNodes} onShowChildren={this.props.onShowChildren} />
               </div>
-              <Xarrow start={pref} end={tree.root.name} startAnchor="bottom" endAnchor="top" zIndex={3} showHead={false} color="#637B47" />
+              <Xarrow start={pref} end={tree.root.name} startAnchor="bottom" strokeWidth={tree.root.weight} endAnchor="top" zIndex={3} showHead={false} color="#637B47" />
               {this.getEdges(tree.left, l - i, t + 150, i / 2, tree.root.name)}
               {this.getEdges(tree.right, l + i, t + 150, i / 2, tree.root.name)}
             </div>

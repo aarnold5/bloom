@@ -150,6 +150,7 @@ class TutorialPage extends Component {
       tool_mode: 'select',
       currentTrackUri: '',
       showing: false,
+      search2add: null,
       // eslint-disable-next-line max-len
       accessToken: 'BQCWYvlgHaGGLI8BDD-CCgcQrQmulElAAwV-BFLoaKjxZ_SyVO2HLfXz9p_FYpIb0MqGEPP9Y95cNEpa7QebQqxAHW0JxoIq3kWNT2gEEnr-02jGE-54u4cMt4gcly3SqN2FRH8wJmqZREo3qs-IZMJXTlx-ak1mX5Mo6f87GbJ5s0AWJqfEaaAwR8KbH6KPqz5-6NbkI8_1hrYJRrnLQlxp_8MW0FUS8OwwBwP9P2oZKvKNU3AzUJvjAAB8B2KWfEGBn2UvJ_hZuWvcORiigPYAmHc_oNL5jfUQp0uwSTMKDMqB_j5c-CCgcQrQmulElAAwV-BFLoaKjxZ_SyVO2HLfXz9p_FYpIb0MqGEPP9Y95cNEpa7QebQqxAHW0JxoIq3kWNT2gEEnr-02jGE-54u4cMt4gcly3SqN2FRH8wJmqZREo3qs-IZMJXTlx-ak1mX5Mo6f87GbJ5s0AWJqfEaaAwR8KbH6KPqz5-6NbkI8_1hrYJRrnLQlxp_8MW0FUS8OwwBwP9P2oZKvKNU3AzUJvjAAB8B2KWfEGBn2UvJ_hZuWvcORiigPYAmHc_oNL5jfUQp0uwSTMKDMqB_j5c-trA6nGrG8sPEVCowKYB0w6ZuoDq2UPiSIzpfL1I6LcaPPCA7XdrVwmbuQVkW4K8PxBSG8dQ2x_b-tcTEszXnZ1wNARQAG9Qqg4toqDYGYi65tq-mgbty45',
       tree: {
@@ -218,10 +219,10 @@ class TutorialPage extends Component {
       if (!this.state.showing) {
         tp.generateChildren_fe(copiedtree);
         tp.showChildren_fe(copiedtree, e.target.id);
-        this.setState({ showing: true });
+        this.setState({ showing: true, search2add: e.target.id });
       } else {
         tp.hideChildren(copiedtree);
-        this.setState({ showing: false });
+        this.setState({ showing: false, search2add: null });
       }
     } else if (this.state.tool_mode === 'weight' && e.target.id !== null) {
       tp.inc_w(copiedtree, e.target.id);
@@ -293,6 +294,9 @@ class TutorialPage extends Component {
     // this.addNode(song);
     this.setState({ searching: false });
     console.log(song);
+    const copiedtree = JSON.parse(JSON.stringify(this.state.tree));
+    tp.ui_set(copiedtree, this.state.search2add, song);
+    this.setState({ tree: copiedtree });
   };
 
   // DRAFT FOR LATER USE

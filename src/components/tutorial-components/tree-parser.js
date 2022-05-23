@@ -49,11 +49,12 @@ const set_song = function (new_song, tree, old_song) {
 
 const ui_set = (tree, pid, song) => {
   if (tree) {
-    if (tree.root.song.id === pid) {
+    if (tree.root.song !== null && tree.root.song.id === pid) {
       tree.left.root.song = song;
+      tree.left.root.rec = 0;
     } else {
-      ui_set(pid, tree.left);
-      ui_set(pid, tree.right);
+      ui_set(tree.left, pid, song);
+      ui_set(tree.right, pid, song);
     }
   }
 };

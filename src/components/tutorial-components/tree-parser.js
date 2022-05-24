@@ -4,7 +4,8 @@
 /* eslint-disable camelcase */
 /* eslint-disable no-undef */
 /* eslint-disable no-return-assign */
-
+// drag scroll center on click
+import * as db from '../../services/firestore';
 // pulls values of or json structure as a list
 const to_list = (tree, depth) => {
   // SET VALUE YOU WANT
@@ -85,18 +86,20 @@ const change_attribute = (attr, tree, target) => {
   change_attribute(attr, tree.right, target);
 };
 
-const showChildren_fe = (tree, targetid) => {
+const showChildren_fe = (tree, targetid, treeold) => {
   if (tree === null) {
     return;
   } else if (tree.left && tree.root.song.id === targetid) {
     tree.left.root.visible = true;
     tree.right.root.visible = true;
+    /* db.getRecs(treeold, targetid)
+      .then((result) => { db.songIDsToSongs(result.MESSAGE.songs).then((res) => console.log(res)); }); */ // add catch
     return;
   }
-  showChildren_fe(tree.left, targetid);
-  showChildren_fe(tree.right, targetid);
+  showChildren_fe(tree.left, targetid, treeold);
+  showChildren_fe(tree.right, targetid, treeold);
 };
-
+// post maybe just send IDs and weights
 // cannot delete root
 const delete_node = (tree, target) => {
   if (tree && tree.root.song) {
@@ -122,8 +125,7 @@ const hideChildren = (tree) => {
   }
 };
 
-const generateChildren_fe = (tree, _, t_str = 'root_') => {
-  console.log('gen');
+const generateChildren_fe = (tree, _, treeold, t_str = 'root_') => {
   if (tree.root.rec === 0) {
     if (!tree.left) {
       tree.left = {
@@ -138,8 +140,10 @@ const generateChildren_fe = (tree, _, t_str = 'root_') => {
         left: null,
         right: null,
       };
-    } else generateChildren_fe(tree.left, t_str += 'l_');
-    if (tree.right === null) {
+    } else generateChildren_fe(tree.left, _, treeold, t_str += 'l_');
+    if (tree.right === null && tree.root.song !== null) {
+      /* db.getRecs(treeold, tree.root.song.id)
+        .then((result) => { db.songIDsToSongs(result.MESSAGE.songs).then((res) => console.log(res)); }); */
       tree.right = {
         root: {
           song: null,
@@ -152,7 +156,7 @@ const generateChildren_fe = (tree, _, t_str = 'root_') => {
         left: null,
         right: null,
       };
-    } else generateChildren_fe(tree.right, t_str += 'r_');
+    } else generateChildren_fe(tree.right, _, treeold, t_str += 'r_');
   }
 };
 export {

@@ -220,8 +220,8 @@ class TutorialPage extends Component {
       tp.delete_node(copiedtree, e.target.id);
     } else if (this.state.tool_mode === 'select' && e.target.id !== null) {
       if (!this.state.showing) {
-        tp.generateChildren_fe(copiedtree);
-        tp.showChildren_fe(copiedtree, e.target.id);
+        tp.generateChildren_fe(copiedtree, null, copiedtree);
+        tp.showChildren_fe(copiedtree, e.target.id, copiedtree);
         this.setState({ showing: true, search2add: e.target.id });
       } else {
         tp.hideChildren(copiedtree);

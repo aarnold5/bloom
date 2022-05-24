@@ -87,7 +87,7 @@ export const getRecs = (tree, pid) => {
     tree, sender: pid,
   };
   return new Promise((resolve, reject) => {
-    axios.get('https://bloom-algo-server.herokuapp.com/algo/', { params }, {
+    axios.post('https://bloom-algo-server.herokuapp.com/algo/', { params }, {
       headers: { 'Content-Type': 'application/json' },
     })
       .then((response) => {
@@ -138,7 +138,6 @@ export const saveTree = (tree) => {
 
 export const loadTree = (treeID) => {
   const fields = { name: `users/Ihoc1nuTr9lL92TngABS/trees/${treeID}` };
-  console.log(fields.name);
   return new Promise((resolve, reject) => {
     axios.post('https://us-central1-bloom-838b5.cloudfunctions.net/treeLoader', fields, {
       headers: { 'Content-Type': 'application/json' },

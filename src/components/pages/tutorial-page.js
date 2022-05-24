@@ -159,6 +159,7 @@ class TutorialPage extends Component {
           rec: 0,
           visible: true,
           weight: 4,
+          attr: '',
           song: {
             name: 'A Tu Merced', id: '4r9jkMEnArtWGH2rL2FZl0', album_cover: 'https://i.scdn.co/image/ab67616d00001e02548f7ec52da7313de0c5e4a0', uri: 'spotify:track:4r9jkMEnArtWGH2rL2FZl0',
           },
@@ -169,6 +170,7 @@ class TutorialPage extends Component {
             rec: 0,
             visible: true,
             weight: 4,
+            attr: '',
             song: {
               name: 'Armed And Dangerous',
               id: '5wujBwqG7INdStqGd4tRMX',
@@ -190,6 +192,7 @@ class TutorialPage extends Component {
   componentDidMount() {
     document.addEventListener('keydown', this.keydownHandler);
     // document.addEventListener('click', this.handleHideChildren);
+    db.getRecs(this.state.tree, '5wujBwqG7INdStqGd4tRMX').then((res) => { console.log(res); });
     db.fetchTrees()
       .then((result) => {
         this.setState({ trees: result.trees });
@@ -293,7 +296,6 @@ class TutorialPage extends Component {
   handleSelectSong = (song) => {
     // this.addNode(song);
     this.setState({ searching: false });
-    console.log(song);
     const copiedtree = JSON.parse(JSON.stringify(this.state.tree));
     tp.ui_set(copiedtree, this.state.search2add, song);
     this.setState({ tree: copiedtree });
@@ -319,10 +321,11 @@ class TutorialPage extends Component {
       });
   };
 
-  handleGetRecs = () => {
+  handleGetRecs = (e) => {
     this.setState({ isLoading: true });
-    db.getRecs()
-      .then((songIDs) => {
+    db.getRecs(this.state.tree, e.target.id)
+      .then((result) => { console.log(result); });
+    /* .then((songIDs) => {
         // eslint-disable-next-line array-callback-return
         // eslint-disable-next-line no-unused-vars
         db.songIDsToSongs(songIDs.songs)
@@ -330,7 +333,7 @@ class TutorialPage extends Component {
             this.setState({ playlist: res.songs });
             this.setLoadingFalse();
           });
-      });
+      }); */
   };
 
   // eslint-disable-next-line class-methods-use-this

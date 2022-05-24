@@ -99,11 +99,22 @@ function TreeNode2(props) {
   } */
 }
 
-function TreeNodeUnfilled(props) {
+function TreeNodeUnfilledUI(props) {
   const updateXarrow = useXarrow();
   return (
     <Draggable onDrag={updateXarrow} onStop={updateXarrow}>
       <button type="button" id={props.id} className="dot node-button unfilled-node" onClick={props.addSongToNode()}>
+        <img src="../plus.png" draggable="false" alt="temp" className="round-img" />
+      </button>
+    </Draggable>
+  );
+}
+
+function TreeNodeUnfilledAlg(props) {
+  const updateXarrow = useXarrow();
+  return (
+    <Draggable onDrag={updateXarrow} onStop={updateXarrow}>
+      <button type="button" id={props.id} className="dot node-button unfilled-node">
         <img src="../plus.png" draggable="false" alt="temp" className="round-img" />
       </button>
     </Draggable>
@@ -137,12 +148,21 @@ class Tree extends React.Component {
     };
     if (tree && tree.root.visible) {
       if (tree && tree.root.rec !== 0) {
-        return (
-          <div style={inputstyle}>
-            <Xarrow start={pref} end={tree.root.name} startAnchor="bottom" endAnchor="top" zIndex={3} showHead={false} dashness color="gray" />
-            <TreeNodeUnfilled addSongToNode={this.props.addSongToNode} id={tree.root.name} />
-          </div>
-        );
+        if (tree.root.rec === 1) {
+          return (
+            <div style={inputstyle}>
+              <Xarrow start={pref} end={tree.root.name} startAnchor="bottom" endAnchor="top" zIndex={3} showHead={false} dashness color="gray" />
+              <TreeNodeUnfilledUI addSongToNode={this.props.addSongToNode} id={tree.root.name} />
+            </div>
+          );
+        } else {
+          return (
+            <div style={inputstyle}>
+              <Xarrow start={pref} end={tree.root.name} startAnchor="bottom" endAnchor="top" zIndex={3} showHead={false} dashness color="gray" />
+              <TreeNodeUnfilledAlg addSongToNode={this.props.addSongToNode} id={tree.root.name} />
+            </div>
+          );
+        }
       } else if (pref) {
         if (tree.root.rec !== 0) {
           return (

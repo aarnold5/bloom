@@ -49,7 +49,7 @@ const set_song = function (new_song, tree, old_song) {
 
 const ui_set = (tree, pid, song) => {
   if (tree) {
-    if (tree.root.song !== null && tree.root.song.id === pid) {
+    if (tree.root.song !== null && tree.root.song.id === pid && !tree.left.root.song) {
       tree.left.root.song = song;
       tree.left.root.rec = 0;
     } else {
@@ -86,8 +86,6 @@ const change_attribute = (attr, tree, target) => {
 };
 
 const showChildren_fe = (tree, targetid) => {
-  console.log('show');
-  console.log(targetid);
   if (tree === null) {
     return;
   } else if (tree.left && tree.root.song.id === targetid) {

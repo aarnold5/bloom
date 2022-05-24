@@ -81,15 +81,35 @@ export async function songIDsToSongs(songids) {
   return ret;
 }
 
-export const getRecs = () => {
-  const fields = {
-    songs: fetchInputPlaylist(),
+// https://bloom-algo-server.herokuapp.com/algo/
+export const getRecs = (tree, pid) => {
+  const params = {
+    tree, sender: pid,
   };
   return new Promise((resolve, reject) => {
-    axios.post('https://us-central1-bloom-838b5.cloudfunctions.net/algorithm', fields, {
+    axios.get('https://bloom-algo-server.herokuapp.com/algo/', { params }, {
       headers: { 'Content-Type': 'application/json' },
     })
       .then((response) => {
+        resolve(response.data);
+      })
+      .catch((error) => {
+        console.log(`api error: ${error}`);
+        reject(error);
+      });
+  });
+};
+
+export const getRecsTest = () => {
+  const params = {
+    name: 'lets do it',
+  };
+  return new Promise((resolve, reject) => {
+    axios.get('https://bloom-algo-server.herokuapp.com/getmsg/', { params }, {
+      headers: { 'Content-Type': 'application/json' },
+    })
+      .then((response) => {
+        console.log(response);
         resolve(response.data);
       })
       .catch((error) => {

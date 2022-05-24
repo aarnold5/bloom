@@ -10,6 +10,7 @@ import React from 'react';
 import Xarrow, { useXarrow, Xwrapper } from 'react-xarrows';
 import Draggable from 'react-draggable';
 import Panzoom from '@panzoom/panzoom';
+import pic from '../../plus.png';
 import * as db from '../../services/firestore';
 
 function TreeNode2(props) {
@@ -104,7 +105,7 @@ function TreeNodeUnfilledUI(props) {
   return (
     <Draggable onDrag={updateXarrow} onStop={updateXarrow}>
       <button type="button" id={props.id} className="dot node-button unfilled-node" onClick={props.addSongToNode()}>
-        <img src="../plus.png" draggable="false" alt="temp" className="round-img" />
+        <img src={pic} draggable="false" alt="temp" className="round-img" />
       </button>
     </Draggable>
   );
@@ -115,7 +116,7 @@ function TreeNodeUnfilledAlg(props) {
   return (
     <Draggable onDrag={updateXarrow} onStop={updateXarrow}>
       <button type="button" id={props.id} className="dot node-button unfilled-node">
-        <img src="../plus.png" draggable="false" alt="temp" className="round-img" />
+        <img src={pic} draggable="false" alt="temp" className="round-img" />
       </button>
     </Draggable>
   );

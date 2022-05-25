@@ -113,19 +113,27 @@ const change_attribute = (attr, tree, target) => {
   change_attribute(attr, tree.right, target);
 };
 
-const showChildren_fe = (tree, targetid, treeold) => {
-  if (tree === null) {
-    return;
-  } else if (tree.left && tree.root.song.id === targetid) {
-    tree.left.root.visible = true;
-    tree.right.root.visible = true;
+function showChildren_fe(tree, targetid, treeold) {
+  let ans = false;
+  if (tree) {
+    if (tree.left && tree.root.song.id === targetid && (tree.left.root.rec !== 0 || tree.right.root.rec !== 0)) {
+      tree.left.root.visible = true;
+      tree.right.root.visible = true;
+      if (tree.right.root.song !== null) {
+        ans = false;
+      } else {
+        ans = true;
+      }
+      return ans;
     /* db.getRecs(treeold, targetid)
       .then((result) => { db.songIDsToSongs(result.MESSAGE.songs).then((res) => console.log(res)); }); */ // add catch
-    return;
+    }
+    const a1 = showChildren_fe(tree.left, targetid, treeold);
+    const a2 = showChildren_fe(tree.right, targetid, treeold);
+    return a1 || a2 || false;
   }
-  showChildren_fe(tree.left, targetid, treeold);
-  showChildren_fe(tree.right, targetid, treeold);
-};
+  return false;
+}
 // post maybe just send IDs and weights
 // cannot delete root
 const delete_node = (tree, target) => {

@@ -221,16 +221,18 @@ class TutorialPage extends Component {
     } else if (this.state.tool_mode === 'select' && e.target.id !== null) {
       if (!this.state.showing) {
         tp.generateChildren_fe(copiedtree, null, copiedtree);
-        tp.showChildren_fe(copiedtree, e.target.id, copiedtree);
-        console.log(copiedtree);
-        db.getRecs(copiedtree, e.target.id)
-          .then((result) => {
-            db.songIDsToSongs(result.MESSAGE.songs).then((res) => {
-              console.log(res);
-              tp.alg_set(copiedtree, e.target.id, res.songs);
-              this.setState({ tree: copiedtree });
+        const run = tp.showChildren_fe(copiedtree, e.target.id, copiedtree);
+        console.log(run);
+        if (run) {
+          db.getRecs(copiedtree, e.target.id)
+            .then((result) => {
+              db.songIDsToSongs(result.MESSAGE.songs).then((res) => {
+                console.log(res);
+                tp.alg_set(copiedtree, e.target.id, res.songs);
+                this.setState({ tree: copiedtree });
+              });
             });
-          });
+        }
         this.setState({ showing: true, search2add: e.target.id });
       } else {
         tp.hideChildren(copiedtree);

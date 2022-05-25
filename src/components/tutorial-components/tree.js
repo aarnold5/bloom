@@ -11,6 +11,7 @@ import Xarrow, { useXarrow, Xwrapper } from 'react-xarrows';
 import Draggable from 'react-draggable';
 import Panzoom from '@panzoom/panzoom';
 import pic from '../../plus.png';
+import pic2 from '../../loads.png';
 import * as db from '../../services/firestore';
 
 function TreeNode2(props) {
@@ -113,13 +114,75 @@ function TreeNodeUnfilledUI(props) {
 
 function TreeNodeUnfilledAlg(props) {
   const updateXarrow = useXarrow();
-  return (
-    <Draggable onDrag={updateXarrow} onStop={updateXarrow}>
-      <button type="button" id={props.id} className="dot node-button unfilled-node">
-        <img src={pic} draggable="false" alt="temp" className="round-img" />
-      </button>
-    </Draggable>
-  );
+  if (Array.isArray(props.song)) {
+    const song = props.song[0];
+    const song2 = props.song[1];
+    const song3 = props.song[2];
+    if (song.album_cover) {
+      return (
+        <div>
+          <Xarrow start={props.pref} end={props.id} startAnchor="bottom" endAnchor="top" zIndex={3} showHead={false} dashness color="gray" />
+
+          <Draggable onDrag={updateXarrow} onStop={updateXarrow}>
+            <button type="button" id={props.id} className="dot node-button unfilled-node">
+              <img src={pic2} draggable="false" alt="temp" className="round-img" />
+            </button>
+          </Draggable>
+          <Xarrow start={props.id} end={song.id} startAnchor="bottom" endAnchor="top" zIndex={3} showHead={false} dashness color="gray" />
+          <Xarrow start={props.id} end={song2.id} startAnchor="bottom" endAnchor="top" zIndex={3} showHead={false} dashness color="gray" />
+          <Xarrow start={props.id} end={song3.id} startAnchor="bottom" endAnchor="top" zIndex={3} showHead={false} dashness color="gray" />
+
+          <div style={{
+            width: '500px',
+            height: '120px',
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            position: 'relative',
+          }}
+          >
+            <Draggable onDrag={updateXarrow} onStop={updateXarrow}>
+              <button type="button" id={song.id} className="dot node-button unfilled-node" style={{ float: 'left' }}>
+                <img src={song.album_cover} draggable="false" alt="temp" className="round-img" />
+              </button>
+            </Draggable>
+            <Draggable onDrag={updateXarrow} onStop={updateXarrow}>
+              <button type="button" id={song2.id} className="dot node-button unfilled-node" style={{ float: 'left' }}>
+                <img src={song2.album_cover} draggable="false" alt="temp" className="round-img" />
+              </button>
+            </Draggable>
+            <Draggable onDrag={updateXarrow} onStop={updateXarrow}>
+              <button type="button" id={song3.id} className="dot node-button unfilled-node" style={{ float: 'right' }}>
+                <img src={song3.album_cover} draggable="false" alt="temp" className="round-img" />
+              </button>
+            </Draggable>
+          </div>
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <Xarrow start={props.pref} end={props.id} startAnchor="bottom" endAnchor="top" zIndex={3} showHead={false} dashness color="gray" />
+          <Draggable onDrag={updateXarrow} onStop={updateXarrow}>
+            <button type="button" id={props.id} className="dot node-button unfilled-node">
+              <img src={pic2} draggable="false" alt="temp" className="round-img" />
+            </button>
+          </Draggable>
+        </div>
+      );
+    }
+  } else {
+    return (
+      <div>
+        <Xarrow start={props.pref} end={props.id} startAnchor="bottom" endAnchor="top" zIndex={3} showHead={false} dashness color="gray" />
+        <Draggable onDrag={updateXarrow} onStop={updateXarrow}>
+          <button type="button" id={props.id} className="dot node-button unfilled-node">
+            <img src={pic} draggable="false" alt="temp" className="round-img" />
+          </button>
+        </Draggable>
+      </div>
+    );
+  }
 }
 
 class Tree extends React.Component {
@@ -159,8 +222,7 @@ class Tree extends React.Component {
         } else {
           return (
             <div style={inputstyle}>
-              <Xarrow start={pref} end={tree.root.name} startAnchor="bottom" endAnchor="top" zIndex={3} showHead={false} dashness color="gray" />
-              <TreeNodeUnfilledAlg addSongToNode={this.props.addSongToNode} id={tree.root.name} />
+              <TreeNodeUnfilledAlg pref={pref} id={tree.root.name} song={tree.root.song} />
             </div>
           );
         }

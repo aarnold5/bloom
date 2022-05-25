@@ -6,6 +6,7 @@
 /* eslint-disable no-return-assign */
 // drag scroll center on click
 import * as db from '../../services/firestore';
+
 // pulls values of or json structure as a list
 const to_list = (tree, depth) => {
   // SET VALUE YOU WANT
@@ -56,6 +57,17 @@ const ui_set = (tree, pid, song) => {
     } else {
       ui_set(tree.left, pid, song);
       ui_set(tree.right, pid, song);
+    }
+  }
+};
+
+const alg_set = (tree, pid, songs) => {
+  if (tree) {
+    if (tree.root.song !== null && tree.root.song.id === pid && !tree.right.root.song) {
+      tree.right.root.song = songs;
+    } else {
+      alg_set(tree.left, pid, songs);
+      alg_set(tree.right, pid, songs);
     }
   }
 };
@@ -142,8 +154,6 @@ const generateChildren_fe = (tree, _, treeold, t_str = 'root_') => {
       };
     } else generateChildren_fe(tree.left, _, treeold, t_str += 'l_');
     if (tree.right === null && tree.root.song !== null) {
-      /* db.getRecs(treeold, tree.root.song.id)
-        .then((result) => { db.songIDsToSongs(result.MESSAGE.songs).then((res) => console.log(res)); }); */
       tree.right = {
         root: {
           song: null,
@@ -160,7 +170,7 @@ const generateChildren_fe = (tree, _, treeold, t_str = 'root_') => {
   }
 };
 export {
-  generateChildren_fe, showChildren_fe, delete_node, ui_set, inc_w, hideChildren,
+  generateChildren_fe, alg_set, showChildren_fe, delete_node, ui_set, inc_w, hideChildren,
 };
 /* const t = {
   root: {

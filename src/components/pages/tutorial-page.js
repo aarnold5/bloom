@@ -192,7 +192,7 @@ class TutorialPage extends Component {
   componentDidMount() {
     document.addEventListener('keydown', this.keydownHandler);
     // document.addEventListener('click', this.handleHideChildren);
-    db.getRecs(this.state.tree, '5wujBwqG7INdStqGd4tRMX').then((res) => { console.log(res); });
+    // db.getRecs(this.state.tree, '5wujBwqG7INdStqGd4tRMX').then((res) => { console.log(res); });
     db.fetchTrees()
       .then((result) => {
         this.setState({ trees: result.trees });
@@ -222,6 +222,15 @@ class TutorialPage extends Component {
       if (!this.state.showing) {
         tp.generateChildren_fe(copiedtree, null, copiedtree);
         tp.showChildren_fe(copiedtree, e.target.id, copiedtree);
+        console.log(copiedtree);
+        db.getRecs(copiedtree, e.target.id)
+          .then((result) => {
+            db.songIDsToSongs(result.MESSAGE.songs).then((res) => {
+              console.log(res);
+              tp.alg_set(copiedtree, e.target.id, res.songs);
+              this.setState({ tree: copiedtree });
+            });
+          });
         this.setState({ showing: true, search2add: e.target.id });
       } else {
         tp.hideChildren(copiedtree);
@@ -403,6 +412,7 @@ class TutorialPage extends Component {
             searchSuggestions={this.state.searchSuggestions}
           />
             <Tree
+              f={this.setLoadingFalse}
               hidechild={this.handleHideChildren}
               currid={this.state.currid}
               tree={this.state.tree}

@@ -367,6 +367,13 @@ class TutorialPage extends Component {
       });
   };
 
+  handleChooseAlg = (e) => {
+    const copiedtree = JSON.parse(JSON.stringify(this.state.tree));
+    tp.alg_add(copiedtree, e.target.id);
+    this.setState({ tree: copiedtree });
+    console.log(copiedtree);
+  };
+
   handleHideChildren = () => {
     const copiedtree = JSON.parse(JSON.stringify(this.state.tree));
     if (this.state.showing) {
@@ -412,6 +419,7 @@ class TutorialPage extends Component {
             searchSuggestions={this.state.searchSuggestions}
           />
             <Tree
+              choosealg={() => this.handleChooseAlg}
               f={this.setLoadingFalse}
               hidechild={this.handleHideChildren}
               currid={this.state.currid}

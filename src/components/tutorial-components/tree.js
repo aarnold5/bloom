@@ -29,76 +29,6 @@ function TreeNode2(props) {
       </div>
     </Draggable>
   );
-  /*
-  function showRec() {
-    console.log('showRec');
-    // call update function to update the tree on the database
-    // props.tree.left.root.visible = true;
-    // if (props.tree.root.rec === 1) {
-    // }
-  } */
-
-  /* function handleClick(isPlayMode, song) {
-    console.log('click');
-    if (isPlayMode) {
-      playSong(song);
-    } else {
-      showRec();
-    }
-  } */
-  /* if (props.tool_mode !== 'select') {
-    if (props.tool_mode === 'play') {
-      return (
-        <Draggable onDrag={updateXarrow} onStop={updateXarrow} disabled>
-          <div>
-            <button type="button" id={props.id} className="dot node-button" onClick={() => props.onClickNode(props.id)}>
-              <img src={props.song.album_cover} draggable="false" alt="temp" className="round-img" />
-            </button>
-          </div>
-        </Draggable>
-      );
-    } else if (props.tool_mode === 'cut') {
-      return (
-        <Draggable onDrag={updateXarrow} onStop={updateXarrow} disabled>
-          <div>
-            <button type="button" id={props.song.id} className="dot node-button" onClick={props.deleteNodes(props.song.id)}>
-              <img src={props.song.album_cover} id={props.song.id} draggable="false" alt="temp" className="round-img" />
-            </button>
-          </div>
-        </Draggable>
-      );
-    } else if (props.tool_mode === 'weight') {
-      return (
-        <Draggable onDrag={updateXarrow} onStop={updateXarrow} disabled>
-          <div>
-            <button type="button" id={props.id} className="dot node-button" onClick={() => props.onClickNode(props.id)}>
-              <img src={props.song.album_cover} draggable="false" alt="temp" className="round-img" />
-            </button>
-          </div>
-        </Draggable>
-      );
-    } else {
-      return (
-        <Draggable onDrag={updateXarrow} onStop={updateXarrow} disabled>
-          <div>
-            <button type="button" id={props.id} className="dot node-button">
-              <img src={props.song.album_cover} draggable="false" alt="temp" className="round-img" />
-            </button>
-          </div>
-        </Draggable>
-      );
-    }
-  } else {
-    return (
-      <Draggable onDrag={updateXarrow} onStop={updateXarrow}>
-        <div>
-          <button type="button" id={props.id} className="dot node-button" value={props.song.id} onClick={props.onShowChildren(props.song.id)}>
-            <img src={props.song.album_cover} draggable="false" alt="temp" className="round-img" />
-          </button>
-        </div>
-      </Draggable>
-    );
-  } */
 }
 
 function TreeNodeUnfilledUI(props) {
@@ -142,18 +72,18 @@ function TreeNodeUnfilledAlg(props) {
           }}
           >
             <Draggable onDrag={updateXarrow} onStop={updateXarrow}>
-              <button type="button" id={song.id} className="dot node-button unfilled-node" style={{ float: 'left' }}>
-                <img src={song.album_cover} draggable="false" alt="temp" className="round-img" />
+              <button type="button" id={song.id} onClick={props.clickfunc()} className="dot node-button unfilled-node" style={{ float: 'left' }}>
+                <img src={song.album_cover} id={song.id} draggable="false" alt="temp" className="round-img" />
               </button>
             </Draggable>
             <Draggable onDrag={updateXarrow} onStop={updateXarrow}>
-              <button type="button" id={song2.id} className="dot node-button unfilled-node" style={{ float: 'left' }}>
-                <img src={song2.album_cover} draggable="false" alt="temp" className="round-img" />
+              <button type="button" id={song2.id} onClick={props.clickfunc()} className="dot node-button unfilled-node" style={{ float: 'left' }}>
+                <img src={song2.album_cover} id={song2.id} draggable="false" alt="temp" className="round-img" />
               </button>
             </Draggable>
             <Draggable onDrag={updateXarrow} onStop={updateXarrow}>
-              <button type="button" id={song3.id} className="dot node-button unfilled-node" style={{ float: 'right' }}>
-                <img src={song3.album_cover} draggable="false" alt="temp" className="round-img" />
+              <button type="button" id={song3.id} onClick={props.clickfunc()} className="dot node-button unfilled-node" style={{ float: 'right' }}>
+                <img src={song3.album_cover} id={song3.id} draggable="false" alt="temp" className="round-img" />
               </button>
             </Draggable>
           </div>
@@ -222,7 +152,7 @@ class Tree extends React.Component {
         } else {
           return (
             <div style={inputstyle}>
-              <TreeNodeUnfilledAlg pref={pref} id={tree.root.name} song={tree.root.song} />
+              <TreeNodeUnfilledAlg pref={pref} id={tree.root.name} song={tree.root.song} clickfunc={this.props.choosealg} />
             </div>
           );
         }

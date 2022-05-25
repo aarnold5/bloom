@@ -72,6 +72,21 @@ const alg_set = (tree, pid, songs) => {
   }
 };
 
+const alg_add = (tree, songId) => {
+  if (tree && tree.right) {
+    if (tree.root.song !== null && tree.right.root.song && Array.isArray(tree.right.root.song)) {
+      // eslint-disable-next-line no-plusplus
+      for (let i = 0; i < 3; i++) {
+        if (tree.right.root.song[i].id === songId) {
+          tree.right.root.song = tree.right.root.song[i];
+          tree.right.root.rec = 0;
+          break;
+        }
+      }
+    } else { alg_add(tree.right, songId); alg_add(tree.left, songId); }
+  }
+};
+
 const inc_w = (tree, target) => {
   if (tree) {
     if (tree.root.song && tree.root.song.id === target) {
@@ -170,144 +185,5 @@ const generateChildren_fe = (tree, _, treeold, t_str = 'root_') => {
   }
 };
 export {
-  generateChildren_fe, alg_set, showChildren_fe, delete_node, ui_set, inc_w, hideChildren,
+  generateChildren_fe, alg_set, showChildren_fe, delete_node, ui_set, inc_w, hideChildren, alg_add,
 };
-/* const t = {
-  root: {
-    name: 'a',
-    rec: 0,
-    visible: true,
-    song: {
-      name: 'AM Remix', id: '05bfbizlM5AX6Mf1RRyMho', album_cover: 'https://i.scdn.co/image/ab67616d00001e022ae66aa58208495074d88fd0', uri: 'spotify:track:05bfbizlM5AX6Mf1RRyMho',
-    },
-  },
-  left: {
-    root: {
-      name: 'b',
-      rec: 0,
-      visible: true,
-      song: {
-        name: 'A Sky Full of Stars', id: '0FDzzruyVECATHXKHFs9eJ', album_cover: 'https://i.scdn.co/image/ab67616d00001e02f864bcdcc245f06831d17ae0', uri: 'spotify:track:0FDzzruyVECATHXKHFs9eJ',
-      },
-    },
-    left: {
-      root: {
-        name: 'd',
-        rec: 0,
-        visible: true,
-        song: {
-          name: 'Anyone', id: '2WnAKZefdRHxtBEkRjFOHC', album_cover: 'https://i.scdn.co/image/ab67616d00001e02e6f407c7f3a0ec98845e4431', uri: 'spotify:track:2WnAKZefdRHxtBEkRjFOHC',
-        },
-      },
-      left: null,
-      right: {
-        left: null,
-        right: null,
-        root: {
-          name: null, song: null, attr: null, rec: 2, visibility: false,
-        },
-      },
-    },
-    right: {
-      root: {
-        name: 'e',
-        rec: 0,
-        visible: true,
-        song: {
-          name: 'All Girls Are The Same', id: '4VXIryQMWpIdGgYR4TrjT1', album_cover: 'https://i.scdn.co/image/ab67616d00001e02f7db43292a6a99b21b51d5b4', uri: 'spotify:track:4VXIryQMWpIdGgYR4TrjT1',
-        },
-      },
-      left: {
-        left: null,
-        right: null,
-        root: {
-          name: null, rec: 1, song: null, attr: null, visibility: false,
-        },
-      },
-      right: {
-        left: null,
-        right: null,
-        root: {
-          name: null, song: null, attr: null, rec: 2, visibility: false,
-        },
-      },
-    },
-  },
-  right: {
-    root: {
-      name: 'c',
-      rec: 0,
-      visible: true,
-      song: {
-        name: 'A Tu Merced', id: '4r9jkMEnArtWGH2rL2FZl0', album_cover: 'https://i.scdn.co/image/ab67616d00001e02548f7ec52da7313de0c5e4a0', uri: 'spotify:track:4r9jkMEnArtWGH2rL2FZl0',
-      },
-    },
-    left: {
-      root: {
-        name: 'f',
-        rec: 0,
-        visible: true,
-        song: {
-          name: 'All Too Well (10 Minute Version) (Taylor"s Version) (From The Vault)', id: '5enxwA8aAbwZbf5qCHORXi', album_cover: 'https://i.scdn.co/image/ab67616d00001e02318443aab3531a0558e79a4d', uri: 'spotify:track:5enxwA8aAbwZbf5qCHORXi',
-        },
-      },
-      left: {
-        left: null,
-        right: null,
-        root: {
-          name: null, rec: 1, song: null, attr: null, visibility: false,
-        },
-      },
-      right: {
-        left: null,
-        right: null,
-        root: {
-          name: null, song: null, attr: null, rec: 2, visibility: false,
-        },
-      },
-    },
-    right: {
-      root: {
-        name: 'g',
-        rec: 0,
-        visible: true,
-        song: {
-          name: 'Armed And Dangerous', id: '5wujBwqG7INdStqGd4tRMX', album_cover: 'https://i.scdn.co/image/ab67616d00001e02f7db43292a6a99b21b51d5b4', uri: 'spotify:track:5wujBwqG7INdStqGd4tRMX',
-        },
-      },
-      left: {
-        left: null,
-        right: null,
-        root: {
-          name: null, rec: 1, song: null, attr: null, visibility: false,
-        },
-      },
-      right: null,
-    },
-  },
-  id: 'users/Ihoc1nuTr9lL92TngABS/trees/2q5uA3rO1YnSd7pYXLUK',
-};
-
-t2 = {
-  root: {
-    name: 'c',
-    rec: 0,
-    visible: true,
-    song: {
-      name: 'A Tu Merced', id: '4r9jkMEnArtWGH2rL2FZl0', album_cover: 'https://i.scdn.co/image/ab67616d00001e02548f7ec52da7313de0c5e4a0', uri: 'spotify:track:4r9jkMEnArtWGH2rL2FZl0',
-    },
-  },
-  left: null,
-  right: null,
-};
-generateChildren_fe(t);
-console.log('%o', t.left.left.left);
-generateChildren_fe(t2);
-console.log('%o', t2);
-showChildren_fe(t2, '4r9jkMEnArtWGH2rL2FZl0');
-console.log('%o', t2);
-ui_set(t2, '4r9jkMEnArtWGH2rL2FZl0', {
-  name: 'Armed And Dangerous', id: '5wujBwqG7INdStqGd4tRMX', album_cover: 'https://i.scdn.co/image/ab67616d00001e02f7db43292a6a99b21b51d5b4', uri: 'spotify:track:5wujBwqG7INdStqGd4tRMX',
-});
-console.log('%o', t2);
- */

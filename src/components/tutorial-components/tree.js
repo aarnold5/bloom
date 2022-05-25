@@ -48,7 +48,7 @@ function TreeNodeUnfilledAlg(props) {
     const song = props.song[0];
     const song2 = props.song[1];
     const song3 = props.song[2];
-    if (song.album_cover) {
+    if (song.album_cover && props.showstat && props.showid === props.id) {
       return (
         <div>
           <Xarrow start={props.pref} end={props.id} startAnchor="bottom" endAnchor="top" zIndex={3} showHead={false} dashness color="gray" />
@@ -94,8 +94,8 @@ function TreeNodeUnfilledAlg(props) {
         <div>
           <Xarrow start={props.pref} end={props.id} startAnchor="bottom" endAnchor="top" zIndex={3} showHead={false} dashness color="gray" />
           <Draggable onDrag={updateXarrow} onStop={updateXarrow}>
-            <button type="button" id={props.id} className="dot node-button unfilled-node">
-              <img src={pic2} draggable="false" alt="temp" className="round-img" />
+            <button type="button" id={props.id} className="dot node-button unfilled-node" onClick={props.setStuff()}>
+              <img src={pic2} id={props.id} draggable="false" alt="temp" className="round-img" />
             </button>
           </Draggable>
         </div>
@@ -118,6 +118,10 @@ function TreeNodeUnfilledAlg(props) {
 class Tree extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      showalg: false,
+      showalgid: null,
+    };
   }
 
   /* componentDidMount() {
@@ -129,6 +133,7 @@ class Tree extends React.Component {
     setTimeout(() => panzoom.pan(100, 100));
   }
  */
+
   getEdges(tree, l, t, i, pref, isPlayMode) {
     const inputstyle = {
       position: 'absolute',
@@ -152,7 +157,7 @@ class Tree extends React.Component {
         } else {
           return (
             <div style={inputstyle}>
-              <TreeNodeUnfilledAlg pref={pref} id={tree.root.name} song={tree.root.song} clickfunc={this.props.choosealg} />
+              <TreeNodeUnfilledAlg pref={pref} id={tree.root.name} showid={this.state.showalgid} showstat={this.state.showalg} song={tree.root.song} clickfunc={this.props.choosealg} setStuff={() => this.toShow} />
             </div>
           );
         }
@@ -195,6 +200,11 @@ class Tree extends React.Component {
       return null;
     }
   }
+
+  toShow = (e) => {
+    console.log(e.target.id);
+    this.setState({ showalg: true, showalgid: e.target.id });
+  };
 
   render() {
     const w = window.innerWidth;

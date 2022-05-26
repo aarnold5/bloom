@@ -419,6 +419,7 @@ class TutorialPage extends Component {
             onSearchChange={this.search}
             searchSuggestions={this.state.searchSuggestions}
           />
+
             <Tree
               choosealg={() => this.handleChooseAlg}
               f={this.setLoadingFalse}

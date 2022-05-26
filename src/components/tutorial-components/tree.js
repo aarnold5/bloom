@@ -20,10 +20,28 @@ function TreeNode2(props) {
   /* function playSong(song) {
     console.log(`playSong:${song.name}`);
   } */
+  let inputStyle = {
+    background: '#96A66D',
+  };
+  if (props.tree.root.attr !== '') {
+    if (props.tree.root.attr === 'mood') {
+      inputStyle = {
+        background: 'blue',
+      };
+    } else if (props.tree.root.attr === 'tempo') {
+      inputStyle = {
+        background: 'orange',
+      };
+    } else {
+      inputStyle = {
+        background: 'yellow',
+      };
+    }
+  }
   return (
     <Draggable onDrag={updateXarrow} onStop={updateXarrow}>
       <div>
-        <button type="button" id={props.id} className="dot node-button" onClick={props.onclickfunc()}>
+        <button type="button" id={props.id} className="dot node-button" onClick={props.onclickfunc()} style={inputStyle}>
           <img src={props.song.album_cover} id={props.song.id} draggable="false" alt="temp" className="round-img" />
         </button>
       </div>

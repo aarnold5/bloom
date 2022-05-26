@@ -222,7 +222,6 @@ class TutorialPage extends Component {
       if (!this.state.showing) {
         tp.generateChildren_fe(copiedtree, null, copiedtree);
         const run = tp.showChildren_fe(copiedtree, e.target.id, copiedtree);
-        console.log(run);
         if (run) {
           db.getRecs(copiedtree, e.target.id)
             .then((result) => {

@@ -15,7 +15,7 @@ class PlayList extends Component {
     const spotifyApi = spt.CreateSpotifyObjects();
     // eslint-disable-next-line no-unused-vars
     const songIDs = this.props.playlist.map((song) => {
-      console.log(song);
+      // console.log(song);
       return song.id;
     });
     /* spt.createPlaylist(spotifyApi, 'New Thing').then((playlistID) => {
@@ -48,7 +48,6 @@ class PlayList extends Component {
         </button>
         <div id="playlist" className="container">
           {this.renderLoading()}
-          {console.log(this.props.playlist)}
           {this.props.playlist.map((song) => {
             console.log(song);
             return <Song key={song.id} name={song.name} album_cover={song.album_cover} song={song} />;

@@ -138,9 +138,9 @@ function showChildren_fe(tree, targetid, treeold) {
 // cannot delete root
 const delete_node = (tree, target) => {
   if (tree && tree.root.song) {
-    if (tree.left && tree.left.root.song.id === target) {
+    if (tree.left && tree.left.root.song && tree.left.root.song.id === target) {
       tree.left = null;
-    } else if (tree.right && tree.right.root.song.id === target) {
+    } else if (tree.right && tree.right.root.song && tree.right.root.song.id === target) {
       tree.right = null;
     } else {
       delete_node(tree.left, target);

@@ -81,15 +81,35 @@ export async function songIDsToSongs(songids) {
   return ret;
 }
 
-export const getRecs = () => {
-  const fields = {
-    songs: fetchInputPlaylist(),
+// https://bloom-algo-server.herokuapp.com/algo/
+export const getRecs = (tree, pid) => {
+  const params = {
+    tree, sender: pid,
   };
   return new Promise((resolve, reject) => {
-    axios.post('https://us-central1-bloom-838b5.cloudfunctions.net/algorithm', fields, {
+    axios.post('https://bloom-algo-server.herokuapp.com/algo/', { params }, {
       headers: { 'Content-Type': 'application/json' },
     })
       .then((response) => {
+        resolve(response.data);
+      })
+      .catch((error) => {
+        console.log(`api error: ${error}`);
+        reject(error);
+      });
+  });
+};
+
+export const getRecsTest = () => {
+  const params = {
+    name: 'lets do it',
+  };
+  return new Promise((resolve, reject) => {
+    axios.get('https://bloom-algo-server.herokuapp.com/getmsg/', { params }, {
+      headers: { 'Content-Type': 'application/json' },
+    })
+      .then((response) => {
+        console.log(response);
         resolve(response.data);
       })
       .catch((error) => {
@@ -106,8 +126,8 @@ export const saveTree = (tree) => {
       headers: { 'Content-Type': 'application/json' },
     })
       .then((response) => {
-        console.log(response.data.results);
-        resolve(response.data.results);
+        console.log(response.data);
+        resolve(response.data);
       })
       .catch((error) => {
         console.log(`api error: ${error}`);
@@ -116,14 +136,14 @@ export const saveTree = (tree) => {
   });
 };
 
-export const loadTree = (tree) => {
-  const fields = tree;
+export const loadTree = (treeID) => {
+  const fields = { name: `users/Ihoc1nuTr9lL92TngABS/trees/${treeID}` };
   return new Promise((resolve, reject) => {
     axios.post('https://us-central1-bloom-838b5.cloudfunctions.net/treeLoader', fields, {
       headers: { 'Content-Type': 'application/json' },
     })
       .then((response) => {
-        resolve(response.data.results);
+        resolve(response.data);
       })
       .catch((error) => {
         console.log(`api error: ${error}`);
@@ -141,7 +161,76 @@ export const addFirstNode = (node) => {
       headers: { 'Content-Type': 'application/json' },
     })
       .then((response) => {
-        resolve(response.data.results);
+        resolve(response.data);
+      })
+      .catch((error) => {
+        console.log(`api error: ${error}`);
+        reject(error);
+      });
+  });
+};
+
+export const deleteNodes = (tree, path, songID) => {
+  const fields = {
+    tree, operation: 'DELETE', node_id: songID, attribute: '', name: path,
+  };
+  return new Promise((resolve, reject) => {
+    axios.post('https://us-central1-bloom-838b5.cloudfunctions.net/treeFunctions', fields, {
+      headers: { 'Content-Type': 'application/json' },
+    })
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((error) => {
+        console.log(`api error: ${error}`);
+        reject(error);
+      });
+  });
+};
+
+export const generateChildren = (tree, path) => {
+  const fields = {
+    tree, operation: 'GENERATE_CHILDREN', node_id: '', attribute: '', name: path,
+  };
+  return new Promise((resolve, reject) => {
+    axios.post('https://us-central1-bloom-838b5.cloudfunctions.net/treeFunctions', fields, {
+      headers: { 'Content-Type': 'application/json' },
+    })
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((error) => {
+        console.log(`api error: ${error}`);
+        reject(error);
+      });
+  });
+};
+
+export const showChildren = (tree, path, songID) => {
+  const fields = {
+    tree, operation: 'SHOW', node_id: songID, attribute: '', name: path,
+  };
+  return new Promise((resolve, reject) => {
+    axios.post('https://us-central1-bloom-838b5.cloudfunctions.net/treeFunctions', fields, {
+      headers: { 'Content-Type': 'application/json' },
+    })
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((error) => {
+        console.log(`api error: ${error}`);
+        reject(error);
+      });
+  });
+};
+
+export const createTree = () => {
+  return new Promise((resolve, reject) => {
+    axios.post('https://us-central1-bloom-838b5.cloudfunctions.net/treeCreator', {
+      headers: { 'Content-Type': 'application/json' },
+    })
+      .then((response) => {
+        resolve(response.data);
       })
       .catch((error) => {
         console.log(`api error: ${error}`);

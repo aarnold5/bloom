@@ -331,10 +331,10 @@ class TutorialPage extends Component {
       });
   };
 
-  handleGetRecs = (e) => {
+  handleGetRecs = () => {
     this.setState({ isLoading: true });
-    db.getRecs(this.state.tree, e.target.id)
-      .then((result) => { console.log(result); });
+    db.getRecs(this.state.tree, '')
+      .then((result) => { db.songIDsToSongs(result.MESSAGE.songs).then((res) => this.setState({ playlist: res.songs, isLoading: false })); });
     /* .then((songIDs) => {
         // eslint-disable-next-line array-callback-return
         // eslint-disable-next-line no-unused-vars
@@ -419,7 +419,6 @@ class TutorialPage extends Component {
             onSearchChange={this.search}
             searchSuggestions={this.state.searchSuggestions}
           />
-
             <Tree
               choosealg={() => this.handleChooseAlg}
               f={this.setLoadingFalse}

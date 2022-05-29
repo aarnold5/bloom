@@ -158,11 +158,6 @@ class Tree extends React.Component {
       top: t,
       left: l,
     };
-    const inputstyleUnfilled = {
-      position: 'absolute',
-      top: t,
-      left: l,
-    };
     if (tree && tree.root.visible) {
       if (tree && tree.root.rec !== 0) {
         if (tree.root.rec === 1) {
@@ -228,7 +223,17 @@ class Tree extends React.Component {
     const w = window.innerWidth;
     const h = window.innerHeight;
     return (
-      <div id="currTree" style={{ display: 'flex', justifyContent: 'space-evenly', width: '100%' }}>
+      <div id="currTree"
+        style={{
+          display: 'flex',
+          justifyContent: 'space-evenly',
+          width: '100%',
+          overflow: 'scroll',
+          height: '100%',
+          borderColor: 'black',
+          position: 'relative',
+        }}
+      >
         <Xwrapper>
           {this.getEdges(this.props.tree, w / 2, 100, w / 4, null, this.props.isPlayMode)}
         </Xwrapper>

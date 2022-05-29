@@ -333,6 +333,7 @@ class TutorialPage extends Component {
 
   handleGetRecs = () => {
     this.setState({ isLoading: true });
+    db.saveTree(this.state.tree).then((res) => console.log(res));
     db.getRecs(this.state.tree, '')
       .then((result) => { db.songIDsToSongs(result.MESSAGE.songs).then((res) => this.setState({ playlist: res.songs, isLoading: false })); });
     /* .then((songIDs) => {

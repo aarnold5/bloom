@@ -150,7 +150,7 @@ class TutorialPage extends Component {
       tool_mode: 'select',
       currentTrackUri: '',
       // eslint-disable-next-line max-len
-      accessToken: 'BQCWYvlgHaGGLI8BDD-CCgcQrQmulElAAwV-BFLoaKjxZ_SyVO2HLfXz9p_FYpIb0MqGEPP9Y95cNEpa7QebQqxAHW0JxoIq3kWNT2gEEnr-02jGE-54u4cMt4gcly3SqN2FRH8wJmqZREo3qs-IZMJXTlx-ak1mX5Mo6f87GbJ5s0AWJqfEaaAwR8KbH6KPqz5-6NbkI8_1hrYJRrnLQlxp_8MW0FUS8OwwBwP9P2oZKvKNU3AzUJvjAAB8B2KWfEGBn2UvJ_hZuWvcORiigPYAmHc_oNL5jfUQp0uwSTMKDMqB_j5c',
+      accessToken: 'BQBncXG2SuBOQAhsi51b5SmrezUt8A3QWLH1KIFkUPZxnc1MAUmooJVjfG9kdKk3ud9ea5wJcEfH55bISGMA4dCs8PztrhBJXiWoNgpt_u_95mOmjYS4VTZseBoQU4iIBsAqMt3u_wfDnkZ08tvDa8GxHkzts8oavLLM4YAOybHBIxMOd5YA2h8K7ZnmVyAlIIxmywLMsPjLv9UriqzyycFuFUe9Ez_e5hJfvU9K7-RVBxG4_y6iBPsg2CZ6URk2x4kYtfdRAMCAsrIrK1GdpW9NqjFDtE1L-EB0vIZXbC6gApWhdpkx',
 
       // trackUri: 'spotify:track:05bfbizlM5AX6Mf1RRyMho',
     };
@@ -314,7 +314,7 @@ class TutorialPage extends Component {
             searchSuggestions={this.state.searchSuggestions}
           />
           {`Tree: ${this.state.tree}`}
-          <Tree currid={this.state.currid} tree={t} runAlgo={this.handleRunAlgo} isPlayMode={this.state.isPlayMode} onClickNode={this.handleClickNode} tool={this.state.tool_mode} />
+          <Tree currid={this.state.currid} tree={t} runAlgo={this.handleRunAlgo} isPlayMode={this.state.isPlayMode} onClickNode={this.setSongPlayback} tool={this.state.tool_mode} />
           <Player accessToken={this.state.accessToken} trackUri={this.state.trackUri} playingTrack />
           <PlayList playlist={this.state.playlist} getRecs={this.handleGetRecs} isLoading={this.state.isLoading} />
         </div>

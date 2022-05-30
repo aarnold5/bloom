@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 /* eslint-disable react/jsx-indent-props */
 /* eslint-disable react/jsx-indent */
 /* eslint-disable react/jsx-closing-bracket-location */
@@ -29,7 +28,7 @@ import Player from '../tutorial-components/player';
   return dictSoFar;
 } */
 
-const t = {
+/* let t = {
   root: {
     name: 'a',
     rec: false,
@@ -127,7 +126,7 @@ const t = {
       right: null,
     },
   },
-};
+}; */
 
 class TutorialPage extends Component {
   constructor(props) {
@@ -152,8 +151,6 @@ class TutorialPage extends Component {
       showing: false,
       search2add: null,
       // eslint-disable-next-line max-len
-      // accessToken: 'BQBncXG2SuBOQAhsi51b5SmrezUt8A3QWLH1KIFkUPZxnc1MAUmooJVjfG9kdKk3ud9ea5wJcEfH55bISGMA4dCs8PztrhBJXiWoNgpt_u_95mOmjYS4VTZseBoQU4iIBsAqMt3u_wfDnkZ08tvDa8GxHkzts8oavLLM4YAOybHBIxMOd5YA2h8K7ZnmVyAlIIxmywLMsPjLv9UriqzyycFuFUe9Ez_e5hJfvU9K7-RVBxG4_y6iBPsg2CZ6URk2x4kYtfdRAMCAsrIrK1GdpW9NqjFDtE1L-EB0vIZXbC6gApWhdpkx',
-
       accessToken: 'BQCWYvlgHaGGLI8BDD-CCgcQrQmulElAAwV-BFLoaKjxZ_SyVO2HLfXz9p_FYpIb0MqGEPP9Y95cNEpa7QebQqxAHW0JxoIq3kWNT2gEEnr-02jGE-54u4cMt4gcly3SqN2FRH8wJmqZREo3qs-IZMJXTlx-ak1mX5Mo6f87GbJ5s0AWJqfEaaAwR8KbH6KPqz5-6NbkI8_1hrYJRrnLQlxp_8MW0FUS8OwwBwP9P2oZKvKNU3AzUJvjAAB8B2KWfEGBn2UvJ_hZuWvcORiigPYAmHc_oNL5jfUQp0uwSTMKDMqB_j5c-CCgcQrQmulElAAwV-BFLoaKjxZ_SyVO2HLfXz9p_FYpIb0MqGEPP9Y95cNEpa7QebQqxAHW0JxoIq3kWNT2gEEnr-02jGE-54u4cMt4gcly3SqN2FRH8wJmqZREo3qs-IZMJXTlx-ak1mX5Mo6f87GbJ5s0AWJqfEaaAwR8KbH6KPqz5-6NbkI8_1hrYJRrnLQlxp_8MW0FUS8OwwBwP9P2oZKvKNU3AzUJvjAAB8B2KWfEGBn2UvJ_hZuWvcORiigPYAmHc_oNL5jfUQp0uwSTMKDMqB_j5c-trA6nGrG8sPEVCowKYB0w6ZuoDq2UPiSIzpfL1I6LcaPPCA7XdrVwmbuQVkW4K8PxBSG8dQ2x_b-tcTEszXnZ1wNARQAG9Qqg4toqDYGYi65tq-mgbty45',
       tree: {
         root: {
@@ -333,10 +330,11 @@ class TutorialPage extends Component {
       });
   };
 
-  handleGetRecs = (e) => {
+  handleGetRecs = () => {
     this.setState({ isLoading: true });
-    db.getRecs(this.state.tree, e.target.id)
-      .then((result) => { console.log(result); });
+    db.saveTree(this.state.tree).then((res) => console.log(res));
+    db.getRecs(this.state.tree, '')
+      .then((result) => { db.songIDsToSongs(result.MESSAGE.songs).then((res) => this.setState({ playlist: res.songs, isLoading: false })); });
     /* .then((songIDs) => {
         // eslint-disable-next-line array-callback-return
         // eslint-disable-next-line no-unused-vars
@@ -421,10 +419,6 @@ class TutorialPage extends Component {
             onSearchChange={this.search}
             searchSuggestions={this.state.searchSuggestions}
           />
-          {`Tree: ${this.state.tree}`}
-          <Tree currid={this.state.currid} tree={t} runAlgo={this.handleRunAlgo} isPlayMode={this.state.isPlayMode} onClickNode={this.setSongPlayback} tool={this.state.tool_mode} />
-          <Player accessToken={this.state.accessToken} trackUri={this.state.trackUri} playingTrack />
-
             <Tree
               choosealg={() => this.handleChooseAlg}
               f={this.setLoadingFalse}

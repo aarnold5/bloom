@@ -17,7 +17,7 @@ import Tree from '../tutorial-components/tree';
 import * as tp from '../tutorial-components/tree-parser';
 import Player from '../tutorial-components/player';
 
-// const songLookup = {};
+//= const songLookup = {};
 /* function treeToDict(t, dictSoFar) {
   if (t) {
     // eslint-disable-next-line no-param-reassign
@@ -238,6 +238,10 @@ class TutorialPage extends Component {
       }
     } else if (this.state.tool_mode === 'weight' && e.target.id !== null) {
       tp.inc_w(copiedtree, e.target.id);
+    } else if (this.state.tool_mode === 'play' && e.target.id !== null) {
+      this.setState({ currentTrackUri: e.target.trackUri }); // very easy fix: add trackUri to the img src div holding the album cover! That way this e.target.trackUri will work.
+      console.log('target');
+      console.log(e.target);
     }
     this.setState({ tree: copiedtree });
   };
@@ -434,7 +438,7 @@ class TutorialPage extends Component {
               addSongToNode={() => this.handleAddSongToNode}
               clickfunc={() => this.onClickfunc} />
 
-          {/* <Player accessToken={this.state.accessToken} trackUri={this.state.trackUri} playingTrack /> */}
+          <Player accessToken={this.state.accessToken} trackUri={this.state.trackUri} playingTrack />
           <PlayList playlist={this.state.playlist} getRecs={this.handleGetRecs} isLoading={this.state.isLoading} />
         </div>
       </div>

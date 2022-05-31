@@ -10,7 +10,7 @@ const TreeListComponent = (props) => {
     );
   } */
   return ( // renders all other buttons as a disabled button
-    <button type="button" key={props.tree.id} id={props.tree.id} className="tree-list-component home-page-button container" onClick={props.onSelectDifferentTree}>
+    <button type="button" key={props.tree.id} id={props.tree.id} style={{ overflowWrap: false }} className="tree-list-component home-page-button container" onClick={props.onSelectDifferentTree}>
       {props.tree.name}
     </button>
   );

@@ -26,7 +26,7 @@ class SearchSuggestions extends Component {
       return (
         <div>
           <SearchBar className="search-bar" onSearchChange={this.props.onSearchChange} />
-          <div className="suggestion-box">
+          <div className="suggestion-box" style={{ flex: 'left', position: 'fixed', zIndex: '8' }}>
             {this.renderSearchSuggestions()}
           </div>
         </div>

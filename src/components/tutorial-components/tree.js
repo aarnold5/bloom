@@ -232,7 +232,7 @@ class Tree extends React.Component {
           justifyContent: 'space-evenly',
           width: '100%',
           overflow: 'scroll',
-          height: '100%',
+          height: '80%',
           borderColor: 'black',
           position: 'relative',
         }}

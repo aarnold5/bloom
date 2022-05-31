@@ -156,7 +156,7 @@ class TutorialPage extends Component {
       accessToken: 'BQCWYvlgHaGGLI8BDD-CCgcQrQmulElAAwV-BFLoaKjxZ_SyVO2HLfXz9p_FYpIb0MqGEPP9Y95cNEpa7QebQqxAHW0JxoIq3kWNT2gEEnr-02jGE-54u4cMt4gcly3SqN2FRH8wJmqZREo3qs-IZMJXTlx-ak1mX5Mo6f87GbJ5s0AWJqfEaaAwR8KbH6KPqz5-6NbkI8_1hrYJRrnLQlxp_8MW0FUS8OwwBwP9P2oZKvKNU3AzUJvjAAB8B2KWfEGBn2UvJ_hZuWvcORiigPYAmHc_oNL5jfUQp0uwSTMKDMqB_j5c-CCgcQrQmulElAAwV-BFLoaKjxZ_SyVO2HLfXz9p_FYpIb0MqGEPP9Y95cNEpa7QebQqxAHW0JxoIq3kWNT2gEEnr-02jGE-54u4cMt4gcly3SqN2FRH8wJmqZREo3qs-IZMJXTlx-ak1mX5Mo6f87GbJ5s0AWJqfEaaAwR8KbH6KPqz5-6NbkI8_1hrYJRrnLQlxp_8MW0FUS8OwwBwP9P2oZKvKNU3AzUJvjAAB8B2KWfEGBn2UvJ_hZuWvcORiigPYAmHc_oNL5jfUQp0uwSTMKDMqB_j5c-trA6nGrG8sPEVCowKYB0w6ZuoDq2UPiSIzpfL1I6LcaPPCA7XdrVwmbuQVkW4K8PxBSG8dQ2x_b-tcTEszXnZ1wNARQAG9Qqg4toqDYGYi65tq-mgbty45',
       tree: {
         root: {
-          name: 'c',
+          name: 'root',
           rec: 0,
           visible: true,
           weight: 4,
@@ -167,7 +167,7 @@ class TutorialPage extends Component {
         },
         left: {
           root: {
-            name: 'g',
+            name: 'root_l_',
             rec: 0,
             visible: true,
             weight: 4,
@@ -184,7 +184,6 @@ class TutorialPage extends Component {
         },
         right: null,
       },
-      // trackUri: 'spotify:track:05bfbizlM5AX6Mf1RRyMho',
     };
 
     this.search = debounce(this.search, 300);
@@ -197,6 +196,7 @@ class TutorialPage extends Component {
     db.fetchTrees()
       .then((result) => {
         this.setState({ trees: result.trees });
+        console.log(result.trees);
         /* db.loadTree(result.trees[0].id)
           .then((res) => {
             this.setState({ tree: res.tree_json });
@@ -308,7 +308,18 @@ class TutorialPage extends Component {
     // this.addNode(song);
     this.setState({ searching: false });
     const copiedtree = JSON.parse(JSON.stringify(this.state.tree));
-    tp.ui_set(copiedtree, this.state.search2add, song);
+    if (copiedtree.root.rec === 1) {
+      copiedtree.root = {
+        name: 'root',
+        rec: 0,
+        visible: true,
+        weight: 4,
+        attr: '',
+        song,
+      };
+    } else {
+      tp.ui_set(copiedtree, this.state.search2add, song);
+    }
     this.setState({ tree: copiedtree });
   };
 
@@ -329,12 +340,13 @@ class TutorialPage extends Component {
     db.loadTree(tree.target.id)
       .then((result) => {
         this.setState({ tree: result.tree_json, currTreeId: tree.target.id });
+        console.log(this.state.tree);
       });
   };
 
   handleGetRecs = () => {
     this.setState({ isLoading: true });
-    db.saveTree(this.state.tree, this.state.currTreeId).then((res) => console.log(res));
+    db.saveTree(this.state.tree, '2q5uA3rO1YnSd7pYXLUK').then((res) => console.log(res));
     db.getRecs(this.state.tree, '')
       .then((result) => { db.songIDsToSongs(result.MESSAGE.songs).then((res) => this.setState({ playlist: res.songs, isLoading: false })); });
     /* .then((songIDs) => {

@@ -218,6 +218,7 @@ class TutorialPage extends Component {
       tp.inc_w(copiedtree, e.target.id);
     }
     this.setState({ tree: copiedtree });
+    db.saveTree(this.state.tree).then((res) => console.log(res));
   };
 
   keydownHandler = (event) => {

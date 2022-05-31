@@ -128,7 +128,7 @@ function TreeNodeUnfilledAlg(props) {
         <Xarrow start={props.pref} end={props.id} startAnchor="bottom" endAnchor="top" zIndex={3} showHead={false} dashness color="gray" />
         <Draggable onDrag={updateXarrow} onStop={updateXarrow}>
           <button type="button" id={props.id} className="dot node-button unfilled-node">
-            <img src={pic} draggable="false" alt="temp" className="round-img" />
+            <img src={pic} id={props.id} draggable="false" alt="temp" className="round-img" />
           </button>
         </Draggable>
       </div>

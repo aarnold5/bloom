@@ -154,36 +154,7 @@ class TutorialPage extends Component {
       currTreeId: null,
       // eslint-disable-next-line max-len
       accessToken: 'BQCWYvlgHaGGLI8BDD-CCgcQrQmulElAAwV-BFLoaKjxZ_SyVO2HLfXz9p_FYpIb0MqGEPP9Y95cNEpa7QebQqxAHW0JxoIq3kWNT2gEEnr-02jGE-54u4cMt4gcly3SqN2FRH8wJmqZREo3qs-IZMJXTlx-ak1mX5Mo6f87GbJ5s0AWJqfEaaAwR8KbH6KPqz5-6NbkI8_1hrYJRrnLQlxp_8MW0FUS8OwwBwP9P2oZKvKNU3AzUJvjAAB8B2KWfEGBn2UvJ_hZuWvcORiigPYAmHc_oNL5jfUQp0uwSTMKDMqB_j5c-CCgcQrQmulElAAwV-BFLoaKjxZ_SyVO2HLfXz9p_FYpIb0MqGEPP9Y95cNEpa7QebQqxAHW0JxoIq3kWNT2gEEnr-02jGE-54u4cMt4gcly3SqN2FRH8wJmqZREo3qs-IZMJXTlx-ak1mX5Mo6f87GbJ5s0AWJqfEaaAwR8KbH6KPqz5-6NbkI8_1hrYJRrnLQlxp_8MW0FUS8OwwBwP9P2oZKvKNU3AzUJvjAAB8B2KWfEGBn2UvJ_hZuWvcORiigPYAmHc_oNL5jfUQp0uwSTMKDMqB_j5c-trA6nGrG8sPEVCowKYB0w6ZuoDq2UPiSIzpfL1I6LcaPPCA7XdrVwmbuQVkW4K8PxBSG8dQ2x_b-tcTEszXnZ1wNARQAG9Qqg4toqDYGYi65tq-mgbty45',
-      tree: {
-        root: {
-          name: 'root',
-          rec: 0,
-          visible: true,
-          weight: 4,
-          attr: '',
-          song: {
-            name: 'A Tu Merced', id: '4r9jkMEnArtWGH2rL2FZl0', album_cover: 'https://i.scdn.co/image/ab67616d00001e02548f7ec52da7313de0c5e4a0', uri: 'spotify:track:4r9jkMEnArtWGH2rL2FZl0',
-          },
-        },
-        left: {
-          root: {
-            name: 'root_l_',
-            rec: 0,
-            visible: true,
-            weight: 4,
-            attr: '',
-            song: {
-              name: 'Armed And Dangerous',
-              id: '5wujBwqG7INdStqGd4tRMX',
-              album_cover: 'https://i.scdn.co/image/ab67616d00001e02f7db43292a6a99b21b51d5b4',
-              uri: 'spotify:track:5wujBwqG7INdStqGd4tRMX',
-            },
-          },
-          left: null,
-          right: null,
-        },
-        right: null,
-      },
+      tree: null,
     };
 
     this.search = debounce(this.search, 300);
@@ -193,20 +164,25 @@ class TutorialPage extends Component {
     document.addEventListener('keydown', this.keydownHandler);
     // document.addEventListener('click', this.handleHideChildren);
     // db.getRecs(this.state.tree, '5wujBwqG7INdStqGd4tRMX').then((res) => { console.log(res); });
-    db.fetchTrees()
-      .then((result) => {
-        this.setState({ trees: result.trees });
-        console.log(result.trees);
-        /* db.loadTree(result.trees[0].id)
-          .then((res) => {
-            this.setState({ tree: res.tree_json });
-            db.generateChildren(res.tree_json, res.tree_json.id)
-              .then((res2) => {
-                this.setState({ tree: res2 });
+    if (this.state.tree === null) {
+      db.fetchTrees()
+        .then((result) => {
+          this.setState({ trees: result.trees });
+          console.log(result.trees);
+          db.loadTree(result.trees[0].id)
+            .then((res) => {
+              if (res.tree_json.root.rec === 0) {
+                tp.hideChildren(res.tree_json);
+              }
+              this.setState({ tree: res.tree_json });
+              db.generateChildren(res.tree_json, res.tree_json.id)
+                .then((res2) => {
+                  this.setState({ tree: res2 });
                 // console.log(res2);
-              });
-          }); */
-      });
+                });
+            });
+        });
+    }
     // eslint-disable-next-line no-new-object
   }
 
@@ -339,6 +315,9 @@ class TutorialPage extends Component {
   handleLoadNewTree = (tree) => {
     db.loadTree(tree.target.id)
       .then((result) => {
+        if (result.tree_json.root.rec === 0) {
+          tp.hideChildren(result.tree_json);
+        }
         this.setState({ tree: result.tree_json, currTreeId: tree.target.id });
         console.log(this.state.tree);
       });
@@ -346,7 +325,7 @@ class TutorialPage extends Component {
 
   handleGetRecs = () => {
     this.setState({ isLoading: true });
-    db.saveTree(this.state.tree, '2q5uA3rO1YnSd7pYXLUK').then((res) => console.log(res));
+    db.saveTree(this.state.tree).then((res) => console.log(res));
     db.getRecs(this.state.tree, '')
       .then((result) => { db.songIDsToSongs(result.MESSAGE.songs).then((res) => this.setState({ playlist: res.songs, isLoading: false })); });
     /* .then((songIDs) => {

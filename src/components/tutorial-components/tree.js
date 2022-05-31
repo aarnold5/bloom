@@ -42,7 +42,7 @@ function TreeNode2(props) {
     <Draggable onDrag={updateXarrow} onStop={updateXarrow}>
       <div data-toggle="popover" title={props.song.name} data-content={props.song.artist}>
         <button type="button" id={props.id} className="dot node-button" onClick={props.onclickfunc()} style={inputStyle}>
-          <img src={props.song.album_cover} id={props.song.id} draggable="false" alt="temp" className="round-img" />
+          <img src={props.song.album_cover} id={props.song.id} trackuri={props.song.uri} draggable="false" alt="temp" className="round-img" />
         </button>
       </div>
     </Draggable>

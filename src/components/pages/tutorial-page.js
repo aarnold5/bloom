@@ -151,7 +151,7 @@ class TutorialPage extends Component {
       showing: false,
       search2add: null,
       // eslint-disable-next-line max-len
-      accessToken: 'BQCWYvlgHaGGLI8BDD-CCgcQrQmulElAAwV-BFLoaKjxZ_SyVO2HLfXz9p_FYpIb0MqGEPP9Y95cNEpa7QebQqxAHW0JxoIq3kWNT2gEEnr-02jGE-54u4cMt4gcly3SqN2FRH8wJmqZREo3qs-IZMJXTlx-ak1mX5Mo6f87GbJ5s0AWJqfEaaAwR8KbH6KPqz5-6NbkI8_1hrYJRrnLQlxp_8MW0FUS8OwwBwP9P2oZKvKNU3AzUJvjAAB8B2KWfEGBn2UvJ_hZuWvcORiigPYAmHc_oNL5jfUQp0uwSTMKDMqB_j5c-CCgcQrQmulElAAwV-BFLoaKjxZ_SyVO2HLfXz9p_FYpIb0MqGEPP9Y95cNEpa7QebQqxAHW0JxoIq3kWNT2gEEnr-02jGE-54u4cMt4gcly3SqN2FRH8wJmqZREo3qs-IZMJXTlx-ak1mX5Mo6f87GbJ5s0AWJqfEaaAwR8KbH6KPqz5-6NbkI8_1hrYJRrnLQlxp_8MW0FUS8OwwBwP9P2oZKvKNU3AzUJvjAAB8B2KWfEGBn2UvJ_hZuWvcORiigPYAmHc_oNL5jfUQp0uwSTMKDMqB_j5c-trA6nGrG8sPEVCowKYB0w6ZuoDq2UPiSIzpfL1I6LcaPPCA7XdrVwmbuQVkW4K8PxBSG8dQ2x_b-tcTEszXnZ1wNARQAG9Qqg4toqDYGYi65tq-mgbty45',
+      accessToken: 'BQBxhQ7F97btR0xyyflyLHt-G7TFYCfc6djFFfZ0izSIAzxP-NeTfzZJ94KRfgKnVsumXIsqJYVC7VoaR46tA4d7vqhqKIrCC-T5UfzMPetCDEyuAnBnkfdQTSSjhxPYlk84EMKEicc1LfklgRZQ6prKM0AqGLylkJNx4vheYrIZ6WXmt-ju69JZaxUABJ0XUjYuyEp9d4EkgtPR5KXDg30BfwPI_LMhS5RiaDkIfpmWZZAGRaHv1K70SuyZlVX0EKcQdUKlP4bKf82pIKV8XfEofv2iPL02qxyZHwn94ryuoxzInLoU',
       tree: {
         root: {
           name: 'c',
@@ -239,11 +239,10 @@ class TutorialPage extends Component {
     } else if (this.state.tool_mode === 'weight' && e.target.id !== null) {
       tp.inc_w(copiedtree, e.target.id);
     } else if (this.state.tool_mode === 'play' && e.target.id !== null) {
-      this.setState({ currentTrackUri: e.target.trackUri }); // very easy fix: add trackUri to the img src div holding the album cover! That way this e.target.trackUri will work.
-      console.log('target');
-      console.log(e.target);
+      this.setState({ currentTrackUri: `spotify:track:${e.target.id}` }); // very easy fix: add trackUri to the img src div holding the album cover! That way this e.target.trackUri will work.
     }
     this.setState({ tree: copiedtree });
+    console.log(this.state.currentTrackUri);
   };
 
   keydownHandler = (event) => {
@@ -438,7 +437,7 @@ class TutorialPage extends Component {
               addSongToNode={() => this.handleAddSongToNode}
               clickfunc={() => this.onClickfunc} />
 
-          <Player accessToken={this.state.accessToken} trackUri={this.state.trackUri} playingTrack />
+          <Player accessToken={this.state.accessToken} trackUri={this.state.currentTrackUri} playingTrack />
           <PlayList playlist={this.state.playlist} getRecs={this.handleGetRecs} isLoading={this.state.isLoading} />
         </div>
       </div>

@@ -48,14 +48,6 @@ class PlayList extends Component {
     }
   }
 
-  renderSongs() {
-    if (this.props.playlist[0] && this.props.playlist[0].album_cover) {
-      this.props.playlist.map((song) => {
-        return <Song key={song.id} name={song.name} album_cover={song.album_cover} song={song} />;
-      });
-    }
-  }
-
   render() {
     return (
       <div id="playlist-container" className="container">

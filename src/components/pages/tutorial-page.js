@@ -353,10 +353,8 @@ class TutorialPage extends Component {
 
   // eslint-disable-next-line class-methods-use-this
   handleDeleteNodes = (e) => {
-    console.log(e.target.id);
     db.deleteNodes(this.state.tree, this.state.tree.id, e.target.id)
       .then((result) => {
-        console.log(result);
         this.setState({ tree: result });
       });
   };

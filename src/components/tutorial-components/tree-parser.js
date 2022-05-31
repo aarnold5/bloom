@@ -107,7 +107,7 @@ const change_attribute = (attr, tree, target) => {
   if (tree === null) {
     return;
   }
-  if (tree.root === target) {
+  if (tree.root.song && tree.root.song.id === target) {
     tree.root.attribute = attr;
   }
   change_attribute(attr, tree.left, target);

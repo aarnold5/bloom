@@ -16,7 +16,7 @@ import * as db from '../../services/firestore';
 
 function TreeNode2(props) {
   const updateXarrow = useXarrow();
-
+  console.log(props.tree);
   /* function playSong(song) {
     console.log(`playSong:${song.name}`);
   } */

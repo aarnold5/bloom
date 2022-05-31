@@ -16,7 +16,6 @@ class App extends Component {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="tutorial" element={<TutorialPage />} />
-          <Route path="auth" element={<HomePage />} />
         </Routes>
       </BrowserRouter>
     );

@@ -150,8 +150,8 @@ class TutorialPage extends Component {
       currentTrackUri: '',
       showing: false,
       search2add: null,
-      // eslint-disable-next-line max-len
-      accessToken: 'BQBxhQ7F97btR0xyyflyLHt-G7TFYCfc6djFFfZ0izSIAzxP-NeTfzZJ94KRfgKnVsumXIsqJYVC7VoaR46tA4d7vqhqKIrCC-T5UfzMPetCDEyuAnBnkfdQTSSjhxPYlk84EMKEicc1LfklgRZQ6prKM0AqGLylkJNx4vheYrIZ6WXmt-ju69JZaxUABJ0XUjYuyEp9d4EkgtPR5KXDg30BfwPI_LMhS5RiaDkIfpmWZZAGRaHv1K70SuyZlVX0EKcQdUKlP4bKf82pIKV8XfEofv2iPL02qxyZHwn94ryuoxzInLoU',
+      // eslint-disable-next-line camelcase, no-undef
+      accessToken: auth_token,
       tree: {
         root: {
           name: 'c',

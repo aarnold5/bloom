@@ -8,8 +8,16 @@ import * as spt from '../../spotifyTesting';
 class PlayList extends Component {
   constructor(props) {
     super(props);
-    this.state = { }; // nothing here yet
+    if (this.props.playlist[0]) {
+      this.state = { songs: this.props.playlist, loaded: false };
+      console.log(this.state.songs);
+    }// nothing here yet
   }
+
+  setLoaded = () => {
+    this.setState((prevState) => ({ loaded: !prevState }));
+    console.log(this.state.loaded);
+  };
 
   runSpotifyMethods = () => {
     const spotifyApi = spt.CreateSpotifyObjects();
@@ -35,8 +43,16 @@ class PlayList extends Component {
 
   // eslint-disable-next-line consistent-return
   renderLoading() {
-    if (this.props.isLoading) {
+    if (this.props.isLoading || !this.props.playlist[0]) {
       return <p>Loading Recommendations...</p>;
+    }
+  }
+
+  renderSongs() {
+    if (this.props.playlist[0] && this.props.playlist[0].album_cover) {
+      this.props.playlist.map((song) => {
+        return <Song key={song.id} name={song.name} album_cover={song.album_cover} song={song} />;
+      });
     }
   }
 
@@ -49,8 +65,7 @@ class PlayList extends Component {
         <div id="playlist" className="container">
           {this.renderLoading()}
           {this.props.playlist.map((song) => {
-            console.log(song);
-            return <Song key={song.id} name={song.name} album_cover={song.album_cover} song={song} />;
+            return <Song key={song.id} show={this.setLoaded} name={song.name} album_cover={song.album_cover} song={song} />;
           })}
         </div>
         <button type="button" id="reshuffle-playlist" className="playlist-button" onClick={this.props.getRecs}>

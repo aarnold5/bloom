@@ -150,14 +150,8 @@ class TutorialPage extends Component {
       currentTrackUri: '',
       showing: false,
       search2add: null,
-<<<<<<< HEAD
-      // eslint-disable-next-line camelcase, no-undef
-      accessToken: auth_token,
-=======
-      currTreeId: null,
       // eslint-disable-next-line max-len
-      accessToken: 'BQBxhQ7F97btR0xyyflyLHt-G7TFYCfc6djFFfZ0izSIAzxP-NeTfzZJ94KRfgKnVsumXIsqJYVC7VoaR46tA4d7vqhqKIrCC-T5UfzMPetCDEyuAnBnkfdQTSSjhxPYlk84EMKEicc1LfklgRZQ6prKM0AqGLylkJNx4vheYrIZ6WXmt-ju69JZaxUABJ0XUjYuyEp9d4EkgtPR5KXDg30BfwPI_LMhS5RiaDkIfpmWZZAGRaHv1K70SuyZlVX0EKcQdUKlP4bKf82pIKV8XfEofv2iPL02qxyZHwn94ryuoxzInLoU',
->>>>>>> 125ef08630242dca0b871edef7d674ece620fbc6
+      accessToken: auth_token,
       tree: {
         root: {
           name: 'c',
@@ -335,13 +329,13 @@ class TutorialPage extends Component {
   handleLoadNewTree = (tree) => {
     db.loadTree(tree.target.id)
       .then((result) => {
-        this.setState({ tree: result.tree_json, currTreeId: tree.target.id });
+        this.setState({ tree: result.tree_json });
       });
   };
 
   handleGetRecs = () => {
     this.setState({ isLoading: true });
-    db.saveTree(this.state.tree, this.state.currTreeId).then((res) => console.log(res));
+    db.saveTree(this.state.tree).then((res) => console.log(res));
     db.getRecs(this.state.tree, '')
       .then((result) => { db.songIDsToSongs(result.MESSAGE.songs).then((res) => this.setState({ playlist: res.songs, isLoading: false })); });
     /* .then((songIDs) => {

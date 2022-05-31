@@ -27,8 +27,8 @@ const find_song = function (search, tree) {
   if (!tree) {
     return null;
   }
-  if (tree.root.song === search) {
-    return tree.root;
+  if (tree.root.song && tree.root.song.id === search) {
+    return tree.root.song;
   }
   const res1 = find_song(search, tree.left);
   const res2 = find_song(search, tree.right);
@@ -193,5 +193,5 @@ const generateChildren_fe = (tree, _, treeold, t_str = 'root_') => {
   }
 };
 export {
-  generateChildren_fe, alg_set, showChildren_fe, delete_node, ui_set, inc_w, hideChildren, alg_add,
+  generateChildren_fe, alg_set, showChildren_fe, delete_node, ui_set, inc_w, hideChildren, alg_add, find_song,
 };

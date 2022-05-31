@@ -15,6 +15,7 @@ import SearchSuggestions from '../tutorial-components/search-suggestions';
 import { bloomSearch } from '../tutorial-components/search';
 import Tree from '../tutorial-components/tree';
 import * as tp from '../tutorial-components/tree-parser';
+import Modem from '../tutorial-components/modem';
 
 // import Player from '../tutorial-components/player';
 
@@ -152,6 +153,7 @@ class TutorialPage extends Component {
       showing: false,
       search2add: null,
       currTreeId: null,
+      songToModem: { name: null, id: null },
       // eslint-disable-next-line max-len
       accessToken: 'BQCWYvlgHaGGLI8BDD-CCgcQrQmulElAAwV-BFLoaKjxZ_SyVO2HLfXz9p_FYpIb0MqGEPP9Y95cNEpa7QebQqxAHW0JxoIq3kWNT2gEEnr-02jGE-54u4cMt4gcly3SqN2FRH8wJmqZREo3qs-IZMJXTlx-ak1mX5Mo6f87GbJ5s0AWJqfEaaAwR8KbH6KPqz5-6NbkI8_1hrYJRrnLQlxp_8MW0FUS8OwwBwP9P2oZKvKNU3AzUJvjAAB8B2KWfEGBn2UvJ_hZuWvcORiigPYAmHc_oNL5jfUQp0uwSTMKDMqB_j5c-CCgcQrQmulElAAwV-BFLoaKjxZ_SyVO2HLfXz9p_FYpIb0MqGEPP9Y95cNEpa7QebQqxAHW0JxoIq3kWNT2gEEnr-02jGE-54u4cMt4gcly3SqN2FRH8wJmqZREo3qs-IZMJXTlx-ak1mX5Mo6f87GbJ5s0AWJqfEaaAwR8KbH6KPqz5-6NbkI8_1hrYJRrnLQlxp_8MW0FUS8OwwBwP9P2oZKvKNU3AzUJvjAAB8B2KWfEGBn2UvJ_hZuWvcORiigPYAmHc_oNL5jfUQp0uwSTMKDMqB_j5c-trA6nGrG8sPEVCowKYB0w6ZuoDq2UPiSIzpfL1I6LcaPPCA7XdrVwmbuQVkW4K8PxBSG8dQ2x_b-tcTEszXnZ1wNARQAG9Qqg4toqDYGYi65tq-mgbty45',
       tree: null,
@@ -384,11 +386,19 @@ class TutorialPage extends Component {
   };
 
   // eslint-disable-next-line consistent-return
-  renderRootWarning() {
+  /*   renderRootWarning() {
     if (this.state.issueRootWarning) {
       return <p>sorry! you can only add one root node</p>;
     }
-  }
+  } */
+
+  sendToModem = (e) => {
+    const song = tp.find_song(e.target.id, this.state.tree);
+    console.log(song);
+    if (song) {
+      this.setState({ songToModem: song });
+    }
+  };
 
   render() {
     return (
@@ -404,7 +414,7 @@ class TutorialPage extends Component {
             setPlay={this.setPlay}
             setMinus={this.setMinus}
           />
-          {this.renderRootWarning()}
+          <Modem song={this.state.songToModem} />
           <SearchSuggestions
             searching={this.state.searching}
             onSelectSong={this.handleSelectSong}
@@ -424,7 +434,8 @@ class TutorialPage extends Component {
               deleteNodes={() => this.handleDeleteNodes}
               onShowChildren={() => this.handleShowChildren}
               addSongToNode={() => this.handleAddSongToNode}
-              clickfunc={() => this.onClickfunc} />
+              clickfunc={() => this.onClickfunc}
+              hoover={() => this.sendToModem} />
 
           {/* <Player accessToken={this.state.accessToken} trackUri={this.state.trackUri} playingTrack /> */}
           <PlayList playlist={this.state.playlist} getRecs={this.handleGetRecs} isLoading={this.state.isLoading} />

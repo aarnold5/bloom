@@ -9,9 +9,8 @@ class PlayList extends Component {
   constructor(props) {
     super(props);
     if (this.props.playlist[0]) {
-      this.state = { songs: this.props.playlist, loaded: false, showStat: false };
-      console.log(this.state.songs);
-    }// nothing here yet
+      this.state = { loaded: false, showStat: false };
+    } else this.state = { showStat: false };
   }
 
   componentDidMount() {
@@ -22,6 +21,7 @@ class PlayList extends Component {
 
   keydownHandlerp = (event) => {
     if (event.key === 'l' || event.key === 'L') {
+      console.log('in');
       this.setState({ showStat: true });
     }
   };
@@ -62,8 +62,7 @@ class PlayList extends Component {
 
   renderSongs = () => {
     if (this.props.playlist[0]) {
-      if ((this.props.playlist[0].album_cover || this.props.playlist[1].album_cover) && this.state.showStat) {
-        console.log('ughhh');
+      if ((this.props.playlist[0].album_cover || this.props.playlist[1].album_cover || this.props.playlist[2].album_cover || this.props.playlist[3].album_cover) && this.state.showStat) {
         const songs = this.props.playlist.map((song) => {
           return <Song key={song.id} show={this.setLoaded} name={song.name} album_cover={song.album_cover} song={song} />;
         });

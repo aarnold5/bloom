@@ -189,7 +189,9 @@ nav {
   align-items: center;
   justify-content: center;
   width: 100%;
+  height: fit-content;
   word-wrap: anywhere;
+  hyphens: auto;
 }
 
 .playlist-button {

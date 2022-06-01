@@ -12,7 +12,8 @@ import Xarrow, { useXarrow, Xwrapper } from 'react-xarrows';
 import Draggable from 'react-draggable';
 import Panzoom from '@panzoom/panzoom';
 import pic from '../../plus.png';
-import pic2 from '../../loads.png';
+import pic3 from '../../loads.png';
+// import pic3 from '../../seeRecs.png';
 import * as db from '../../services/firestore';
 
 function TreeNode2(props) {
@@ -21,26 +22,50 @@ function TreeNode2(props) {
   /* function playSong(song) {
     console.log(`playSong:${song.name}`);
   } */
-  const hoverHandler = () => {
-    console.log('onMouseEnter');
-  };
   let inputStyle = {
     background: '#96A66D',
   };
-  if (props.tree.root.attr !== '') {
-    if (props.tree.root.attr === 'mood') {
-      inputStyle = {
-        background: 'blue',
-      };
-    } else if (props.tree.root.attr === 'tempo') {
-      inputStyle = {
-        background: 'orange',
-      };
-    } else {
-      inputStyle = {
-        background: 'yellow',
-      };
-    }
+  const colordict = {
+    tempo: '#D54800', liveness: '#FFFA7F', energy: '#EBA215', instrumentalness: '#D2E7C8', happiness: '#81DEDE', acousticness: '#808082', danceability: '#9C8DDA', mode: '#93A57E', key: '#E5E5E5', pop: '#DAAD8D',
+  };
+  // const str = 'tempo,liveness,energy,happiness,instrumentalness,acousticness,mode';
+  const str = props.root.attr;
+  const lists = str.split(',');
+  const colors = lists.map((c) => colordict[c]);
+  if (colors.length === 1) {
+    inputStyle = { background: `${colors[0]}` };
+  } else if (colors.length === 2) {
+    inputStyle = {
+      background: `conic-gradient(${colors[0]} 0deg 90deg, ${colors[1]} 90deg 270deg, ${colors[0]} 270deg)`,
+    };
+  } else if (colors.length === 3) {
+    inputStyle = {
+      background: `conic-gradient(${colors[0]} 0deg 120deg, ${colors[1]} 120deg 240deg, ${colors[2]} 240deg 360deg)`,
+    };
+  } else if (colors.length === 4) {
+    inputStyle = {
+      background: `conic-gradient(${colors[0]} 0deg 90deg, ${colors[1]} 90deg 180deg, ${colors[2]} 180deg 270deg, ${colors[3]} 270deg 360deg)`,
+    };
+  } else if (colors.length === 5) {
+    inputStyle = {
+      background: `conic-gradient(${colors[0]} 0deg 72deg, ${colors[1]} 72deg 144deg, ${colors[2]} 144deg 216deg, ${colors[3]} 216deg 288deg, ${colors[4]} 288deg 360deg)`,
+    };
+  } else if (colors.length === 6) {
+    inputStyle = {
+      background: `conic-gradient(${colors[0]} 0deg 60deg, ${colors[1]} 60deg 120deg, ${colors[2]} 120deg 180deg, ${colors[3]} 180deg 240deg, ${colors[4]} 240deg 300deg, ${colors[5]} 300deg 360deg)`,
+    };
+  } else if (colors.length === 7) {
+    inputStyle = {
+      background: `conic-gradient(${colors[0]} 0deg 52deg, ${colors[1]} 52deg 104deg, ${colors[2]} 104deg 156deg, ${colors[3]} 156deg 208deg, ${colors[4]} 208deg 260deg, ${colors[5]} 260deg 312deg, ${colors[6]} 312deg 360deg)`,
+    };
+  } else if (colors.length === 8) {
+    inputStyle = {
+      background: `conic-gradient(${colors[0]} 0deg 45deg, ${colors[1]} 45deg 90deg, ${colors[2]} 90deg 135deg, ${colors[3]} 135deg 180deg, ${colors[4]} 180deg 225deg, ${colors[5]} 225deg 270deg, ${colors[6]} 270deg 315deg,${colors[7]} 315deg 360deg)`,
+    };
+  } else if (colors.length === 9) {
+    inputStyle = {
+      background: `conic-gradient(${colors[0]} 0deg 40deg, ${colors[1]} 40deg 80deg, ${colors[2]} 80deg 120deg, ${colors[3]} 120deg 160deg, ${colors[4]} 160deg 200deg, ${colors[5]} 200deg 240deg, ${colors[6]} 240deg 280deg,${colors[7]} 280deg 320deg,${colors[8]} 320deg 360deg)`,
+    };
   }
   return (
     <Draggable onDrag={updateXarrow} onStop={updateXarrow}>
@@ -79,14 +104,15 @@ function TreeNodeUnfilledAlg(props) {
     const songid = props.id + props.song[0].id;
     const song2id = props.id + props.song[1].id;
     const song3id = props.id + props.song[2].id;
-    if (song.album_cover && props.showstat && props.showid === props.id) {
+    console.log(((song.album_cover || song2.album_cover || song3.album_cover) && props.showstat && props.showid === props.id));
+    if ((song.album_cover || song2.album_cover || song3.album_cover) && props.showstat && props.showid === props.id) {
       return (
         <div>
           <Xarrow start={props.pref} end={props.id} startAnchor="bottom" endAnchor="top" zIndex={3} showHead={false} dashness color="gray" />
 
           <Draggable onDrag={updateXarrow} onStop={updateXarrow}>
             <button type="button" id={props.id} className="dot node-button unfilled-node">
-              <img src={pic2} draggable="false" alt="temp" className="round-img" />
+              <img src={pic3} draggable="false" alt="temp" className="round-img" />
             </button>
           </Draggable>
           <Xarrow start={props.id} end={songid} startAnchor="bottom" endAnchor="top" zIndex={3} showHead={false} dashness color="gray" />
@@ -126,7 +152,7 @@ function TreeNodeUnfilledAlg(props) {
           <Xarrow start={props.pref} end={props.id} startAnchor="bottom" endAnchor="top" zIndex={3} showHead={false} dashness color="gray" />
           <Draggable onDrag={updateXarrow} onStop={updateXarrow}>
             <button type="button" id={props.id} className="dot node-button unfilled-node" onClick={props.setStuff()}>
-              <img src={pic2} id={props.id} draggable="false" alt="temp" className="round-img" />
+              <img src={pic3} id={props.id} draggable="false" alt="temp" className="round-img" />
             </button>
           </Draggable>
         </div>
@@ -200,7 +226,7 @@ class Tree extends React.Component {
           return (
             <div>
               <div style={inputstyle}>
-                <TreeNode2 id={tree.root.name} hoover={this.props.hoover} tree={tree} song={tree.root.song} onClickNode={this.props.onClickNode} tool_mode={this.props.tool} onclickfunc={this.props.clickfunc} deleteNodes={this.props.deleteNodes} onShowChildren={this.props.onShowChildren} />
+                <TreeNode2 id={tree.root.name} root={tree.root} hoover={this.props.hoover} tree={tree} song={tree.root.song} onClickNode={this.props.onClickNode} tool_mode={this.props.tool} onclickfunc={this.props.clickfunc} deleteNodes={this.props.deleteNodes} onShowChildren={this.props.onShowChildren} />
               </div>
               <Xarrow start={pref} end={tree.root.name} startAnchor="bottom" endAnchor="top" zIndex={3} showHead={false} dashness color="gray" />
               {this.getEdges(tree.left, l - i, t + 150, i / 2, tree.root.name)}
@@ -211,7 +237,7 @@ class Tree extends React.Component {
           return (
             <div>
               <div style={inputstyle}>
-                <TreeNode2 id={tree.root.name} onclickfunc={this.props.clickfunc} tree={tree} song={tree.root.song} onClickNode={this.props.onClickNode} tool_mode={this.props.tool} hoover={this.props.hoover} deleteNodes={this.props.deleteNodes} onShowChildren={this.props.onShowChildren} />
+                <TreeNode2 id={tree.root.name} root={tree.root} onclickfunc={this.props.clickfunc} tree={tree} song={tree.root.song} onClickNode={this.props.onClickNode} tool_mode={this.props.tool} hoover={this.props.hoover} deleteNodes={this.props.deleteNodes} onShowChildren={this.props.onShowChildren} />
               </div>
               <Xarrow start={pref} end={tree.root.name} startAnchor="bottom" strokeWidth={tree.root.weight} endAnchor="top" zIndex={3} showHead={false} color="#637B47" />
               {this.getEdges(tree.left, l - i, t + 150, i / 2, tree.root.name)}
@@ -223,7 +249,7 @@ class Tree extends React.Component {
         return (
           <div>
             <div style={inputstyle}>
-              <TreeNode2 id={tree.root.name} tree={tree} hoover={this.props.hoover} song={tree.root.song} onclickfunc={this.props.clickfunc} onClickNode={this.props.onClickNode} tool_mode={this.props.tool} deleteNodes={this.props.deleteNodes} onShowChildren={this.props.onShowChildren} />
+              <TreeNode2 id={tree.root.name} root={tree.root} tree={tree} hoover={this.props.hoover} song={tree.root.song} onclickfunc={this.props.clickfunc} onClickNode={this.props.onClickNode} tool_mode={this.props.tool} deleteNodes={this.props.deleteNodes} onShowChildren={this.props.onShowChildren} />
             </div>
             {this.getEdges(tree.left, l - i, t + 150, i / 2, tree.root.name)}
             {this.getEdges(tree.right, l + i, t + 150, i / 2, tree.root.name)}
@@ -236,7 +262,6 @@ class Tree extends React.Component {
   }
 
   toShow = (e) => {
-    console.log(e.target.id);
     this.setState({ showalg: true, showalgid: e.target.id });
   };
 

@@ -162,6 +162,7 @@ const hideChildren = (tree) => {
 
 const generateChildren_fe = (tree, _, treeold, t_str = 'root_') => {
   if (tree.root.rec === 0) {
+    const newlstr = `${t_str}l_`;
     if (!tree.left) {
       tree.left = {
         root: {
@@ -170,12 +171,13 @@ const generateChildren_fe = (tree, _, treeold, t_str = 'root_') => {
           weight: 4,
           rec: 1,
           attr: '',
-          name: t_str += 'l_',
+          name: newlstr,
         },
         left: null,
         right: null,
       };
-    } else generateChildren_fe(tree.left, _, treeold, t_str += 'l_');
+    } else generateChildren_fe(tree.left, _, treeold, newlstr);
+    const newrstr = `${t_str}r_`;
     if (tree.right === null && tree.root.song !== null) {
       tree.right = {
         root: {
@@ -184,12 +186,12 @@ const generateChildren_fe = (tree, _, treeold, t_str = 'root_') => {
           weight: 4,
           rec: 2,
           attr: '',
-          name: t_str += 'r_',
+          name: newrstr,
         },
         left: null,
         right: null,
       };
-    } else generateChildren_fe(tree.right, _, treeold, t_str += 'r_');
+    } else generateChildren_fe(tree.right, _, treeold, newrstr);
   }
 };
 export {

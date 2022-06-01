@@ -1,5 +1,6 @@
 /* eslint-disable react/prefer-stateless-function */
 import React from 'react';
+import SearchSuggestions from './search-suggestions';
 
 class ToolBar extends React.Component {
   constructor(props) {
@@ -12,12 +13,13 @@ class ToolBar extends React.Component {
     if (this.props.tool === 'cut') {
       return (
         <div id="tool-bar" className="container">
-          <button type="button" className="toolbar-button" onClick={this.props.setMinus}>
-            <i className="fa-solid fa-minus" />
-          </button>
-          <button type="button" className="toolbar-button" onClick={this.props.setPlus}>
-            <i className="fa-solid fa-plus" />
-          </button>
+          <SearchSuggestions
+            searching={this.props.searching}
+            onSelectSong={this.props.onSelectSong}
+            onSearchChange={this.props.onSearchChange}
+            searchSuggestions={this.props.searchSuggestions}
+            cancelSearch={this.props.cancelSearch}
+          />
           <button type="button" className="toolbar-button" onClick={this.props.addRootNode}>
             <i className="fa-solid fa-seedling" />
           </button>
@@ -38,12 +40,13 @@ class ToolBar extends React.Component {
     } if (this.props.tool === 'play') {
       return (
         <div id="tool-bar" className="container">
-          <button type="button" className="toolbar-button" onClick={this.props.setMinus}>
-            <i className="fa-solid fa-minus" />
-          </button>
-          <button type="button" className="toolbar-button" onClick={this.props.setPlus}>
-            <i className="fa-solid fa-plus" />
-          </button>
+          <SearchSuggestions
+            searching={this.props.searching}
+            onSelectSong={this.props.onSelectSong}
+            onSearchChange={this.props.onSearchChange}
+            searchSuggestions={this.props.searchSuggestions}
+            cancelSearch={this.props.cancelSearch}
+          />
           <button type="button" className="toolbar-button" onClick={this.props.addRootNode}>
             <i className="fa-solid fa-seedling" />
           </button>
@@ -64,12 +67,13 @@ class ToolBar extends React.Component {
     } if (this.props.tool === 'plus') {
       return (
         <div id="tool-bar" className="container">
-          <button type="button" className="toolbar-button" onClick={this.props.setMinus}>
-            <i className="fa-solid fa-minus" />
-          </button>
-          <button type="button" className="toolbar-button" onClick={this.props.setPlus} style={sstyle}>
-            <i className="fa-solid fa-plus" />
-          </button>
+          <SearchSuggestions
+            searching={this.props.searching}
+            onSelectSong={this.props.onSelectSong}
+            onSearchChange={this.props.onSearchChange}
+            searchSuggestions={this.props.searchSuggestions}
+            cancelSearch={this.props.cancelSearch}
+          />
           <button type="button" className="toolbar-button" onClick={this.props.addRootNode}>
             <i className="fa-solid fa-seedling" />
           </button>
@@ -90,12 +94,13 @@ class ToolBar extends React.Component {
     } if (this.props.tool === 'weight') {
       return (
         <div id="tool-bar" className="container">
-          <button type="button" className="toolbar-button" onClick={this.props.setMinus}>
-            <i className="fa-solid fa-minus" />
-          </button>
-          <button type="button" className="toolbar-button" onClick={this.props.setPlus}>
-            <i className="fa-solid fa-plus" />
-          </button>
+          <SearchSuggestions
+            searching={this.props.searching}
+            onSelectSong={this.props.onSelectSong}
+            onSearchChange={this.props.onSearchChange}
+            searchSuggestions={this.props.searchSuggestions}
+            cancelSearch={this.props.cancelSearch}
+          />
           <button type="button" className="toolbar-button" onClick={this.props.addRootNode}>
             <i className="fa-solid fa-seedling" />
           </button>
@@ -116,12 +121,13 @@ class ToolBar extends React.Component {
     } if (this.props.tool === 'minus') {
       return (
         <div id="tool-bar" className="container">
-          <button type="button" className="toolbar-button" onClick={this.props.setMinus} style={sstyle}>
-            <i className="fa-solid fa-minus" />
-          </button>
-          <button type="button" className="toolbar-button" onClick={this.props.setPlus}>
-            <i className="fa-solid fa-plus" />
-          </button>
+          <SearchSuggestions
+            searching={this.props.searching}
+            onSelectSong={this.props.onSelectSong}
+            onSearchChange={this.props.onSearchChange}
+            searchSuggestions={this.props.searchSuggestions}
+            cancelSearch={this.props.cancelSearch}
+          />
           <button type="button" className="toolbar-button" onClick={this.props.addRootNode}>
             <i className="fa-solid fa-seedling" />
           </button>
@@ -142,14 +148,15 @@ class ToolBar extends React.Component {
     } else {
       return (
         <div id="tool-bar" className="container">
-          <button type="button" className="toolbar-button" onClick={this.props.setMinus}>
-            <i className="fa-solid fa-minus" />
-          </button>
-          <button type="button" className="toolbar-button" onClick={this.props.setPlus}>
-            <i className="fa-solid fa-plus" />
-          </button>
+          <SearchSuggestions
+            searching={this.props.searching}
+            onSelectSong={this.props.onSelectSong}
+            onSearchChange={this.props.onSearchChange}
+            searchSuggestions={this.props.searchSuggestions}
+            cancelSearch={this.props.cancelSearch}
+          />
           <button type="button" className="toolbar-button" onClick={this.props.addRootNode}>
-            Make New Tree
+            <i className="fa-solid fa-seedling" />
           </button>
           <button type="button" className="toolbar-button" onClick={this.props.setCut}>
             <i className="fa-solid fa-scissors" />

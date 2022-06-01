@@ -234,6 +234,7 @@ export const changeAttr = (tree, path, songID, attr) => {
   const fields = {
     tree, operation: 'ATTRIBUTE', node_id: songID, attribute: attr, name: path,
   };
+  console.log(fields);
   return new Promise((resolve, reject) => {
     axios.post('https://us-central1-bloom-838b5.cloudfunctions.net/treeFunctions', fields, {
       headers: { 'Content-Type': 'application/json' },

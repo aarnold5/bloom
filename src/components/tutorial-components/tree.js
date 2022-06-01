@@ -26,7 +26,7 @@ function TreeNode2(props) {
     background: '#96A66D',
   };
   const colordict = {
-    tempo: '#D54800', liveness: '#FFFA7F', energy: '#EBA215', instrumentalness: '#D2E7C8', happiness: '#81DEDE', acousticness: '#808082', danceability: '#9C8DDA', mode: '#93A57E', key: '#E5E5E5', pop: '#DAAD8D',
+    tempo: '#D54800', liveness: '#FFFA7F', energy: '#EBA215', instrumentalness: '#D2E7C8', valence: '#81DEDE', acousticness: '#808082', danceability: '#9C8DDA', mode: '#93A57E', key: '#E5E5E5', pop: '#DAAD8D',
   };
   // const str = 'tempo,liveness,energy,happiness,instrumentalness,acousticness,mode';
   const str = props.root.attr;

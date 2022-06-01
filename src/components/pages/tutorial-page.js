@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable react/jsx-indent-props */
 /* eslint-disable react/jsx-indent */
 /* eslint-disable react/jsx-closing-bracket-location */
@@ -16,6 +17,8 @@ import { bloomSearch } from '../tutorial-components/search';
 import Tree from '../tutorial-components/tree';
 import * as tp from '../tutorial-components/tree-parser';
 import Player from '../tutorial-components/player';
+import Modem from '../tutorial-components/modem';
+
 
 //= const songLookup = {};
 /* function treeToDict(t, dictSoFar) {
@@ -28,7 +31,7 @@ import Player from '../tutorial-components/player';
   return dictSoFar;
 } */
 
-/* let t = {
+/* const t = {
   root: {
     name: 'a',
     rec: false,
@@ -150,39 +153,13 @@ class TutorialPage extends Component {
       currentTrackUri: '',
       showing: false,
       search2add: null,
+      currTreeId: null,
+      songToModem: { name: null, id: null },
+      stringToAttr: '',
       // eslint-disable-next-line max-len
+      // accessToken: 'BQBncXG2SuBOQAhsi51b5SmrezUt8A3QWLH1KIFkUPZxnc1MAUmooJVjfG9kdKk3ud9ea5wJcEfH55bISGMA4dCs8PztrhBJXiWoNgpt_u_95mOmjYS4VTZseBoQU4iIBsAqMt3u_wfDnkZ08tvDa8GxHkzts8oavLLM4YAOybHBIxMOd5YA2h8K7ZnmVyAlIIxmywLMsPjLv9UriqzyycFuFUe9Ez_e5hJfvU9K7-RVBxG4_y6iBPsg2CZ6URk2x4kYtfdRAMCAsrIrK1GdpW9NqjFDtE1L-EB0vIZXbC6gApWhdpkx',
       accessToken: auth_token,
-      tree: {
-        root: {
-          name: 'c',
-          rec: 0,
-          visible: true,
-          weight: 4,
-          attr: '',
-          song: {
-            name: 'A Tu Merced', id: '4r9jkMEnArtWGH2rL2FZl0', album_cover: 'https://i.scdn.co/image/ab67616d00001e02548f7ec52da7313de0c5e4a0', uri: 'spotify:track:4r9jkMEnArtWGH2rL2FZl0',
-          },
-        },
-        left: {
-          root: {
-            name: 'g',
-            rec: 0,
-            visible: true,
-            weight: 4,
-            attr: '',
-            song: {
-              name: 'Armed And Dangerous',
-              id: '5wujBwqG7INdStqGd4tRMX',
-              album_cover: 'https://i.scdn.co/image/ab67616d00001e02f7db43292a6a99b21b51d5b4',
-              uri: 'spotify:track:5wujBwqG7INdStqGd4tRMX',
-            },
-          },
-          left: null,
-          right: null,
-        },
-        right: null,
-      },
-      // trackUri: 'spotify:track:05bfbizlM5AX6Mf1RRyMho',
+      tree: null,
     };
 
     this.search = debounce(this.search, 300);
@@ -192,19 +169,26 @@ class TutorialPage extends Component {
     document.addEventListener('keydown', this.keydownHandler);
     // document.addEventListener('click', this.handleHideChildren);
     // db.getRecs(this.state.tree, '5wujBwqG7INdStqGd4tRMX').then((res) => { console.log(res); });
-    db.fetchTrees()
-      .then((result) => {
-        this.setState({ trees: result.trees });
-        /* db.loadTree(result.trees[0].id)
-          .then((res) => {
-            this.setState({ tree: res.tree_json });
-            db.generateChildren(res.tree_json, res.tree_json.id)
-              .then((res2) => {
-                this.setState({ tree: res2 });
+    if (this.state.tree === null) {
+      db.fetchTrees()
+        .then((result) => {
+          this.setState({ trees: result.trees });
+          console.log(result.trees);
+          db.loadTree(result.trees[0].id)
+            .then((res) => {
+              if (res.tree_json.root.rec === 0) {
+                tp.hideChildren(res.tree_json);
+              }
+              this.setState({ tree: res.tree_json });
+              console.log(this.state.tree);
+              db.generateChildren(res.tree_json, res.tree_json.id)
+                .then((res2) => {
+                  this.setState({ tree: res2 });
                 // console.log(res2);
-              });
-          }); */
-      });
+                });
+            });
+        });
+    }
     // eslint-disable-next-line no-new-object
   }
 
@@ -242,7 +226,7 @@ class TutorialPage extends Component {
       this.setState({ currentTrackUri: `spotify:track:${e.target.id}` }); // very easy fix: add trackUri to the img src div holding the album cover! That way this e.target.trackUri will work.
     }
     this.setState({ tree: copiedtree });
-    console.log(this.state.currentTrackUri);
+    db.saveTree(this.state.tree).then((res) => console.log(res));
   };
 
   keydownHandler = (event) => {
@@ -309,7 +293,18 @@ class TutorialPage extends Component {
     // this.addNode(song);
     this.setState({ searching: false });
     const copiedtree = JSON.parse(JSON.stringify(this.state.tree));
-    tp.ui_set(copiedtree, this.state.search2add, song);
+    if (copiedtree.root.rec === 1) {
+      copiedtree.root = {
+        name: 'root',
+        rec: 0,
+        visible: true,
+        weight: 4,
+        attr: '',
+        song,
+      };
+    } else {
+      tp.ui_set(copiedtree, this.state.search2add, song);
+    }
     this.setState({ tree: copiedtree });
   };
 
@@ -329,7 +324,11 @@ class TutorialPage extends Component {
   handleLoadNewTree = (tree) => {
     db.loadTree(tree.target.id)
       .then((result) => {
-        this.setState({ tree: result.tree_json });
+        if (result.tree_json.root.rec === 0) {
+          tp.hideChildren(result.tree_json);
+        }
+        this.setState({ tree: result.tree_json, currTreeId: tree.target.id });
+        console.log(this.state.tree);
       });
   };
 
@@ -363,10 +362,8 @@ class TutorialPage extends Component {
 
   // eslint-disable-next-line class-methods-use-this
   handleDeleteNodes = (e) => {
-    console.log(e.target.id);
     db.deleteNodes(this.state.tree, this.state.tree.id, e.target.id)
       .then((result) => {
-        console.log(result);
         this.setState({ tree: result });
       });
   };
@@ -395,11 +392,27 @@ class TutorialPage extends Component {
   };
 
   // eslint-disable-next-line consistent-return
-  renderRootWarning() {
+  /*   renderRootWarning() {
     if (this.state.issueRootWarning) {
       return <p>sorry! you can only add one root node</p>;
     }
-  }
+  } */
+
+  sendToModem = (e) => {
+    const song = tp.find_song(e.target.id, this.state.tree);
+    console.log(song);
+    if (song) {
+      this.setState({ songToModem: song });
+    }
+  };
+
+  modemClick = (e) => {
+    console.log('clicked');
+    if (e.target.id === 'tempo') {
+      this.setState({ stringToAttr: 'tempo' });
+      console.log(this.state.stringToAttr);
+    }
+  };
 
   render() {
     return (
@@ -415,7 +428,7 @@ class TutorialPage extends Component {
             setPlay={this.setPlay}
             setMinus={this.setMinus}
           />
-          {this.renderRootWarning()}
+          <Modem tree={this.state.tree} song={this.state.songToModem} clickfunc3={() => this.modemClick} />
           <SearchSuggestions
             searching={this.state.searching}
             onSelectSong={this.handleSelectSong}
@@ -435,7 +448,8 @@ class TutorialPage extends Component {
               deleteNodes={() => this.handleDeleteNodes}
               onShowChildren={() => this.handleShowChildren}
               addSongToNode={() => this.handleAddSongToNode}
-              clickfunc={() => this.onClickfunc} />
+              clickfunc={() => this.onClickfunc}
+              hoover={() => this.sendToModem} />
 
           <Player accessToken={this.state.accessToken} trackUri={this.state.currentTrackUri} playingTrack />
           <PlayList playlist={this.state.playlist} getRecs={this.handleGetRecs} isLoading={this.state.isLoading} />

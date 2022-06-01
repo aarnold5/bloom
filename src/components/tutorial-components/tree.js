@@ -103,9 +103,7 @@ function TreeNodeUnfilledAlg(props) {
     const songid = props.id + props.song[0].id;
     const song2id = props.id + props.song[1].id;
     const song3id = props.id + props.song[2].id;
-    console.log(song.album_cover);
-    console.log(props.showstat);
-    console.log(props.showid === props.id);
+    console.log(((song.album_cover || song2.album_cover || song3.album_cover) && props.showstat && props.showid === props.id));
     if ((song.album_cover || song2.album_cover || song3.album_cover) && props.showstat && props.showid === props.id) {
       return (
         <div>
@@ -263,9 +261,7 @@ class Tree extends React.Component {
   }
 
   toShow = (e) => {
-    console.log(e.target.id);
     this.setState({ showalg: true, showalgid: e.target.id });
-    console.log(this.state);
   };
 
   render() {

@@ -31,7 +31,6 @@ function TreeNode2(props) {
   const str = props.root.attr;
   const lists = str.split(',');
   const colors = lists.map((c) => colordict[c]);
-  console.log(colors);
   if (colors.length === 2) {
     inputStyle = {
       background: `conic-gradient(${colors[0]} 0deg 90deg, ${colors[1]} 90deg 270deg, ${colors[0]} 270deg)`,

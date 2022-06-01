@@ -18,119 +18,6 @@ import * as tp from '../tutorial-components/tree-parser';
 import Modem from '../tutorial-components/modem';
 import Player from '../tutorial-components/player';
 
-// import Player from '../tutorial-components/player';
-
-// const songLookup = {};
-/* function treeToDict(t, dictSoFar) {
-  if (t) {
-    // eslint-disable-next-line no-param-reassign
-    dictSoFar[t.root.name] = t.root.song;
-    treeToDict(t.left, dictSoFar);
-    treeToDict(t.right, dictSoFar);
-  }
-  return dictSoFar;
-} */
-
-/* const t = {
-  root: {
-    name: 'a',
-    rec: false,
-    visible: true,
-    song: {
-      name: 'AM Remix',
-      id: '05bfbizlM5AX6Mf1RRyMho',
-      album_cover: 'https://i.scdn.co/image/ab67616d00001e022ae66aa58208495074d88fd0',
-      uri: 'spotify:track:05bfbizlM5AX6Mf1RRyMho',
-    },
-  },
-  left: {
-    root: {
-      name: 'b',
-      rec: false,
-      visible: true,
-      song: {
-        name: 'A Sky Full of Stars',
-        id: '0FDzzruyVECATHXKHFs9eJ',
-        album_cover: 'https://i.scdn.co/image/ab67616d00001e02f864bcdcc245f06831d17ae0',
-        uri: 'spotify:track:0FDzzruyVECATHXKHFs9eJ',
-      },
-    },
-    left: {
-      root: {
-        name: 'd',
-        rec: true,
-        visible: true,
-        song: {
-          name: 'Anyone',
-          id: '2WnAKZefdRHxtBEkRjFOHC',
-          album_cover: 'https://i.scdn.co/image/ab67616d00001e02e6f407c7f3a0ec98845e4431',
-          uri: 'spotify:track:2WnAKZefdRHxtBEkRjFOHC',
-        },
-      },
-      left: null,
-      right: null,
-    },
-    right: {
-      root: {
-        name: 'e',
-        rec: true,
-        visible: true,
-        song: {
-          name: 'All Girls Are The Same',
-          id: '4VXIryQMWpIdGgYR4TrjT1',
-          album_cover: 'https://i.scdn.co/image/ab67616d00001e02f7db43292a6a99b21b51d5b4',
-          uri: 'spotify:track:4VXIryQMWpIdGgYR4TrjT1',
-        },
-      },
-      left: null,
-      right: null,
-    },
-  },
-  right: {
-    root: {
-      name: 'c',
-      rec: false,
-      visible: true,
-      song: {
-        name: 'A Tu Merced',
-        id: '4r9jkMEnArtWGH2rL2FZl0',
-        album_cover: 'https://i.scdn.co/image/ab67616d00001e02548f7ec52da7313de0c5e4a0',
-        uri: 'spotify:track:4r9jkMEnArtWGH2rL2FZl0',
-      },
-    },
-    left: {
-      root: {
-        name: 'f',
-        rec: true,
-        visible: true,
-        song: {
-          name: 'All Too Well (10 Minute Version) (Taylor\'s Version) (From The Vault)',
-          id: '5enxwA8aAbwZbf5qCHORXi',
-          album_cover: 'https://i.scdn.co/image/ab67616d00001e02318443aab3531a0558e79a4d',
-          uri: 'spotify:track:5enxwA8aAbwZbf5qCHORXi',
-        },
-      },
-      left: null,
-      right: null,
-    },
-    right: {
-      root: {
-        name: 'g',
-        rec: true,
-        visible: false,
-        song: {
-          name: 'Armed And Dangerous',
-          id: '5wujBwqG7INdStqGd4tRMX',
-          album_cover: 'https://i.scdn.co/image/ab67616d00001e02f7db43292a6a99b21b51d5b4',
-          uri: 'spotify:track:5wujBwqG7INdStqGd4tRMX',
-        },
-      },
-      left: null,
-      right: null,
-    },
-  },
-}; */
-
 class TutorialPage extends Component {
   constructor(props) {
     super(props);
@@ -181,13 +68,8 @@ class TutorialPage extends Component {
               if (res.tree_json.root.rec === 0) {
                 tp.hideChildren(res.tree_json);
               }
-              this.setState({ tree: res.tree_json });
               this.setState({ currTreeId: result.trees[0].id });
-              db.generateChildren(res.tree_json, res.tree_json.id)
-                .then((res2) => {
-                  this.setState({ tree: res2 });
-                // console.log(res2);
-                });
+              this.setState({ tree: res.tree_json });
             });
         });
     }
@@ -198,6 +80,18 @@ class TutorialPage extends Component {
     document.removeEventListener('keydown', this.keydownHandler);
     document.removeEventListener('click', this.handleHideChildren);
   }
+
+  callBackLoad = () => {
+    console.log('called cbl');
+    db.loadTree(this.state.currTreeId)
+      .then((res) => {
+        if (res.tree_json.root.rec === 0) {
+          tp.hideChildren(res.tree_json);
+        }
+        this.setState({ tree: res.tree_json });
+        console.log(this.state.tree);
+      });
+  };
 
   onClickfunc = (e) => {
     const copiedtree = JSON.parse(JSON.stringify(this.state.tree));
@@ -411,14 +305,6 @@ class TutorialPage extends Component {
     }
   };
 
-  modemClick = (e) => {
-    console.log('clicked');
-    if (e.target.id === 'tempo') {
-      this.setState({ stringToAttr: 'tempo' });
-      console.log(this.state.stringToAttr);
-    }
-  };
-
   handleCancelSearch = () => {
     console.log('click');
     this.setState({
@@ -446,7 +332,7 @@ class TutorialPage extends Component {
             searchSuggestions={this.state.searchSuggestions}
             cancelSearch={this.handleCancelSearch}
           />
-          <Modem tree={this.state.tree} song={this.state.songToModem} clickfunc3={() => this.modemClick} />
+          <Modem tree={this.state.tree} song={this.state.songToModem} cbl={() => this.callBackLoad} />
             <Tree
               choosealg={() => this.handleChooseAlg}
               f={this.setLoadingFalse}

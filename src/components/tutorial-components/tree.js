@@ -25,13 +25,15 @@ function TreeNode2(props) {
     background: '#96A66D',
   };
   const colordict = {
-    tempo: '#D54800', liveness: '#FFFA7F', energy: '#EBA215', instrumentalness: '#D2E7C8', happiness: '#81DEDE', acousticness: '#808082', dancebility: '#9C8DDA', mode: '#93A57E', key: '#E5E5E5', pop: '#DAAD8D',
+    tempo: '#D54800', liveness: '#FFFA7F', energy: '#EBA215', instrumentalness: '#D2E7C8', happiness: '#81DEDE', acousticness: '#808082', danceability: '#9C8DDA', mode: '#93A57E', key: '#E5E5E5', pop: '#DAAD8D',
   };
   // const str = 'tempo,liveness,energy,happiness,instrumentalness,acousticness,mode';
   const str = props.root.attr;
   const lists = str.split(',');
   const colors = lists.map((c) => colordict[c]);
-  if (colors.length === 2) {
+  if (colors.length === 1) {
+    inputStyle = { background: `${colors[0]}` };
+  } else if (colors.length === 2) {
     inputStyle = {
       background: `conic-gradient(${colors[0]} 0deg 90deg, ${colors[1]} 90deg 270deg, ${colors[0]} 270deg)`,
     };
@@ -101,7 +103,10 @@ function TreeNodeUnfilledAlg(props) {
     const songid = props.id + props.song[0].id;
     const song2id = props.id + props.song[1].id;
     const song3id = props.id + props.song[2].id;
-    if (song.album_cover && props.showstat && props.showid === props.id) {
+    console.log(song.album_cover);
+    console.log(props.showstat);
+    console.log(props.showid === props.id);
+    if ((song.album_cover || song2.album_cover || song3.album_cover) && props.showstat && props.showid === props.id) {
       return (
         <div>
           <Xarrow start={props.pref} end={props.id} startAnchor="bottom" endAnchor="top" zIndex={3} showHead={false} dashness color="gray" />
@@ -260,6 +265,7 @@ class Tree extends React.Component {
   toShow = (e) => {
     console.log(e.target.id);
     this.setState({ showalg: true, showalgid: e.target.id });
+    console.log(this.state);
   };
 
   render() {

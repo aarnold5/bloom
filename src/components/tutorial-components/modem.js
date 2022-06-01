@@ -135,9 +135,7 @@ class Modem extends Component {
     }
 
     localStorage.setItem('modalVals', arr.join());
-    console.log(this.props);
-    db.changeAttr(this.props.tree, this.props.tree.id, this.props.song.id, `${arr.join()}`); // tree, path, songID, attr
-
+    db.changeAttr(this.props.tree, this.props.tree.id, this.props.song.id, `${arr.join()}`).then(this.props.cbl()); // tree, path, songID, attr
     const checkboxes = document.getElementsByName('interest');
     for (const checkbox of checkboxes) {
       checkbox.checked = false;

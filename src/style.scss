@@ -180,6 +180,7 @@ nav {
   width: 95%;
   justify-content: space-around;
   align-items: center;
+  overflow: hidden;
 }
 
 .tree-list-component{
@@ -192,6 +193,10 @@ nav {
   height: fit-content;
   word-wrap: anywhere;
   hyphens: auto;
+}
+
+.non-chosen-button:hover{
+  background-color: rgba(0, 0, 0, 0.082);
 }
 
 .playlist-button {
@@ -282,7 +287,8 @@ input {
   width: 200px;
 }
 
-.disabled-button {
+.non-chosen-button {
+  background-color: #B5C688;
   opacity: 50%;
 }
 

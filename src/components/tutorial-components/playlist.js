@@ -43,7 +43,7 @@ class PlayList extends Component {
 
   // eslint-disable-next-line consistent-return
   renderLoading() {
-    if (this.props.isLoading || !this.props.playlist[0]) {
+    if (this.props.isLoading) {
       return <p>Loading Recommendations...</p>;
     }
   }

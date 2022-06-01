@@ -140,7 +140,6 @@ class TutorialPage extends Component {
       searchSuggestions: [],
       searching: false,
       // allowRootAdd: true,
-      issueRootWarning: false,
       isLoading: false,
       renderDefault: true,
       fillingNodeID: -1,
@@ -178,6 +177,7 @@ class TutorialPage extends Component {
                 tp.hideChildren(res.tree_json);
               }
               this.setState({ tree: res.tree_json });
+              this.setState({ currTreeId: result.trees[0].id });
               db.generateChildren(res.tree_json, res.tree_json.id)
                 .then((res2) => {
                   this.setState({ tree: res2 });
@@ -330,6 +330,7 @@ class TutorialPage extends Component {
   };
 
   handleGetRecs = () => {
+    this.setState({ playlist: [] });
     this.setState({ isLoading: true });
     db.saveTree(this.state.tree).then((res) => console.log(res));
     db.getRecs(this.state.tree, '')
@@ -414,7 +415,7 @@ class TutorialPage extends Component {
   render() {
     return (
       <div id="tutorial-page" className="page-container container">
-        <TreeList trees={this.state.trees} onSelectDifferentTree={() => this.handleLoadNewTree} />
+        <TreeList trees={this.state.trees} onSelectDifferentTree={() => this.handleLoadNewTree} currTreeId={this.state.currTreeId} />
         <div className="right-half container">
           <ToolBar addRootNode={this.handleAddRootNode}
             tool={this.state.tool_mode}

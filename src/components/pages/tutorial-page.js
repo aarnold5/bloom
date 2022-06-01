@@ -135,10 +135,6 @@ class TutorialPage extends Component {
         this.setState({ tool_mode: 'cut' });
       } else if (event.key === 'p') {
         this.setState({ tool_mode: 'play' });
-      } else if (event.key === '+') {
-        this.setState({ tool_mode: 'plus' });
-      } else if (event.key === '-') {
-        this.setState({ tool_mode: 'minus' });
       }
     }
   };

@@ -9,10 +9,22 @@ class PlayList extends Component {
   constructor(props) {
     super(props);
     if (this.props.playlist[0]) {
-      this.state = { songs: this.props.playlist, loaded: false };
+      this.state = { songs: this.props.playlist, loaded: false, showStat: false };
       console.log(this.state.songs);
     }// nothing here yet
   }
+
+  componentDidMount() {
+    document.addEventListener('keydown', this.keydownHandlerp);
+  }
+
+  componentWillUnmount() { document.removeEventListener('keydown', this.keydownHandlerp); }
+
+  keydownHandlerp = (event) => {
+    if (event.key === 'l' || event.key === 'L') {
+      this.setState({ showStat: true });
+    }
+  };
 
   setLoaded = () => {
     this.setState((prevState) => ({ loaded: !prevState }));
@@ -48,6 +60,18 @@ class PlayList extends Component {
     }
   }
 
+  renderSongs = () => {
+    if (this.props.playlist[0]) {
+      if ((this.props.playlist[0].album_cover || this.props.playlist[1].album_cover) && this.state.showStat) {
+        console.log('ughhh');
+        const songs = this.props.playlist.map((song) => {
+          return <Song key={song.id} show={this.setLoaded} name={song.name} album_cover={song.album_cover} song={song} />;
+        });
+        return songs;
+      } return 'Press L to show recommendations!';
+    } else return null;
+  };
+
   render() {
     return (
       <div id="playlist-container" className="container">
@@ -56,9 +80,7 @@ class PlayList extends Component {
         </button>
         <div id="playlist" className="container">
           {this.renderLoading()}
-          {this.props.playlist.map((song) => {
-            return <Song key={song.id} show={this.setLoaded} name={song.name} album_cover={song.album_cover} song={song} />;
-          })}
+          {this.renderSongs()}
         </div>
         <button type="button" id="reshuffle-playlist" className="playlist-button" onClick={this.props.getRecs}>
           <i className="fa-solid fa-arrows-rotate" />

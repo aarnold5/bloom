@@ -140,7 +140,6 @@ class Modem extends Component {
     for (const checkbox of checkboxes) {
       checkbox.checked = false;
     }
-
     this.setState({
       liveness: false,
       energy: false,

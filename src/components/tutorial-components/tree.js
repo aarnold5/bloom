@@ -12,8 +12,8 @@ import Xarrow, { useXarrow, Xwrapper } from 'react-xarrows';
 import Draggable from 'react-draggable';
 import Panzoom from '@panzoom/panzoom';
 import pic from '../../plus.png';
-// import pic2 from '../../loads.png';
-import pic3 from '../../seeRecs.png';
+import pic3 from '../../loads.png';
+// import pic3 from '../../seeRecs.png';
 import * as db from '../../services/firestore';
 
 function TreeNode2(props) {

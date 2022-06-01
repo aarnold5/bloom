@@ -17,7 +17,7 @@ import * as db from '../../services/firestore';
 
 function TreeNode2(props) {
   const updateXarrow = useXarrow();
-
+  console.log(props.tree);
   /* function playSong(song) {
     console.log(`playSong:${song.name}`);
   } */
@@ -52,7 +52,7 @@ function TreeNode2(props) {
           onMouseOver={props.hoover()}
           style={inputStyle}
         >
-          <img src={props.song.album_cover} id={props.song.id} draggable="false" alt="temp" className="round-img" />
+          <img src={props.song.album_cover} id={props.song.id} trackuri={props.song.uri} draggable="false" alt="temp" className="round-img" />
         </button>
       </div>
     </Draggable>

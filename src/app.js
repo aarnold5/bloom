@@ -7,7 +7,7 @@ import {
 } from 'react-router-dom';
 import HomePage from './components/pages/home-page';
 import TutorialPage from './components/pages/tutorial-page';
-import LoginPage from './components/pages/login-page';
+// import LoginPage from './components/pages/login-page';
 
 class App extends Component {
   render() {
@@ -16,7 +16,6 @@ class App extends Component {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="tutorial" element={<TutorialPage />} />
-          <Route path="login" element={<LoginPage />} />
         </Routes>
       </BrowserRouter>
     );

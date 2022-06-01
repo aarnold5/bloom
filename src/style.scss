@@ -1,10 +1,9 @@
 body, html {
   font-family: "Roboto", sans-serif;
-  background: #D2E7C8;
+  background: #D2E7C8
 }
 
 #home-page{
-  background-image: url(https://github.com/aarnold5/bloom/blob/testing-tree-fuctions/src/home-page-picture.png?raw=true);
   background-size: cover;
 }
 
@@ -128,6 +127,7 @@ nav {
   min-height: 100vh;
   background-color: #96A66D;
   margin-right: 10px;
+  overflow-y: scroll;
 }
 
 #tutorial-page {
@@ -135,6 +135,7 @@ nav {
   justify-content: center;
   flex-direction: row;
   justify-content: space-between;
+  max-height: 100vh; 
 }
 
 .right-half {
@@ -322,10 +323,14 @@ input {
   font-size: 13pt;
   font-weight: 300;
   color: #1F1F1F;
+  margin: 13px 3px;
+  margin-top: 11px;
 }
 
 .modemChooseAttributes {
-  font-size: 13pt;
+  margin-top: 5px;
+  margin-bottom: 7px;
+  font-size: 12pt;
   font-weight: 500;
   color: #1F1F1F;
 }

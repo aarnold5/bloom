@@ -13,6 +13,7 @@ import Draggable from 'react-draggable';
 import Panzoom from '@panzoom/panzoom';
 import pic from '../../plus.png';
 import pic2 from '../../loads.png';
+import pic3 from '../../seeRecs.png';
 import * as db from '../../services/firestore';
 
 function TreeNode2(props) {
@@ -109,7 +110,7 @@ function TreeNodeUnfilledAlg(props) {
 
           <Draggable onDrag={updateXarrow} onStop={updateXarrow}>
             <button type="button" id={props.id} className="dot node-button unfilled-node">
-              <img src={pic2} draggable="false" alt="temp" className="round-img" />
+              <img src={pic3} draggable="false" alt="temp" className="round-img" />
             </button>
           </Draggable>
           <Xarrow start={props.id} end={songid} startAnchor="bottom" endAnchor="top" zIndex={3} showHead={false} dashness color="gray" />
@@ -149,7 +150,7 @@ function TreeNodeUnfilledAlg(props) {
           <Xarrow start={props.pref} end={props.id} startAnchor="bottom" endAnchor="top" zIndex={3} showHead={false} dashness color="gray" />
           <Draggable onDrag={updateXarrow} onStop={updateXarrow}>
             <button type="button" id={props.id} className="dot node-button unfilled-node" onClick={props.setStuff()}>
-              <img src={pic2} id={props.id} draggable="false" alt="temp" className="round-img" />
+              <img src={pic3} id={props.id} draggable="false" alt="temp" className="round-img" />
             </button>
           </Draggable>
         </div>

@@ -158,6 +158,14 @@ class Modem extends Component {
     // console.log(state.join());
   };
 
+  renderTitleAndArtistName() {
+    if (this.props.song.artist) {
+      return <h2 className="modemSongTitle">{this.props.song.name} by {this.props.song.artist}</h2>;
+    } else {
+      return <h2 className="modemSongTitle">{this.props.song.name}</h2>;
+    }
+  }
+
   render() {
     if (this.props.song.album_cover) {
       const inputStyle = {
@@ -175,10 +183,10 @@ class Modem extends Component {
 
       return (
         <div id="modem" style={inputStyle}>
+          {console.log(this.props.song)}
           <img src={this.props.song.album_cover} alt="" className="modemAlbumCover" />
-          <h2 className="modemSongTitle">{this.props.song.name } </h2>
-          {/* artist:{this.props.song.artist}  <br />
-          genres:{this.props.song.genres.join()}  <br /> */}
+          {this.renderTitleAndArtistName()}
+          {/* <h3>{this.props.song.genres}</h3> */}
           <div id="modemCheckboxes">
             {/* <button id="tempo" type="button" onClick={this.props.clickfunc3} className="mbuttons" style={{ zIndex: '8' }}> tempo </button>
             <button type="button" className="mbuttons"> mood </button>

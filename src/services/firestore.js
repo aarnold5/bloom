@@ -230,7 +230,6 @@ export const showChildren = (tree, path, songID) => {
   });
 };
 
-
 export const changeAttr = (tree, path, songID, attr) => {
   const fields = {
     tree, operation: 'ATTRIBUTE', node_id: songID, attribute: attr, name: path,
@@ -251,7 +250,7 @@ export const changeAttr = (tree, path, songID, attr) => {
 
 export const changeWeight = (tree, path, songID, weight) => {
   const fields = {
-    tree, operation: 'WEIGHT', node_id: songID, attribute: '', name: path, weight: weight,
+    tree, operation: 'WEIGHT', node_id: songID, attribute: '', name: path, weight,
   };
   return new Promise((resolve, reject) => {
     axios.post('https://us-central1-bloom-838b5.cloudfunctions.net/treeFunctions', fields, {

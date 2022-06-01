@@ -1,6 +1,8 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { Component } from 'react/cjs/react.production.min';
 import { enableAllPlugins, produce } from 'immer';
+// import { Firestore } from 'firebase/firestore';
+import * as db from '../../services/firestore';
 
 enableAllPlugins();
 class Modem extends Component {
@@ -132,8 +134,27 @@ class Modem extends Component {
       }
     }
 
-    console.log(arr.join());
+    localStorage.setItem('modalVals', arr.join());
+    console.log(this.props);
+    db.changeAttr(this.props.tree, this.props.tree.id, this.props.song.id, `${arr.join()}`); // tree, path, songID, attr
 
+    const checkboxes = document.getElementsByName('interest');
+    for (const checkbox of checkboxes) {
+      checkbox.checked = false;
+    }
+
+    this.setState({
+      liveness: false,
+      energy: false,
+      valence: false,
+      instrumentalness: false,
+      acousticness: false,
+      danceability: false,
+      tempo: false,
+      mode: false,
+      key: false,
+      pop: false,
+    });
     // console.log(Object.keys(this.state));
     // const state = Object.keys(this.state).filter((key) => this.state.key);
     // console.log(state.join());
@@ -213,4 +234,5 @@ class Modem extends Component {
     );
   }
 }
+
 export default Modem;

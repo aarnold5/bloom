@@ -181,6 +181,7 @@ class TutorialPage extends Component {
                 tp.hideChildren(res.tree_json);
               }
               this.setState({ tree: res.tree_json });
+              console.log(this.state.tree);
               db.generateChildren(res.tree_json, res.tree_json.id)
                 .then((res2) => {
                   this.setState({ tree: res2 });
@@ -426,7 +427,7 @@ class TutorialPage extends Component {
             setPlay={this.setPlay}
             setMinus={this.setMinus}
           />
-          <Modem song={this.state.songToModem} clickfunc3={() => this.modemClick} />
+          <Modem tree={this.state.tree} song={this.state.songToModem} clickfunc3={() => this.modemClick} />
           <SearchSuggestions
             searching={this.state.searching}
             onSelectSong={this.handleSelectSong}

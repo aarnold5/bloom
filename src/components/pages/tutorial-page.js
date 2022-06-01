@@ -17,6 +17,7 @@ import { bloomSearch } from '../tutorial-components/search';
 import Tree from '../tutorial-components/tree';
 import * as tp from '../tutorial-components/tree-parser';
 import Modem from '../tutorial-components/modem';
+import Player from '../tutorial-components/player';
 
 // import Player from '../tutorial-components/player';
 
@@ -159,6 +160,8 @@ class TutorialPage extends Component {
       // eslint-disable-next-line max-len
       // accessToken: 'BQBncXG2SuBOQAhsi51b5SmrezUt8A3QWLH1KIFkUPZxnc1MAUmooJVjfG9kdKk3ud9ea5wJcEfH55bISGMA4dCs8PztrhBJXiWoNgpt_u_95mOmjYS4VTZseBoQU4iIBsAqMt3u_wfDnkZ08tvDa8GxHkzts8oavLLM4YAOybHBIxMOd5YA2h8K7ZnmVyAlIIxmywLMsPjLv9UriqzyycFuFUe9Ez_e5hJfvU9K7-RVBxG4_y6iBPsg2CZ6URk2x4kYtfdRAMCAsrIrK1GdpW9NqjFDtE1L-EB0vIZXbC6gApWhdpkx',
 
+      // eslint-disable-next-line camelcase, no-undef
+      // accessToken: auth_token, // this is the write one change before compiling!!!
       accessToken: 'BQCWYvlgHaGGLI8BDD-CCgcQrQmulElAAwV-BFLoaKjxZ_SyVO2HLfXz9p_FYpIb0MqGEPP9Y95cNEpa7QebQqxAHW0JxoIq3kWNT2gEEnr-02jGE-54u4cMt4gcly3SqN2FRH8wJmqZREo3qs-IZMJXTlx-ak1mX5Mo6f87GbJ5s0AWJqfEaaAwR8KbH6KPqz5-6NbkI8_1hrYJRrnLQlxp_8MW0FUS8OwwBwP9P2oZKvKNU3AzUJvjAAB8B2KWfEGBn2UvJ_hZuWvcORiigPYAmHc_oNL5jfUQp0uwSTMKDMqB_j5c-CCgcQrQmulElAAwV-BFLoaKjxZ_SyVO2HLfXz9p_FYpIb0MqGEPP9Y95cNEpa7QebQqxAHW0JxoIq3kWNT2gEEnr-02jGE-54u4cMt4gcly3SqN2FRH8wJmqZREo3qs-IZMJXTlx-ak1mX5Mo6f87GbJ5s0AWJqfEaaAwR8KbH6KPqz5-6NbkI8_1hrYJRrnLQlxp_8MW0FUS8OwwBwP9P2oZKvKNU3AzUJvjAAB8B2KWfEGBn2UvJ_hZuWvcORiigPYAmHc_oNL5jfUQp0uwSTMKDMqB_j5c-trA6nGrG8sPEVCowKYB0w6ZuoDq2UPiSIzpfL1I6LcaPPCA7XdrVwmbuQVkW4K8PxBSG8dQ2x_b-tcTEszXnZ1wNARQAG9Qqg4toqDYGYi65tq-mgbty45',
       tree: null,
     };
@@ -223,6 +226,8 @@ class TutorialPage extends Component {
       }
     } else if (this.state.tool_mode === 'weight' && e.target.id !== null) {
       tp.inc_w(copiedtree, e.target.id);
+    } else if (this.state.tool_mode === 'play' && e.target.id !== null) {
+      this.setState({ currentTrackUri: `spotify:track:${e.target.id}` }); // get the track id and make it look like the trackUri through concatenation
     }
     this.setState({ tree: copiedtree });
     db.saveTree(this.state.tree).then((res) => console.log(res));
@@ -452,6 +457,7 @@ class TutorialPage extends Component {
 
           {/* <Player accessToken={this.state.accessToken} trackUri={this.state.trackUri} playingTrack /> */}
           <PlayList playlist={this.state.playlist} getRecs={this.handleGetRecs} isLoading={this.state.isLoading} />
+          <Player accessToken={this.state.accessToken} trackUri={this.state.currentTrackUri} playingTrack />
         </div>
       </div>
     );

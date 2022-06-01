@@ -154,6 +154,7 @@ class TutorialPage extends Component {
       search2add: null,
       currTreeId: null,
       songToModem: { name: null, id: null },
+      stringToAttr: '',
       // eslint-disable-next-line max-len
       accessToken: 'BQCWYvlgHaGGLI8BDD-CCgcQrQmulElAAwV-BFLoaKjxZ_SyVO2HLfXz9p_FYpIb0MqGEPP9Y95cNEpa7QebQqxAHW0JxoIq3kWNT2gEEnr-02jGE-54u4cMt4gcly3SqN2FRH8wJmqZREo3qs-IZMJXTlx-ak1mX5Mo6f87GbJ5s0AWJqfEaaAwR8KbH6KPqz5-6NbkI8_1hrYJRrnLQlxp_8MW0FUS8OwwBwP9P2oZKvKNU3AzUJvjAAB8B2KWfEGBn2UvJ_hZuWvcORiigPYAmHc_oNL5jfUQp0uwSTMKDMqB_j5c-CCgcQrQmulElAAwV-BFLoaKjxZ_SyVO2HLfXz9p_FYpIb0MqGEPP9Y95cNEpa7QebQqxAHW0JxoIq3kWNT2gEEnr-02jGE-54u4cMt4gcly3SqN2FRH8wJmqZREo3qs-IZMJXTlx-ak1mX5Mo6f87GbJ5s0AWJqfEaaAwR8KbH6KPqz5-6NbkI8_1hrYJRrnLQlxp_8MW0FUS8OwwBwP9P2oZKvKNU3AzUJvjAAB8B2KWfEGBn2UvJ_hZuWvcORiigPYAmHc_oNL5jfUQp0uwSTMKDMqB_j5c-trA6nGrG8sPEVCowKYB0w6ZuoDq2UPiSIzpfL1I6LcaPPCA7XdrVwmbuQVkW4K8PxBSG8dQ2x_b-tcTEszXnZ1wNARQAG9Qqg4toqDYGYi65tq-mgbty45',
       tree: null,
@@ -400,6 +401,14 @@ class TutorialPage extends Component {
     }
   };
 
+  modemClick = (e) => {
+    console.log('clicked');
+    if (e.target.id === 'tempo') {
+      this.setState({ stringToAttr: 'tempo' });
+      console.log(this.state.stringToAttr);
+    }
+  };
+
   render() {
     return (
       <div id="tutorial-page" className="page-container container">
@@ -414,7 +423,7 @@ class TutorialPage extends Component {
             setPlay={this.setPlay}
             setMinus={this.setMinus}
           />
-          <Modem song={this.state.songToModem} />
+          <Modem song={this.state.songToModem} clickfunc3={() => this.modemClick} />
           <SearchSuggestions
             searching={this.state.searching}
             onSelectSong={this.handleSelectSong}

@@ -8,7 +8,6 @@ class Modem extends Component {
   }
 
   render() {
-    console.log(this.props);
     const inputStyle = {
       background: 'gray',
       width: '150px',
@@ -17,6 +16,7 @@ class Modem extends Component {
       top: '55px',
       borderRadius: '4px',
       padding: '8px',
+      zIndex: '6',
     };
     return (
       <div id="modem" style={inputStyle}>
@@ -24,10 +24,10 @@ class Modem extends Component {
         artist:  <br />
         set attribute:
         <div id="modemButtons">
-          <button type="button"> tempo </button>
-          <button type="button"> mood </button>
-          <button type="button"> key </button>
-          <button type="button"> dancebility </button>
+          <button id="tempo" type="button" onClick={this.props.clickfunc3} className="mbuttons" style={{ zIndex: '8' }}> tempo </button>
+          <button type="button" className="mbuttons"> mood </button>
+          <button type="button" className="mbuttons"> key </button>
+          <button type="button" className="mbuttons"> dancebility </button>
         </div>
       </div>
     );

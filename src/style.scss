@@ -296,3 +296,14 @@ input {
   border-style: dashed;
   // background-color: #bbb;
 }
+
+.input-and-x {
+  display: flex;
+  flex-direction: row
+}
+
+.search-bar {
+  align-self: center;
+  height: fit-content;
+  justify-self: start;
+}

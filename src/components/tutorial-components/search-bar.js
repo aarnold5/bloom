@@ -16,7 +16,10 @@ class SearchBar extends Component {
 
   render() {
     return (
-      <input onChange={this.onInputChange} value={this.state.searchterm} style={{ zIndex: 7 }} />
+      <div className="input-and-x">
+        <input onChange={this.onInputChange} value={this.state.searchterm} style={{ zIndex: 7 }} />
+        <button type="button" className="playlist-button" onClick={this.props.cancelSearch}>X</button>
+      </div>
     );
   }
 }

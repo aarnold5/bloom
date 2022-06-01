@@ -61,7 +61,7 @@ export async function fetchInputPlaylist() {
     playlist: [],
   };
   querySnapshot.forEach((d) => {
-    playlistReturn.playlist.push({ id: d.id, name: d.get('name'), album_cover: d.get('album_cover') });
+    playlistReturn.playlist.push({ id: d.id, name: d.get('name'), album_cover: d.get('album_cover'), artist: d.get('artist'), genres: d.get('genres') });
   });
   return playlistReturn;
 }
@@ -74,6 +74,8 @@ export async function songIDsToSongs(songids) {
       .then((songRef) => {
         song.name = songRef.get('name');
         song.album_cover = songRef.get('album_cover');
+        song.genres = songRef.get('genres');
+        song.artist = songRef.get('artist');
         song.id = id;
       });
     return song;

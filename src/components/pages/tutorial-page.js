@@ -40,7 +40,9 @@ class TutorialPage extends Component {
       showing: false,
       search2add: null,
       currTreeId: null,
-      songToModem: { name: null, id: null },
+      songToModem: {
+        name: null, id: null, artist: null, genres: null,
+      },
       stringToAttr: '',
       // eslint-disable-next-line max-len
       // accessToken: 'BQBncXG2SuBOQAhsi51b5SmrezUt8A3QWLH1KIFkUPZxnc1MAUmooJVjfG9kdKk3ud9ea5wJcEfH55bISGMA4dCs8PztrhBJXiWoNgpt_u_95mOmjYS4VTZseBoQU4iIBsAqMt3u_wfDnkZ08tvDa8GxHkzts8oavLLM4YAOybHBIxMOd5YA2h8K7ZnmVyAlIIxmywLMsPjLv9UriqzyycFuFUe9Ez_e5hJfvU9K7-RVBxG4_y6iBPsg2CZ6URk2x4kYtfdRAMCAsrIrK1GdpW9NqjFDtE1L-EB0vIZXbC6gApWhdpkx',

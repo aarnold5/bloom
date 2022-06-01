@@ -234,18 +234,20 @@ class TutorialPage extends Component {
   };
 
   keydownHandler = (event) => {
-    if (event.key === 'w') {
-      this.setState({ tool_mode: 'weight' });
-    } else if (event.key === 's') {
-      this.setState({ tool_mode: 'select' });
-    } else if (event.key === 'c') {
-      this.setState({ tool_mode: 'cut' });
-    } else if (event.key === 'p') {
-      this.setState({ tool_mode: 'play' });
-    } else if (event.key === '+') {
-      this.setState({ tool_mode: 'plus' });
-    } else if (event.key === '-') {
-      this.setState({ tool_mode: 'minus' });
+    if (!this.state.searching) {
+      if (event.key === 'w') {
+        this.setState({ tool_mode: 'weight' });
+      } else if (event.key === 's') {
+        this.setState({ tool_mode: 'select' });
+      } else if (event.key === 'c') {
+        this.setState({ tool_mode: 'cut' });
+      } else if (event.key === 'p') {
+        this.setState({ tool_mode: 'play' });
+      } else if (event.key === '+') {
+        this.setState({ tool_mode: 'plus' });
+      } else if (event.key === '-') {
+        this.setState({ tool_mode: 'minus' });
+      }
     }
   };
 

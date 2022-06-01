@@ -61,7 +61,9 @@ export async function fetchInputPlaylist() {
     playlist: [],
   };
   querySnapshot.forEach((d) => {
-    playlistReturn.playlist.push({ id: d.id, name: d.get('name'), album_cover: d.get('album_cover'), artist: d.get('artist'), genres: d.get('genres') });
+    playlistReturn.playlist.push({
+      id: d.id, name: d.get('name'), album_cover: d.get('album_cover'), artist: d.get('artist'), genres: d.get('genres'),
+    });
   });
   return playlistReturn;
 }

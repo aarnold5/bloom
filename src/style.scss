@@ -171,6 +171,9 @@ nav {
   background-color: #A8B9A0;
   justify-content: center;
   align-items: center;
+ // position: fixed;
+  //bottom: 0;
+  //width: 77%;
 }
 
 #playlist {
@@ -186,6 +189,7 @@ nav {
   align-items: center;
   justify-content: center;
   width: -webkit-fill-available;
+  overflow: hidden;
 }
 
 .playlist-button {

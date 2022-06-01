@@ -51,6 +51,7 @@ const set_song = function (new_song, tree, old_song) {
 
 const ui_set = (tree, pid, song) => {
   if (tree) {
+    console.log(pid);
     if (tree.root.song !== null && tree.root.song.id === pid && !tree.left.root.song) {
       tree.left.root.song = song;
       tree.left.root.rec = 0;

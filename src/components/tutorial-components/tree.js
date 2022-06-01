@@ -66,6 +66,9 @@ function TreeNodeUnfilledAlg(props) {
     const song = props.song[0];
     const song2 = props.song[1];
     const song3 = props.song[2];
+    const songid = props.id + props.song[0].id;
+    const song2id = props.id + props.song[1].id;
+    const song3id = props.id + props.song[2].id;
     if (song.album_cover && props.showstat && props.showid === props.id) {
       return (
         <div>
@@ -76,9 +79,9 @@ function TreeNodeUnfilledAlg(props) {
               <img src={pic2} draggable="false" alt="temp" className="round-img" />
             </button>
           </Draggable>
-          <Xarrow start={props.id} end={song.id} startAnchor="bottom" endAnchor="top" zIndex={3} showHead={false} dashness color="gray" />
-          <Xarrow start={props.id} end={song2.id} startAnchor="bottom" endAnchor="top" zIndex={3} showHead={false} dashness color="gray" />
-          <Xarrow start={props.id} end={song3.id} startAnchor="bottom" endAnchor="top" zIndex={3} showHead={false} dashness color="gray" />
+          <Xarrow start={props.id} end={songid} startAnchor="bottom" endAnchor="top" zIndex={3} showHead={false} dashness color="gray" />
+          <Xarrow start={props.id} end={song2id} startAnchor="bottom" endAnchor="top" zIndex={3} showHead={false} dashness color="gray" />
+          <Xarrow start={props.id} end={song3id} startAnchor="bottom" endAnchor="top" zIndex={3} showHead={false} dashness color="gray" />
 
           <div style={{
             width: '500px',
@@ -90,17 +93,17 @@ function TreeNodeUnfilledAlg(props) {
           }}
           >
             <Draggable onDrag={updateXarrow} onStop={updateXarrow}>
-              <button type="button" id={song.id} onClick={props.clickfunc()} className="dot node-button unfilled-node" style={{ float: 'left' }}>
+              <button type="button" id={songid} onClick={props.clickfunc()} className="dot node-button unfilled-node" style={{ float: 'left' }}>
                 <img src={song.album_cover} id={song.id} draggable="false" alt="temp" className="round-img" />
               </button>
             </Draggable>
             <Draggable onDrag={updateXarrow} onStop={updateXarrow}>
-              <button type="button" id={song2.id} onClick={props.clickfunc()} className="dot node-button unfilled-node" style={{ float: 'left' }}>
+              <button type="button" id={song2id} onClick={props.clickfunc()} className="dot node-button unfilled-node" style={{ float: 'left' }}>
                 <img src={song2.album_cover} id={song2.id} draggable="false" alt="temp" className="round-img" />
               </button>
             </Draggable>
             <Draggable onDrag={updateXarrow} onStop={updateXarrow}>
-              <button type="button" id={song3.id} onClick={props.clickfunc()} className="dot node-button unfilled-node" style={{ float: 'right' }}>
+              <button type="button" id={song3id} onClick={props.clickfunc()} className="dot node-button unfilled-node" style={{ float: 'right' }}>
                 <img src={song3.album_cover} id={song3.id} draggable="false" alt="temp" className="round-img" />
               </button>
             </Draggable>
@@ -158,20 +161,23 @@ class Tree extends React.Component {
       top: t,
       left: l,
     };
-    const inputstyleUnfilled = {
-      position: 'absolute',
-      top: t,
-      left: l,
-    };
     if (tree && tree.root.visible) {
       if (tree && tree.root.rec !== 0) {
         if (tree.root.rec === 1) {
-          return (
-            <div style={inputstyle}>
-              <Xarrow start={pref} end={tree.root.name} startAnchor="bottom" endAnchor="top" zIndex={3} showHead={false} dashness color="gray" />
-              <TreeNodeUnfilledUI addSongToNode={this.props.addSongToNode} id={tree.root.name} />
-            </div>
-          );
+          if (pref) {
+            return (
+              <div style={inputstyle}>
+                <Xarrow start={pref} end={tree.root.name} startAnchor="bottom" endAnchor="top" zIndex={3} showHead={false} dashness color="gray" />
+                <TreeNodeUnfilledUI addSongToNode={this.props.addSongToNode} id={tree.root.name} />
+              </div>
+            );
+          } else {
+            return (
+              <div style={inputstyle}>
+                <TreeNodeUnfilledUI addSongToNode={this.props.addSongToNode} id={tree.root.name} />
+              </div>
+            );
+          }
         } else {
           return (
             <div style={inputstyle}>
@@ -228,7 +234,17 @@ class Tree extends React.Component {
     const w = window.innerWidth;
     const h = window.innerHeight;
     return (
-      <div id="currTree" style={{ display: 'flex', justifyContent: 'space-evenly', width: '100%' }}>
+      <div id="currTree"
+        style={{
+          display: 'flex',
+          justifyContent: 'space-evenly',
+          width: '100%',
+          overflow: 'scroll',
+          height: '80%',
+          borderColor: 'black',
+          position: 'relative',
+        }}
+      >
         <Xwrapper>
           {this.getEdges(this.props.tree, w / 2, 100, w / 4, null, this.props.isPlayMode)}
         </Xwrapper>

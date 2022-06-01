@@ -1,11 +1,10 @@
 import React from 'react';
+import pic2 from '../../loads.png';
 
 function Song(props) {
   const playSong = () => {
     // code to play the song here
   };
-  console.log(props.album_cover);
-  console.log(props.name);
 
   if (props.song.album_cover) {
     return (
@@ -13,7 +12,7 @@ function Song(props) {
     );
   } // if it doesn't have a cover, render the title
   return (
-    <button type="button" className="song song-button" onClick={playSong}><p>{props.name}</p></button>
+    <button type="button" className="song song-button" onClick={props.show}><img className="square-img" src={pic2} style={{ backgroundColor: '#c7d2c1' }} alt="temp" /></button>
   );
 }
 

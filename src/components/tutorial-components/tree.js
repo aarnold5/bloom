@@ -52,7 +52,7 @@ function TreeNode2(props) {
           onMouseOver={props.hoover()}
           style={inputStyle}
         >
-          <img src={props.song.album_cover} id={props.song.id} draggable="false" alt="temp" className="round-img" />
+          <img src={props.song.album_cover} id={props.song.id} artist={props.song.artist} genres={props.song.genres} draggable="false" alt="temp" className="round-img" />
         </button>
       </div>
     </Draggable>

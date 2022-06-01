@@ -175,8 +175,8 @@ class Modem extends Component {
       <div id="modem" style={inputStyle}>
         <img src={this.props.song.album_cover} alt="" className="modalAlbumCover" />
         name:{this.props.song.name} <br />
-        {/* artist:{this.props.song.artist}  <br />
-        genres:{this.props.song.genres.join()}  <br /> */}
+        artist:{this.props.song.artist}  <br />
+        genres:{this.props.song.genres}  <br />
         set attribute:
         <div id="modemCheckboxes">
           {/* <button id="tempo" type="button" onClick={this.props.clickfunc3} className="mbuttons" style={{ zIndex: '8' }}> tempo </button>

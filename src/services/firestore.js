@@ -61,7 +61,9 @@ export async function fetchInputPlaylist() {
     playlist: [],
   };
   querySnapshot.forEach((d) => {
-    playlistReturn.playlist.push({ id: d.id, name: d.get('name'), album_cover: d.get('album_cover') });
+    playlistReturn.playlist.push({
+      id: d.id, name: d.get('name'), album_cover: d.get('album_cover'), artist: d.get('artist'), genres: d.get('genres'),
+    });
   });
   return playlistReturn;
 }
@@ -74,6 +76,8 @@ export async function songIDsToSongs(songids) {
       .then((songRef) => {
         song.name = songRef.get('name');
         song.album_cover = songRef.get('album_cover');
+        song.genres = songRef.get('genres');
+        song.artist = songRef.get('artist');
         song.id = id;
       });
     return song;
@@ -211,6 +215,42 @@ export const generateChildren = (tree, path) => {
 export const showChildren = (tree, path, songID) => {
   const fields = {
     tree, operation: 'SHOW', node_id: songID, attribute: '', name: path,
+  };
+  return new Promise((resolve, reject) => {
+    axios.post('https://us-central1-bloom-838b5.cloudfunctions.net/treeFunctions', fields, {
+      headers: { 'Content-Type': 'application/json' },
+    })
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((error) => {
+        console.log(`api error: ${error}`);
+        reject(error);
+      });
+  });
+};
+
+export const changeAttr = (tree, path, songID, attr) => {
+  const fields = {
+    tree, operation: 'ATTRIBUTE', node_id: songID, attribute: attr, name: path,
+  };
+  return new Promise((resolve, reject) => {
+    axios.post('https://us-central1-bloom-838b5.cloudfunctions.net/treeFunctions', fields, {
+      headers: { 'Content-Type': 'application/json' },
+    })
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((error) => {
+        console.log(`api error: ${error}`);
+        reject(error);
+      });
+  });
+};
+
+export const changeWeight = (tree, path, songID, weight) => {
+  const fields = {
+    tree, operation: 'WEIGHT', node_id: songID, attribute: '', name: path, weight,
   };
   return new Promise((resolve, reject) => {
     axios.post('https://us-central1-bloom-838b5.cloudfunctions.net/treeFunctions', fields, {

@@ -432,7 +432,7 @@ class TutorialPage extends Component {
       <div id="tutorial-page" className="page-container container">
         <TreeList trees={this.state.trees} onSelectDifferentTree={() => this.handleLoadNewTree} currTreeId={this.state.currTreeId} />
         <div className="right-half container">
-          <ToolBar addRootNode={this.handleAddRootNode}
+        <ToolBar addRootNode={this.handleAddRootNode}
             tool={this.state.tool_mode}
             setPlus={this.setPlus}
             setCut={this.setCut}
@@ -440,16 +440,13 @@ class TutorialPage extends Component {
             setW={this.setWeight}
             setPlay={this.setPlay}
             setMinus={this.setMinus}
-          />
-          <Modem tree={this.state.tree} song={this.state.songToModem} clickfunc3={() => this.modemClick} />
-          <SearchSuggestions
             searching={this.state.searching}
             onSelectSong={this.handleSelectSong}
             onSearchChange={this.search}
             searchSuggestions={this.state.searchSuggestions}
             cancelSearch={this.handleCancelSearch}
           />
-          <Modem song={this.state.songToModem} clickfunc3={() => this.modemClick} />
+          <Modem tree={this.state.tree} song={this.state.songToModem} clickfunc3={() => this.modemClick} />
             <Tree
               choosealg={() => this.handleChooseAlg}
               f={this.setLoadingFalse}

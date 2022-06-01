@@ -12,7 +12,6 @@ import PlayList from '../tutorial-components/playlist';
 import ToolBar from '../tutorial-components/tool-bar';
 import TreeList from '../tutorial-components/tree-list';
 import * as db from '../../services/firestore';
-import SearchSuggestions from '../tutorial-components/search-suggestions';
 import { bloomSearch } from '../tutorial-components/search';
 import Tree from '../tutorial-components/tree';
 import * as tp from '../tutorial-components/tree-parser';
@@ -142,7 +141,6 @@ class TutorialPage extends Component {
       searchSuggestions: [],
       searching: false,
       // allowRootAdd: true,
-      issueRootWarning: false,
       isLoading: false,
       renderDefault: true,
       fillingNodeID: -1,
@@ -184,7 +182,7 @@ class TutorialPage extends Component {
                 tp.hideChildren(res.tree_json);
               }
               this.setState({ tree: res.tree_json });
-              console.log(this.state.tree);
+              this.setState({ currTreeId: result.trees[0].id });
               db.generateChildren(res.tree_json, res.tree_json.id)
                 .then((res2) => {
                   this.setState({ tree: res2 });
@@ -339,6 +337,7 @@ class TutorialPage extends Component {
   };
 
   handleGetRecs = () => {
+    this.setState({ playlist: [] });
     this.setState({ isLoading: true });
     db.saveTree(this.state.tree).then((res) => console.log(res));
     db.getRecs(this.state.tree, '')
@@ -420,10 +419,18 @@ class TutorialPage extends Component {
     }
   };
 
+  handleCancelSearch = () => {
+    console.log('click');
+    this.setState({
+      searchSuggestions: [],
+      searching: false,
+    });
+  };
+
   render() {
     return (
       <div id="tutorial-page" className="page-container container">
-        <TreeList trees={this.state.trees} onSelectDifferentTree={() => this.handleLoadNewTree} />
+        <TreeList trees={this.state.trees} onSelectDifferentTree={() => this.handleLoadNewTree} currTreeId={this.state.currTreeId} />
         <div className="right-half container">
           <ToolBar addRootNode={this.handleAddRootNode}
             tool={this.state.tool_mode}
@@ -440,7 +447,9 @@ class TutorialPage extends Component {
             onSelectSong={this.handleSelectSong}
             onSearchChange={this.search}
             searchSuggestions={this.state.searchSuggestions}
+            cancelSearch={this.handleCancelSearch}
           />
+          <Modem song={this.state.songToModem} clickfunc3={() => this.modemClick} />
             <Tree
               choosealg={() => this.handleChooseAlg}
               f={this.setLoadingFalse}

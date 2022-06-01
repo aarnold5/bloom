@@ -161,77 +161,83 @@ class Modem extends Component {
   };
 
   render() {
-    const inputStyle = {
-      background: 'gray',
-      width: '150px',
-      height: '200px',
-      position: 'absolute',
-      top: '55px',
-      borderRadius: '4px',
-      padding: '8px',
-      zIndex: '6',
-    };
-    return (
-      <div id="modem" style={inputStyle}>
-        <img src={this.props.song.album_cover} alt="" className="modalAlbumCover" />
-        name:{this.props.song.name} <br />
-        {/* artist:{this.props.song.artist}  <br />
-        genres:{this.props.song.genres.join()}  <br /> */}
-        set attribute:
-        <div id="modemCheckboxes">
-          {/* <button id="tempo" type="button" onClick={this.props.clickfunc3} className="mbuttons" style={{ zIndex: '8' }}> tempo </button>
-          <button type="button" className="mbuttons"> mood </button>
-          <button type="button" className="mbuttons"> key </button>
-    <button type="button" className="mbuttons"> dancebility </button> */}
-          <form className="modalForm">
-            <fieldset className="fields">
-              <h2>Choose Attributes</h2>
-              <div>
-                <input type="checkbox" id="coding" name="interest" onChange={this.handleCheckLiveness} value={this.state.liveness} />
-                <label htmlFor="coding">Liveness</label>
-              </div>
-              <div>
-                <input type="checkbox" id="music" name="interest" onChange={this.handleCheckEnergy} value={this.state.energy} />
-                <label htmlFor="music">Energy</label>
-              </div>
-              <div>
-                <input type="checkbox" id="art" name="interest" onChange={this.handleCheckHappiness} value={this.state.valence} />
-                <label htmlFor="art">Happiness</label>
-              </div>
-              <div>
-                <input type="checkbox" id="coding" name="interest" onChange={this.handleCheckInstrumentalness} value={this.state.instrumentalness} />
-                <label htmlFor="coding">Instrumentalness</label>
-              </div>
-              <div>
-                <input type="checkbox" id="music" name="interest" onChange={this.handleCheckAcousticness} value={this.state.acousticness} />
-                <label htmlFor="music">Acousticness</label>
-              </div>
-              <div>
-                <input type="checkbox" id="art" name="interest" onChange={this.handleCheckDanceability} value={this.state.danceability} />
-                <label htmlFor="art">Danceability</label>
-              </div>
-              <div>
-                <input type="checkbox" id="coding" name="interest" onChange={this.handleCheckTempo} value={this.state.tempo} />
-                <label htmlFor="coding">Tempo</label>
-              </div>
-              <div>
-                <input type="checkbox" id="music" name="interest" onChange={this.handleCheckMode} value={this.state.mode} />
-                <label htmlFor="music">Mode</label>
-              </div>
-              <div>
-                <input type="checkbox" id="art" name="interest" onChange={this.handleCheckKey} value={this.state.key} />
-                <label htmlFor="art">Key</label>
-              </div>
-              <div>
-                <input type="checkbox" id="art" name="interest" onChange={this.handleCheckPop} value={this.state.pop} />
-                <label htmlFor="art">Popularity</label>
-              </div>
-            </fieldset>
-          </form>
-          <button type="button" onClick={() => this.handleCheckSubmit()}>Submit</button>
+    if (this.props.song.album_cover) {
+      const inputStyle = {
+        background: 'light-gray',
+        width: '150px',
+        height: 'fit-content',
+        position: 'absolute',
+        top: '55px',
+        borderRadius: '4px',
+        padding: '8px',
+        zIndex: '6',
+        display: 'flex',
+        flexDirection: 'column',
+      };
+
+      return (
+        <div id="modem" style={inputStyle}>
+          <img src={this.props.song.album_cover} alt="" className="modemAlbumCover" />
+          <h2 className="modemSongTitle">{this.props.song.name } </h2>
+          {/* artist:{this.props.song.artist}  <br />
+          genres:{this.props.song.genres.join()}  <br /> */}
+          <div id="modemCheckboxes">
+            {/* <button id="tempo" type="button" onClick={this.props.clickfunc3} className="mbuttons" style={{ zIndex: '8' }}> tempo </button>
+            <button type="button" className="mbuttons"> mood </button>
+            <button type="button" className="mbuttons"> key </button>
+      <button type="button" className="mbuttons"> dancebility </button> */}
+            <form className="modalForm">
+              <fieldset className="fields">
+                <h2 className="modemChooseAttributes">Choose Attributes</h2>
+                <div>
+                  <input type="checkbox" id="coding" name="interest" onChange={this.handleCheckLiveness} value={this.state.liveness} />
+                  <label htmlFor="coding" className="modemAttrText">Liveness</label>
+                </div>
+                <div>
+                  <input type="checkbox" id="music" name="interest" onChange={this.handleCheckEnergy} value={this.state.energy} />
+                  <label htmlFor="music" className="modemAttrText">Energy</label>
+                </div>
+                <div>
+                  <input type="checkbox" id="art" name="interest" onChange={this.handleCheckHappiness} value={this.state.valence} />
+                  <label htmlFor="art" className="modemAttrText">Happiness</label>
+                </div>
+                <div>
+                  <input type="checkbox" id="coding" name="interest" onChange={this.handleCheckInstrumentalness} value={this.state.instrumentalness} />
+                  <label htmlFor="coding" className="modemAttrText">Instrumentalness</label>
+                </div>
+                <div>
+                  <input type="checkbox" id="music" name="interest" onChange={this.handleCheckAcousticness} value={this.state.acousticness} />
+                  <label htmlFor="music" className="modemAttrText">Acousticness</label>
+                </div>
+                <div>
+                  <input type="checkbox" id="art" name="interest" onChange={this.handleCheckDanceability} value={this.state.danceability} />
+                  <label htmlFor="art" className="modemAttrText">Danceability</label>
+                </div>
+                <div>
+                  <input type="checkbox" id="coding" name="interest" onChange={this.handleCheckTempo} value={this.state.tempo} />
+                  <label htmlFor="coding" className="modemAttrText">Tempo</label>
+                </div>
+                <div>
+                  <input type="checkbox" id="music" name="interest" onChange={this.handleCheckMode} value={this.state.mode} />
+                  <label htmlFor="music" className="modemAttrText">Mode</label>
+                </div>
+                <div>
+                  <input type="checkbox" id="art" name="interest" onChange={this.handleCheckKey} value={this.state.key} />
+                  <label htmlFor="art" className="modemAttrText">Key</label>
+                </div>
+                <div>
+                  <input type="checkbox" id="art" name="interest" onChange={this.handleCheckPop} value={this.state.pop} />
+                  <label htmlFor="art" className="modemAttrText">Popularity</label>
+                </div>
+              </fieldset>
+            </form>
+            <button type="button" className="submit-button" onClick={() => this.handleCheckSubmit()}>Submit</button>
+          </div>
         </div>
-      </div>
-    );
+      );
+    } else {
+      return <div />;
+    }
   }
 }
 

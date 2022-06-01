@@ -307,3 +307,61 @@ input {
   height: fit-content;
   justify-self: start;
 }
+
+.modemAlbumCover {
+  width: 100%;
+  height: auto;
+}
+
+.modemAttrText {
+  font-size: 10pt;
+  color: #1F1F1F;
+}
+
+.modemSongTitle {
+  font-size: 13pt;
+  font-weight: 300;
+  color: #1F1F1F;
+}
+
+.modemChooseAttributes {
+  font-size: 13pt;
+  font-weight: 500;
+  color: #1F1F1F;
+}
+
+fieldset.fields {
+  div {
+    display: flex;
+    flex-direction: row;
+ }
+
+ input{ 
+   width: fit-content;
+ }
+
+ margin: 0;
+ border: none;
+}
+
+#modem {
+  background: #B0C2A8;
+}
+
+.submit-button {
+  border: none;
+  border-radius: 0px;
+  border: none;
+  color: #1F1F1F;
+  padding: 8px 54px;
+  background-color: rgb(250, 250, 250)
+}
+.submit-button:hover {
+  background-color: rgb(232, 232, 232)
+}
+
+#modemCheckboxes {
+  border-style: solid;
+  border-width: thin;
+  border-color: rgb(245, 245, 245);
+}

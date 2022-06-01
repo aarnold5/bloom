@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/mouse-events-have-key-events */
 /* eslint-disable new-cap */
 /* eslint-disable max-len */
 /* eslint-disable no-useless-constructor */
@@ -20,6 +21,9 @@ function TreeNode2(props) {
   /* function playSong(song) {
     console.log(`playSong:${song.name}`);
   } */
+  const hoverHandler = () => {
+    console.log('onMouseEnter');
+  };
   let inputStyle = {
     background: '#96A66D',
   };
@@ -41,7 +45,13 @@ function TreeNode2(props) {
   return (
     <Draggable onDrag={updateXarrow} onStop={updateXarrow}>
       <div>
-        <button type="button" id={props.id} className="dot node-button" onClick={props.onclickfunc()} style={inputStyle}>
+        <button type="button"
+          id={props.id}
+          className="dot node-button"
+          onClick={props.onclickfunc()}
+          onMouseOver={props.hoover()}
+          style={inputStyle}
+        >
           <img src={props.song.album_cover} id={props.song.id} draggable="false" alt="temp" className="round-img" />
         </button>
       </div>
@@ -128,7 +138,7 @@ function TreeNodeUnfilledAlg(props) {
         <Xarrow start={props.pref} end={props.id} startAnchor="bottom" endAnchor="top" zIndex={3} showHead={false} dashness color="gray" />
         <Draggable onDrag={updateXarrow} onStop={updateXarrow}>
           <button type="button" id={props.id} className="dot node-button unfilled-node">
-            <img src={pic} draggable="false" alt="temp" className="round-img" />
+            <img src={pic} id={props.id} draggable="false" alt="temp" className="round-img" />
           </button>
         </Draggable>
       </div>
@@ -190,7 +200,7 @@ class Tree extends React.Component {
           return (
             <div>
               <div style={inputstyle}>
-                <TreeNode2 id={tree.root.name} tree={tree} song={tree.root.song} onClickNode={this.props.onClickNode} tool_mode={this.props.tool} onclickfunc={this.props.clickfunc} deleteNodes={this.props.deleteNodes} onShowChildren={this.props.onShowChildren} />
+                <TreeNode2 id={tree.root.name} hoover={this.props.hoover} tree={tree} song={tree.root.song} onClickNode={this.props.onClickNode} tool_mode={this.props.tool} onclickfunc={this.props.clickfunc} deleteNodes={this.props.deleteNodes} onShowChildren={this.props.onShowChildren} />
               </div>
               <Xarrow start={pref} end={tree.root.name} startAnchor="bottom" endAnchor="top" zIndex={3} showHead={false} dashness color="gray" />
               {this.getEdges(tree.left, l - i, t + 150, i / 2, tree.root.name)}
@@ -201,7 +211,7 @@ class Tree extends React.Component {
           return (
             <div>
               <div style={inputstyle}>
-                <TreeNode2 id={tree.root.name} onclickfunc={this.props.clickfunc} tree={tree} song={tree.root.song} onClickNode={this.props.onClickNode} tool_mode={this.props.tool} deleteNodes={this.props.deleteNodes} onShowChildren={this.props.onShowChildren} />
+                <TreeNode2 id={tree.root.name} onclickfunc={this.props.clickfunc} tree={tree} song={tree.root.song} onClickNode={this.props.onClickNode} tool_mode={this.props.tool} hoover={this.props.hoover} deleteNodes={this.props.deleteNodes} onShowChildren={this.props.onShowChildren} />
               </div>
               <Xarrow start={pref} end={tree.root.name} startAnchor="bottom" strokeWidth={tree.root.weight} endAnchor="top" zIndex={3} showHead={false} color="#637B47" />
               {this.getEdges(tree.left, l - i, t + 150, i / 2, tree.root.name)}
@@ -213,7 +223,7 @@ class Tree extends React.Component {
         return (
           <div>
             <div style={inputstyle}>
-              <TreeNode2 id={tree.root.name} tree={tree} song={tree.root.song} onclickfunc={this.props.clickfunc} onClickNode={this.props.onClickNode} tool_mode={this.props.tool} deleteNodes={this.props.deleteNodes} onShowChildren={this.props.onShowChildren} />
+              <TreeNode2 id={tree.root.name} tree={tree} hoover={this.props.hoover} song={tree.root.song} onclickfunc={this.props.clickfunc} onClickNode={this.props.onClickNode} tool_mode={this.props.tool} deleteNodes={this.props.deleteNodes} onShowChildren={this.props.onShowChildren} />
             </div>
             {this.getEdges(tree.left, l - i, t + 150, i / 2, tree.root.name)}
             {this.getEdges(tree.right, l + i, t + 150, i / 2, tree.root.name)}

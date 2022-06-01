@@ -16,6 +16,8 @@ import SearchSuggestions from '../tutorial-components/search-suggestions';
 import { bloomSearch } from '../tutorial-components/search';
 import Tree from '../tutorial-components/tree';
 import * as tp from '../tutorial-components/tree-parser';
+import Modem from '../tutorial-components/modem';
+
 // import Player from '../tutorial-components/player';
 
 // const songLookup = {};
@@ -152,6 +154,8 @@ class TutorialPage extends Component {
       showing: false,
       search2add: null,
       currTreeId: null,
+      songToModem: { name: null, id: null },
+      stringToAttr: '',
       // eslint-disable-next-line max-len
       // accessToken: 'BQBncXG2SuBOQAhsi51b5SmrezUt8A3QWLH1KIFkUPZxnc1MAUmooJVjfG9kdKk3ud9ea5wJcEfH55bISGMA4dCs8PztrhBJXiWoNgpt_u_95mOmjYS4VTZseBoQU4iIBsAqMt3u_wfDnkZ08tvDa8GxHkzts8oavLLM4YAOybHBIxMOd5YA2h8K7ZnmVyAlIIxmywLMsPjLv9UriqzyycFuFUe9Ez_e5hJfvU9K7-RVBxG4_y6iBPsg2CZ6URk2x4kYtfdRAMCAsrIrK1GdpW9NqjFDtE1L-EB0vIZXbC6gApWhdpkx',
 
@@ -220,6 +224,7 @@ class TutorialPage extends Component {
       tp.inc_w(copiedtree, e.target.id);
     }
     this.setState({ tree: copiedtree });
+    db.saveTree(this.state.tree).then((res) => console.log(res));
   };
 
   keydownHandler = (event) => {
@@ -355,10 +360,8 @@ class TutorialPage extends Component {
 
   // eslint-disable-next-line class-methods-use-this
   handleDeleteNodes = (e) => {
-    console.log(e.target.id);
     db.deleteNodes(this.state.tree, this.state.tree.id, e.target.id)
       .then((result) => {
-        console.log(result);
         this.setState({ tree: result });
       });
   };
@@ -387,11 +390,27 @@ class TutorialPage extends Component {
   };
 
   // eslint-disable-next-line consistent-return
-  renderRootWarning() {
+  /*   renderRootWarning() {
     if (this.state.issueRootWarning) {
       return <p>sorry! you can only add one root node</p>;
     }
-  }
+  } */
+
+  sendToModem = (e) => {
+    const song = tp.find_song(e.target.id, this.state.tree);
+    console.log(song);
+    if (song) {
+      this.setState({ songToModem: song });
+    }
+  };
+
+  modemClick = (e) => {
+    console.log('clicked');
+    if (e.target.id === 'tempo') {
+      this.setState({ stringToAttr: 'tempo' });
+      console.log(this.state.stringToAttr);
+    }
+  };
 
   render() {
     return (
@@ -407,7 +426,7 @@ class TutorialPage extends Component {
             setPlay={this.setPlay}
             setMinus={this.setMinus}
           />
-          {this.renderRootWarning()}
+          <Modem song={this.state.songToModem} clickfunc3={() => this.modemClick} />
           <SearchSuggestions
             searching={this.state.searching}
             onSelectSong={this.handleSelectSong}
@@ -427,7 +446,8 @@ class TutorialPage extends Component {
               deleteNodes={() => this.handleDeleteNodes}
               onShowChildren={() => this.handleShowChildren}
               addSongToNode={() => this.handleAddSongToNode}
-              clickfunc={() => this.onClickfunc} />
+              clickfunc={() => this.onClickfunc}
+              hoover={() => this.sendToModem} />
 
           {/* <Player accessToken={this.state.accessToken} trackUri={this.state.trackUri} playingTrack /> */}
           <PlayList playlist={this.state.playlist} getRecs={this.handleGetRecs} isLoading={this.state.isLoading} />

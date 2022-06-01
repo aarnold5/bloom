@@ -226,9 +226,12 @@ export const showChildren = (tree, path, songID) => {
   });
 };
 
-export const createTree = () => {
+export const createTree = (name) => {
+  const fields = {
+    name,
+  };
   return new Promise((resolve, reject) => {
-    axios.post('https://us-central1-bloom-838b5.cloudfunctions.net/treeCreator', {
+    axios.post('https://us-central1-bloom-838b5.cloudfunctions.net/treeCreator', fields, {
       headers: { 'Content-Type': 'application/json' },
     })
       .then((response) => {
